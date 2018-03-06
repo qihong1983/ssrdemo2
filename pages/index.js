@@ -32,24 +32,28 @@ import {
 const cookieParser = require("cookie-parser");
 
 import initializeStore from '../store/initializeStore';
-
+import * as actionCreators from './actions';
 
 
 class Index extends React.Component {
-	// static async getInitialProps() {
+	static async getInitialProps({
+		query,
+		store,
+		isServer
+	}) {
 
-	// console.log(11);
-	// global.token = 'aaa';
+		// console.log(11);
+		// global.token = 'aaa';
 
-	// let data = store.getState();
+		// let data = store.getState();
 
-	// let params = {
-	// 	limit: data.limit,
-	// 	offset: 1
-	// }
-	// await store.dispatch(actionCreators.getTables(params));
+		// let params = {
+		// 	limit: data.limit,
+		// 	offset: 1
+		// }
+		// await store.dispatch(actionCreators.getTables(params));
 
-	// }
+	}
 
 	constructor(props) {
 		super(props);
@@ -104,7 +108,7 @@ const mapStateToProps = (state) => {
 //将action的所有方法绑定到props上
 const mapDispatchToProps = (dispatch, ownProps) => {
 	//全量
-	// return bindActionCreators(actionCreators, dispatch);
+	return bindActionCreators(actionCreators, dispatch);
 };
 
 Index = connect(mapStateToProps, mapDispatchToProps)(Index);
