@@ -28,23 +28,25 @@ import Link from 'next/link';
 
 const cookieParser = require("cookie-parser");
 
+import initializeStore from '../store/initializeStore';
+
+
+
 class Index extends React.Component {
-	static async getInitialProps({
-		query,
-		store,
-		isServer
-	}) {
-		// global.token = 'aaa';
+	// static async getInitialProps() {
 
-		// let data = store.getState();
+	// console.log(11);
+	// global.token = 'aaa';
 
-		// let params = {
-		// 	limit: data.limit,
-		// 	offset: 1
-		// }
-		// await store.dispatch(actionCreators.getTables(params));
+	// let data = store.getState();
 
-	}
+	// let params = {
+	// 	limit: data.limit,
+	// 	offset: 1
+	// }
+	// await store.dispatch(actionCreators.getTables(params));
+
+	// }
 
 	constructor(props) {
 		super(props);
@@ -89,4 +91,4 @@ class Index extends React.Component {
 	}
 }
 
-export default Index
+export default Index;
