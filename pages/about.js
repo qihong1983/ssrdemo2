@@ -47,6 +47,25 @@ import * as actionCreators from './actions';
  */
 
 class About extends Component {
+	static async getInitialProps({
+		query,
+		store,
+		isServer
+	}) {
+		let data = store.getState();
+
+		let params = {
+			limit: data.limit,
+			offset: 1
+		}
+		await store.dispatch(actionCreators.getTablesNoData(params));
+
+	}
+
+	constructor(props) {
+		super(props);
+	}
+
 	componentDidMount() {
 
 		notification['success']({
@@ -56,7 +75,36 @@ class About extends Component {
 
 	}
 
+
+	addKey(data, str) {
+		var arr = [];
+
+		data.map((v, k) => {
+			v.key = str + k;
+			arr.push(v);
+		});
+
+		return arr;
+	}
+
+	handleTableChange(pagination, filters, sorter) {
+		let params = {
+			offset: pagination.current,
+			limit: pagination.pageSize
+		}
+
+		this.props.getTablesNoData(params);
+	}
+
 	render() {
+
+		var pagination = {
+			current: this.props.about.offset,
+			pageSize: this.props.about.limit,
+			total: this.props.about.total
+		}
+
+		this.addKey(this.props.about.tableData, 'about' + new Date().getTime());
 
 		return (
 			<div>
@@ -79,10 +127,42 @@ class About extends Component {
 				        <Menu.Item key="2">不变化的数据</Menu.Item>
 				      </Menu>
 					</Header>
+					<Content>
+						<div style={{ background: '#ECECEC', padding: '30px' }}>
+					    	<Card title="小洪（高级前端开发）" bordered={false}>
+								<Table 
+									columns={this.props.about.columns} 
+									dataSource={this.props.about.tableData} 
+									hoverable={true} 
+									loading={this.props.about.loading} 
+									pagination={pagination}
+									onChange={this.handleTableChange.bind(this)}
+								/>
+	  						</Card>
+	  					</div>
+			        </Content>
+
 	      		</Layout>
 	        </div>
 		)
 	}
 }
 
-export default About;
+//将state.counter绑定到props的counter
+const mapStateToProps = (state) => {
+	return {
+		about: state.About
+	}
+};
+
+//将action的所有方法绑定到props上
+const mapDispatchToProps = (dispatch, ownProps) => {
+	//全量
+	return bindActionCreators(actionCreators, dispatch);
+};
+
+About = connect(mapStateToProps, mapDispatchToProps)(About);
+
+About = withRedux(initializeStore)(About);
+
+export default withRouter(About);

@@ -125,7 +125,7 @@ class Index extends React.Component {
 					<Content>
 
 						<div style={{ background: '#ECECEC', padding: '30px' }}>
-						    <Card title="刷新或强刷后用户无感知的性能体验(有数据变化)" bordered={false}>
+						    <Card title="小洪（高级前端开发）" bordered={false}>
 								<Table 
 									columns={this.props.index.columns} 
 									dataSource={this.props.index.tableData} 
