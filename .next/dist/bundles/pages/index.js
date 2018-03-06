@@ -134,6 +134,46 @@ var Index = function Index() {
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('meta', { name: 'viewport', content: 'initial-scale=1.0, width=device-width' }),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('link', { rel: 'stylesheet', href: '/static/antd.css' }),
 			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('link', { rel: 'stylesheet', href: '/static/demo.css' })
+		),
+		__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+			__WEBPACK_IMPORTED_MODULE_4_antd__["Layout"],
+			null,
+			__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+				Header,
+				{ style: { color: "white" } },
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+					'div',
+					{ className: 'logo' },
+					'SSR demo'
+				),
+				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+					__WEBPACK_IMPORTED_MODULE_4_antd__["Menu"],
+					{
+						theme: 'dark',
+						mode: 'horizontal',
+						selectedKeys: ['1'],
+						style: { lineHeight: '64px' }
+					},
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						__WEBPACK_IMPORTED_MODULE_4_antd__["Menu"].Item,
+						{ key: '1' },
+						'\u53D8\u5316\u7684\u6570\u636E'
+					),
+					__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+						__WEBPACK_IMPORTED_MODULE_4_antd__["Menu"].Item,
+						{ key: '2' },
+						__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+							__WEBPACK_IMPORTED_MODULE_7_next_link___default.a,
+							{ href: '/about', replace: true },
+							__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+								'a',
+								null,
+								'\u4E0D\u53D8\u5316\u7684\u6570\u636E'
+							)
+						)
+					)
+				)
+			)
 		)
 	);
 };
