@@ -67,23 +67,135 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
+/******/ ({
 
-module.exports = require("babel-runtime/regenerator");
+/***/ "./modules/about/reducer.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return About; });
+var About = function About(state, action) {
+
+  if (typeof state === "undefined") {
+    //初始化
+    return {
+      columns: [{
+        title: '日期',
+        dataIndex: 'day',
+        key: 'day'
+      }, {
+        title: '数据1',
+        dataIndex: 'n1',
+        key: 'n1'
+      }, {
+        title: '数据2',
+        dataIndex: 'n2',
+        key: 'n2'
+      }, {
+        title: '数据3',
+        dataIndex: 'n3',
+        key: 'n3'
+      }, {
+        title: '数据4',
+        dataIndex: 'n4',
+        key: 'n4'
+      }, {
+        title: '数据5 ',
+        dataIndex: 'n5',
+        key: 'n5'
+      }, {
+        title: '数据6',
+        dataIndex: 'n6',
+        key: 'n6'
+      }],
+      offset: 1,
+      limit: 1,
+      total: 1,
+      loading: false,
+      tableData: []
+    };
+  }
+
+  switch (action.type) {
+    case "ADIMPRESSION_APPCODE":
+      //操作系统状态
+      return Object.assign({}, state, {
+        appCode: action.payload
+      });
+
+    case "ADIMPRESSION_CHANNELCATEGORY":
+      //操作系统状态
+      return Object.assign({}, state, {
+        channelCategory: action.payload
+      });
+
+    case "ADIMPRESSION_CHANNELNAME":
+      //操作系统状态
+      return Object.assign({}, state, {
+        channelName: action.payload
+      });
+    case "PAGE1_COLUMNS":
+      return Object.assign({}, state, {
+        columns: action.payload
+      });
+    case "PAGE1_TABLEDATA":
+      return Object.assign({}, state, {
+        tableData: action.payload
+      });
+    case "PAGE1_OFFSET":
+      return Object.assign({}, state, {
+        offset: action.payload
+      });
+
+    case "PAGE1_LIMIT":
+      return Object.assign({}, state, {
+        limit: action.payload
+      });
+    case "PAGE1_TOTAL":
+      return Object.assign({}, state, {
+        total: action.payload
+      });
+
+    case "PAGE1_LOADING":
+      return Object.assign({}, state, {
+        loading: action.payload
+      });
+
+    default:
+      //返回初始化
+      return state;
+  }
+};
+
+
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
 
-module.exports = require("isomorphic-unfetch");
+/***/ "./modules/reducers.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__("redux");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_redux__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__about_reducer__ = __webpack_require__("./modules/about/reducer.js");
+
+
+
+// 合并到主reducer
+var reducers = {
+	"About": __WEBPACK_IMPORTED_MODULE_1__about_reducer__["a" /* About */]
+};
+
+// combineReducers() 函数用于将分离的 reducer 合并为一个 reducer 
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["combineReducers"])(reducers));
+//
 
 /***/ }),
-/* 2 */
+
+/***/ "./pages/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92,9 +204,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inita", function() { return inita; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTables", function() { return getTables; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTablesNoData", function() { return getTablesNoData; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__("babel-runtime/regenerator");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch__ = __webpack_require__("isomorphic-unfetch");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch__);
 
 
@@ -334,201 +446,36 @@ var getCharts = function getCharts(data) {
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
 
-module.exports = require("redux");
-
-/***/ }),
-/* 4 */,
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-/* 6 */
+/***/ "./pages/index.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__("babel-runtime/regenerator");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_redux_wrapper__ = __webpack_require__("next-redux-wrapper");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_redux_wrapper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_next_redux_wrapper__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_isomorphic_unfetch__ = __webpack_require__("isomorphic-unfetch");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_isomorphic_unfetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_isomorphic_unfetch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_redux__ = __webpack_require__("react-redux");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_redux__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_antd__ = __webpack_require__("antd");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_antd___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_antd__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_redux__ = __webpack_require__("redux");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_redux__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_next_head__ = __webpack_require__("next/head");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_next_head___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_next_head__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_next_link__ = __webpack_require__("next/link");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_next_link___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_next_link__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_next_router__ = __webpack_require__("next/router");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_next_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_next_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__store_initializeStore__ = __webpack_require__("./store/initializeStore.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__actions__ = __webpack_require__("./pages/actions.js");
 
-// EXTERNAL MODULE: external "babel-runtime/regenerator"
-var regenerator_ = __webpack_require__(0);
-var regenerator__default = /*#__PURE__*/__webpack_require__.n(regenerator_);
-
-// EXTERNAL MODULE: external "react"
-var external__react_ = __webpack_require__(7);
-var external__react__default = /*#__PURE__*/__webpack_require__.n(external__react_);
-
-// EXTERNAL MODULE: external "next-redux-wrapper"
-var external__next_redux_wrapper_ = __webpack_require__(8);
-var external__next_redux_wrapper__default = /*#__PURE__*/__webpack_require__.n(external__next_redux_wrapper_);
-
-// EXTERNAL MODULE: external "isomorphic-unfetch"
-var external__isomorphic_unfetch_ = __webpack_require__(1);
-var external__isomorphic_unfetch__default = /*#__PURE__*/__webpack_require__.n(external__isomorphic_unfetch_);
-
-// EXTERNAL MODULE: external "react-redux"
-var external__react_redux_ = __webpack_require__(9);
-var external__react_redux__default = /*#__PURE__*/__webpack_require__.n(external__react_redux_);
-
-// EXTERNAL MODULE: external "antd"
-var external__antd_ = __webpack_require__(10);
-var external__antd__default = /*#__PURE__*/__webpack_require__.n(external__antd_);
-
-// EXTERNAL MODULE: external "redux"
-var external__redux_ = __webpack_require__(3);
-var external__redux__default = /*#__PURE__*/__webpack_require__.n(external__redux_);
-
-// EXTERNAL MODULE: external "next/head"
-var head_ = __webpack_require__(11);
-var head__default = /*#__PURE__*/__webpack_require__.n(head_);
-
-// EXTERNAL MODULE: external "next/link"
-var link_ = __webpack_require__(12);
-var link__default = /*#__PURE__*/__webpack_require__.n(link_);
-
-// EXTERNAL MODULE: external "next/router"
-var router_ = __webpack_require__(13);
-var router__default = /*#__PURE__*/__webpack_require__.n(router_);
-
-// EXTERNAL MODULE: external "redux-devtools-extension"
-var external__redux_devtools_extension_ = __webpack_require__(15);
-var external__redux_devtools_extension__default = /*#__PURE__*/__webpack_require__.n(external__redux_devtools_extension_);
-
-// EXTERNAL MODULE: external "redux-thunk"
-var external__redux_thunk_ = __webpack_require__(16);
-var external__redux_thunk__default = /*#__PURE__*/__webpack_require__.n(external__redux_thunk_);
-
-// CONCATENATED MODULE: ./modules/about/reducer.js
-var About = function About(state, action) {
-
-  if (typeof state === "undefined") {
-    //初始化
-    return {
-      columns: [{
-        title: '日期',
-        dataIndex: 'day',
-        key: 'day'
-      }, {
-        title: '数据1',
-        dataIndex: 'n1',
-        key: 'n1'
-      }, {
-        title: '数据2',
-        dataIndex: 'n2',
-        key: 'n2'
-      }, {
-        title: '数据3',
-        dataIndex: 'n3',
-        key: 'n3'
-      }, {
-        title: '数据4',
-        dataIndex: 'n4',
-        key: 'n4'
-      }, {
-        title: '数据5 ',
-        dataIndex: 'n5',
-        key: 'n5'
-      }, {
-        title: '数据6',
-        dataIndex: 'n6',
-        key: 'n6'
-      }],
-      offset: 1,
-      limit: 1,
-      total: 1,
-      loading: false,
-      tableData: []
-    };
-  }
-
-  switch (action.type) {
-    case "ADIMPRESSION_APPCODE":
-      //操作系统状态
-      return Object.assign({}, state, {
-        appCode: action.payload
-      });
-
-    case "ADIMPRESSION_CHANNELCATEGORY":
-      //操作系统状态
-      return Object.assign({}, state, {
-        channelCategory: action.payload
-      });
-
-    case "ADIMPRESSION_CHANNELNAME":
-      //操作系统状态
-      return Object.assign({}, state, {
-        channelName: action.payload
-      });
-    case "PAGE1_COLUMNS":
-      return Object.assign({}, state, {
-        columns: action.payload
-      });
-    case "PAGE1_TABLEDATA":
-      return Object.assign({}, state, {
-        tableData: action.payload
-      });
-    case "PAGE1_OFFSET":
-      return Object.assign({}, state, {
-        offset: action.payload
-      });
-
-    case "PAGE1_LIMIT":
-      return Object.assign({}, state, {
-        limit: action.payload
-      });
-    case "PAGE1_TOTAL":
-      return Object.assign({}, state, {
-        total: action.payload
-      });
-
-    case "PAGE1_LOADING":
-      return Object.assign({}, state, {
-        loading: action.payload
-      });
-
-    default:
-      //返回初始化
-      return state;
-  }
-};
-
-
-// CONCATENATED MODULE: ./modules/reducers.js
-
-
-
-// 合并到主reducer
-var reducers = {
-	"About": About
-};
-
-// combineReducers() 函数用于将分离的 reducer 合并为一个 reducer 
-/* harmony default export */ var modules_reducers = (Object(external__redux_["combineReducers"])(reducers));
-//
-// CONCATENATED MODULE: ./store/initializeStore.js
-
-
-
-
-
-
-
-var middleware = [external__redux_thunk__default.a];
-
-var initializeStore_initializeStore = function initializeStore(initialState) {
-	return Object(external__redux_["createStore"])(modules_reducers, initialState, Object(external__redux_devtools_extension_["composeWithDevTools"])(external__redux_["applyMiddleware"].apply(undefined, middleware)));
-};
-
-/* harmony default export */ var store_initializeStore = (initializeStore_initializeStore);
-// EXTERNAL MODULE: ./pages/actions.js
-var actions = __webpack_require__(2);
-
-// CONCATENATED MODULE: ./pages/index.js
-
+var _jsxFileName = '/Users/qihong/netease/dev/nextdemo/ssrdemo2/pages/index.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -548,10 +495,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var Header = external__antd_["Layout"].Header,
-    Footer = external__antd_["Layout"].Footer,
-    Sider = external__antd_["Layout"].Sider,
-    Content = external__antd_["Layout"].Content;
+var Header = __WEBPACK_IMPORTED_MODULE_5_antd__["Layout"].Header,
+    Footer = __WEBPACK_IMPORTED_MODULE_5_antd__["Layout"].Footer,
+    Sider = __WEBPACK_IMPORTED_MODULE_5_antd__["Layout"].Sider,
+    Content = __WEBPACK_IMPORTED_MODULE_5_antd__["Layout"].Content;
 
 
 
@@ -560,25 +507,39 @@ var Header = external__antd_["Layout"].Header,
 
 
 
-var cookieParser = __webpack_require__(14);
+var cookieParser = __webpack_require__("cookie-parser");
 
 
 
 
-var pages_Index = function (_React$Component) {
+var Index = function (_React$Component) {
 	_inherits(Index, _React$Component);
 
 	_createClass(Index, null, [{
 		key: 'getInitialProps',
 		value: function () {
-			var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator__default.a.mark(function _callee(_ref) {
+			var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(_ref) {
 				var query = _ref.query,
 				    store = _ref.store,
 				    isServer = _ref.isServer;
-				return regenerator__default.a.wrap(function _callee$(_context) {
+				var data, params;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
 							case 0:
+
+								console.log(11);
+								// global.token = 'aaa';
+
+								data = store.getState();
+								params = {
+									limit: data.limit,
+									offset: 1
+								};
+								_context.next = 5;
+								return store.dispatch(__WEBPACK_IMPORTED_MODULE_11__actions__["getTables"](params));
+
+							case 5:
 							case 'end':
 								return _context.stop();
 						}
@@ -604,67 +565,207 @@ var pages_Index = function (_React$Component) {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 
-			external__antd_["notification"]['success']({
+			__WEBPACK_IMPORTED_MODULE_5_antd__["notification"]['success']({
 				message: 'SSR 秒开(有数据变化的)',
 				description: '用户刷新无感知性能体验'
 			});
 		}
 	}, {
+		key: 'addKey',
+		value: function addKey(data, str) {
+			var arr = [];
+
+			data.map(function (v, k) {
+				v.key = str + k;
+				arr.push(v);
+			});
+
+			return arr;
+		}
+	}, {
+		key: 'handleTableChange',
+		value: function handleTableChange(pagination, filters, sorter) {
+			var params = {
+
+				offset: pagination.current,
+				limit: pagination.pageSize
+			};
+
+			this.props.getTables(params);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			return external__react__default.a.createElement(
+
+			var pagination = {
+				current: this.props.index.offset,
+				pageSize: this.props.index.limit,
+				total: this.props.index.total
+			};
+
+			this.addKey(this.props.index.tableData, 'index' + new Date().getTime());
+
+			return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
 				'div',
-				null,
-				external__react__default.a.createElement(
-					head__default.a,
-					null,
-					external__react__default.a.createElement(
+				{
+					__source: {
+						fileName: _jsxFileName,
+						lineNumber: 103
+					}
+				},
+				__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+					__WEBPACK_IMPORTED_MODULE_7_next_head___default.a,
+					{
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 104
+						}
+					},
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
 						'title',
-						null,
+						{
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 105
+							}
+						},
 						'\u53D8\u5316\u7684\u6570\u636E'
 					),
-					external__react__default.a.createElement('meta', { name: 'viewport', content: 'initial-scale=1.0, width=device-width' }),
-					external__react__default.a.createElement('link', { rel: 'stylesheet', href: '/static/antd.css' }),
-					external__react__default.a.createElement('link', { rel: 'stylesheet', href: '/static/demo.css' })
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('meta', { name: 'viewport', content: 'initial-scale=1.0, width=device-width', __source: {
+							fileName: _jsxFileName,
+							lineNumber: 106
+						}
+					}),
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('link', { rel: 'stylesheet', href: '/static/antd.css', __source: {
+							fileName: _jsxFileName,
+							lineNumber: 107
+						}
+					}),
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('link', { rel: 'stylesheet', href: '/static/demo.css', __source: {
+							fileName: _jsxFileName,
+							lineNumber: 108
+						}
+					})
 				),
-				external__react__default.a.createElement(
-					external__antd_["Layout"],
-					null,
-					external__react__default.a.createElement(
+				__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+					__WEBPACK_IMPORTED_MODULE_5_antd__["Layout"],
+					{
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 110
+						}
+					},
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
 						Header,
-						{ style: { color: "white" } },
-						external__react__default.a.createElement(
+						{ style: { color: "white" }, __source: {
+								fileName: _jsxFileName,
+								lineNumber: 111
+							}
+						},
+						__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
 							'div',
-							{ className: 'logo' },
+							{ className: 'logo', __source: {
+									fileName: _jsxFileName,
+									lineNumber: 112
+								}
+							},
 							'SSR demo'
 						),
-						external__react__default.a.createElement(
-							external__antd_["Menu"],
+						__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+							__WEBPACK_IMPORTED_MODULE_5_antd__["Menu"],
 							{
 								theme: 'dark',
 								mode: 'horizontal',
 								selectedKeys: ['1'],
-								style: { lineHeight: '64px' }
+								style: { lineHeight: '64px' },
+								__source: {
+									fileName: _jsxFileName,
+									lineNumber: 113
+								}
 							},
-							external__react__default.a.createElement(
-								external__antd_["Menu"].Item,
-								{ key: '1' },
+							__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+								__WEBPACK_IMPORTED_MODULE_5_antd__["Menu"].Item,
+								{ key: '1', __source: {
+										fileName: _jsxFileName,
+										lineNumber: 119
+									}
+								},
 								'\u53D8\u5316\u7684\u6570\u636E'
 							),
-							external__react__default.a.createElement(
-								external__antd_["Menu"].Item,
-								{ key: '2' },
-								external__react__default.a.createElement(
-									link__default.a,
-									{ href: '/about', replace: true },
-									external__react__default.a.createElement(
+							__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+								__WEBPACK_IMPORTED_MODULE_5_antd__["Menu"].Item,
+								{ key: '2', __source: {
+										fileName: _jsxFileName,
+										lineNumber: 120
+									}
+								},
+								__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+									__WEBPACK_IMPORTED_MODULE_8_next_link___default.a,
+									{ href: '/about', replace: true, __source: {
+											fileName: _jsxFileName,
+											lineNumber: 120
+										}
+									},
+									__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
 										'a',
-										null,
+										{
+											__source: {
+												fileName: _jsxFileName,
+												lineNumber: 120
+											}
+										},
 										'\u4E0D\u53D8\u5316\u7684\u6570\u636E'
 									)
 								)
 							)
 						)
+					),
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+						Content,
+						{
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 124
+							}
+						},
+						__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+							'div',
+							{ style: { background: '#ECECEC', padding: '30px' }, __source: {
+									fileName: _jsxFileName,
+									lineNumber: 126
+								}
+							},
+							__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+								__WEBPACK_IMPORTED_MODULE_5_antd__["Card"],
+								{ title: '\u5237\u65B0\u6216\u5F3A\u5237\u540E\u7528\u6237\u65E0\u611F\u77E5\u7684\u6027\u80FD\u4F53\u9A8C(\u6709\u6570\u636E\u53D8\u5316)', bordered: false, __source: {
+										fileName: _jsxFileName,
+										lineNumber: 127
+									}
+								},
+								__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_antd__["Table"], {
+									columns: this.props.index.columns,
+									dataSource: this.props.index.tableData,
+									hoverable: true,
+									loading: this.props.index.loading,
+									pagination: pagination,
+									onChange: this.handleTableChange.bind(this),
+									__source: {
+										fileName: _jsxFileName,
+										lineNumber: 128
+									}
+								})
+							)
+						)
+					),
+					__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+						Footer,
+						{
+							__source: {
+								fileName: _jsxFileName,
+								lineNumber: 140
+							}
+						},
+						'Footer'
 					)
 				)
 			);
@@ -672,7 +773,7 @@ var pages_Index = function (_React$Component) {
 	}]);
 
 	return Index;
-}(external__react__default.a.Component);
+}(__WEBPACK_IMPORTED_MODULE_1_react___default.a.Component);
 
 //将state.counter绑定到props的counter
 
@@ -684,76 +785,145 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 //将action的所有方法绑定到props上
-var pages_mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	//全量
-	return Object(external__redux_["bindActionCreators"])(actions, dispatch);
+	return Object(__WEBPACK_IMPORTED_MODULE_6_redux__["bindActionCreators"])(__WEBPACK_IMPORTED_MODULE_11__actions__, dispatch);
 };
 
-pages_Index = Object(external__react_redux_["connect"])(mapStateToProps, pages_mapDispatchToProps)(pages_Index);
+Index = Object(__WEBPACK_IMPORTED_MODULE_4_react_redux__["connect"])(mapStateToProps, mapDispatchToProps)(Index);
 
-pages_Index = external__next_redux_wrapper__default()(store_initializeStore)(pages_Index);
+Index = __WEBPACK_IMPORTED_MODULE_2_next_redux_wrapper___default()(__WEBPACK_IMPORTED_MODULE_10__store_initializeStore__["a" /* default */])(Index);
 
-/* harmony default export */ var pages = __webpack_exports__["default"] = (Object(router_["withRouter"])(pages_Index));
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = require("react");
+/* harmony default export */ __webpack_exports__["default"] = (Object(__WEBPACK_IMPORTED_MODULE_9_next_router__["withRouter"])(Index));
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
 
-module.exports = require("next-redux-wrapper");
+/***/ "./store/initializeStore.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__("redux");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_redux__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_devtools_extension__ = __webpack_require__("redux-devtools-extension");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_redux_devtools_extension___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_redux_devtools_extension__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_redux_thunk__ = __webpack_require__("redux-thunk");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_redux_thunk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_redux_thunk__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_reducers__ = __webpack_require__("./modules/reducers.js");
+
+
+
+
+
+
+
+var middleware = [__WEBPACK_IMPORTED_MODULE_2_redux_thunk___default.a];
+
+var initializeStore = function initializeStore(initialState) {
+	return Object(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPACK_IMPORTED_MODULE_3__modules_reducers__["a" /* default */], initialState, Object(__WEBPACK_IMPORTED_MODULE_1_redux_devtools_extension__["composeWithDevTools"])(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"].apply(undefined, middleware)));
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (initializeStore);
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
 
-module.exports = require("react-redux");
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("./pages/index.js");
+
 
 /***/ }),
-/* 10 */
+
+/***/ "antd":
 /***/ (function(module, exports) {
 
 module.exports = require("antd");
 
 /***/ }),
-/* 11 */
+
+/***/ "babel-runtime/regenerator":
 /***/ (function(module, exports) {
 
-module.exports = require("next/head");
+module.exports = require("babel-runtime/regenerator");
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports) {
 
-module.exports = require("next/link");
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = require("next/router");
-
-/***/ }),
-/* 14 */
+/***/ "cookie-parser":
 /***/ (function(module, exports) {
 
 module.exports = require("cookie-parser");
 
 /***/ }),
-/* 15 */
+
+/***/ "isomorphic-unfetch":
+/***/ (function(module, exports) {
+
+module.exports = require("isomorphic-unfetch");
+
+/***/ }),
+
+/***/ "next-redux-wrapper":
+/***/ (function(module, exports) {
+
+module.exports = require("next-redux-wrapper");
+
+/***/ }),
+
+/***/ "next/head":
+/***/ (function(module, exports) {
+
+module.exports = require("next/head");
+
+/***/ }),
+
+/***/ "next/link":
+/***/ (function(module, exports) {
+
+module.exports = require("next/link");
+
+/***/ }),
+
+/***/ "next/router":
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
+
+/***/ }),
+
+/***/ "react":
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+
+/***/ "react-redux":
+/***/ (function(module, exports) {
+
+module.exports = require("react-redux");
+
+/***/ }),
+
+/***/ "redux":
+/***/ (function(module, exports) {
+
+module.exports = require("redux");
+
+/***/ }),
+
+/***/ "redux-devtools-extension":
 /***/ (function(module, exports) {
 
 module.exports = require("redux-devtools-extension");
 
 /***/ }),
-/* 16 */
+
+/***/ "redux-thunk":
 /***/ (function(module, exports) {
 
 module.exports = require("redux-thunk");
 
 /***/ })
-/******/ ]);
+
+/******/ });
+//# sourceMappingURL=index.js.map

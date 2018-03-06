@@ -42,16 +42,16 @@ class Index extends React.Component {
 		isServer
 	}) {
 
-		// console.log(11);
+		console.log(11);
 		// global.token = 'aaa';
 
-		// let data = store.getState();
+		let data = store.getState();
 
-		// let params = {
-		// 	limit: data.limit,
-		// 	offset: 1
-		// }
-		// await store.dispatch(actionCreators.getTables(params));
+		let params = {
+			limit: data.limit,
+			offset: 1
+		}
+		await store.dispatch(actionCreators.getTables(params));
 
 	}
 
@@ -67,7 +67,38 @@ class Index extends React.Component {
 		});
 
 	}
+
+	addKey(data, str) {
+		var arr = [];
+
+		data.map((v, k) => {
+			v.key = str + k;
+			arr.push(v);
+		});
+
+		return arr;
+	}
+
+	handleTableChange(pagination, filters, sorter) {
+		let params = {
+
+			offset: pagination.current,
+			limit: pagination.pageSize
+		}
+
+		this.props.getTables(params);
+	}
+
 	render() {
+
+		var pagination = {
+			current: this.props.index.offset,
+			pageSize: this.props.index.limit,
+			total: this.props.index.total
+		}
+
+		this.addKey(this.props.index.tableData, 'index' + new Date().getTime());
+
 		return (
 			<div>
 			    <Head>
@@ -90,7 +121,23 @@ class Index extends React.Component {
 				      </Menu>
 					</Header>
 
+					<Content>
 
+						<div style={{ background: '#ECECEC', padding: '30px' }}>
+						    <Card title="刷新或强刷后用户无感知的性能体验(有数据变化)" bordered={false}>
+								<Table 
+									columns={this.props.index.columns} 
+									dataSource={this.props.index.tableData} 
+									hoverable={true} 
+									loading={this.props.index.loading} 
+									pagination={pagination}
+									onChange={this.handleTableChange.bind(this)}
+								/>
+		  					</Card>
+	  					</div>
+						
+					</Content>
+					<Footer>Footer</Footer>
 
 				</Layout>
 			</div>
