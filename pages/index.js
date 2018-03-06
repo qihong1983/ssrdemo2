@@ -36,13 +36,13 @@ class Index extends React.Component {
 	}) {
 		// global.token = 'aaa';
 
-		let data = store.getState();
+		// let data = store.getState();
 
-		let params = {
-			limit: data.limit,
-			offset: 1
-		}
-		await store.dispatch(actionCreators.getTables(params));
+		// let params = {
+		// 	limit: data.limit,
+		// 	offset: 1
+		// }
+		// await store.dispatch(actionCreators.getTables(params));
 
 	}
 
