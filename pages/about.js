@@ -129,7 +129,7 @@ class About extends Component {
 					</Header>
 					<Content>
 						<div style={{ background: '#ECECEC', padding: '30px' }}>
-					    	<Card title="小洪（高级前端开发）" bordered={false}>
+					    	<Card title="小洪（高级前端架构师）" bordered={false}>
 								<Table 
 									columns={this.props.about.columns} 
 									dataSource={this.props.about.tableData} 
