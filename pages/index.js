@@ -25,6 +25,9 @@ import {
 
 import Head from 'next/head'; // 引入内置组件
 import Link from 'next/link';
+import {
+	withRouter
+} from 'next/router';
 
 const cookieParser = require("cookie-parser");
 
@@ -91,4 +94,21 @@ class Index extends React.Component {
 	}
 }
 
-export default Index;
+//将state.counter绑定到props的counter
+const mapStateToProps = (state) => {
+	return {
+		index: state.About
+	}
+};
+
+//将action的所有方法绑定到props上
+const mapDispatchToProps = (dispatch, ownProps) => {
+	//全量
+	// return bindActionCreators(actionCreators, dispatch);
+};
+
+Index = connect(mapStateToProps, mapDispatchToProps)(Index);
+
+Index = withRedux(initializeStore)(Index);
+
+export default withRouter(Index);
