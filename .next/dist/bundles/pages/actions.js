@@ -67,22 +67,15 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-module.exports = require("babel-runtime/regenerator");
-
-/***/ }),
-
-/***/ 16:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
@@ -94,7 +87,7 @@ module.exports = require("isomorphic-unfetch");
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103,19 +96,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inita", function() { return inita; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTables", function() { return getTables; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTablesNoData", function() { return getTablesNoData; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_isomorphic_unfetch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_isomorphic_unfetch__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_isomorphic_unfetch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_isomorphic_unfetch__);
 
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-
-
-var toQueryString = function toQueryString(obj) {
+const toQueryString = obj => {
 	return obj ? Object.keys(obj).sort().map(function (key) {
 		var val = obj[key];
 		if (Array.isArray(val)) {
@@ -127,7 +112,7 @@ var toQueryString = function toQueryString(obj) {
 	}).join('&') : '';
 };
 
-var inita = function inita(data) {
+const inita = data => {
 	return function (dispatch) {
 		dispatch({
 			type: "ADIMPRESSION_APPCODE",
@@ -136,210 +121,123 @@ var inita = function inita(data) {
 	};
 };
 
-var getTablesNoData = function getTablesNoData(data) {
-	return function () {
-		var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(dispatch) {
-			var _fetch;
+const getTablesNoData = data => {
+	return async function (dispatch) {
 
-			var res, json;
-			return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-				while (1) {
-					switch (_context.prev = _context.next) {
-						case 0:
-							_context.next = 2;
-							return dispatch({
-								type: "PAGE1_LOADING",
-								payload: true
-							});
+		await dispatch({
+			type: "PAGE1_LOADING",
+			payload: true
+		});
 
-						case 2:
+		dispatch({
+			type: "PAGE1_OFFSET",
+			payload: data.offset
+		});
 
-							dispatch({
-								type: "PAGE1_OFFSET",
-								payload: data.offset
-							});
+		dispatch({
+			type: "PAGE1_LIMIT",
+			payload: data.limit
+		});
 
-							dispatch({
-								type: "PAGE1_LIMIT",
-								payload: data.limit
-							});
+		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/tableNoChange", {
+			method: 'POST',
+			mode: 'cors',
+			cache: 'force-cache',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': 'Bearer xxx'
+			},
 
-							_context.next = 6;
-							return fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/tableNoChange", (_fetch = {
-								method: 'POST',
-								mode: 'cors',
-								cache: 'force-cache',
-								headers: {
-									'Content-Type': 'application/x-www-form-urlencoded',
-									'Authorization': 'Bearer xxx'
-								}
+			cache: 'default',
+			body: toQueryString(data)
+		});
 
-							}, _defineProperty(_fetch, 'cache', 'default'), _defineProperty(_fetch, 'body', toQueryString(data)), _fetch));
+		let json = await res.json();
 
-						case 6:
-							res = _context.sent;
-							_context.next = 9;
-							return res.json();
+		await dispatch({
+			type: "PAGE1_TABLEDATA",
+			payload: json.data
+		});
 
-						case 9:
-							json = _context.sent;
-							_context.next = 12;
-							return dispatch({
-								type: "PAGE1_TABLEDATA",
-								payload: json.data
-							});
+		await dispatch({
+			type: "PAGE1_TOTAL",
+			payload: json.total
+		});
 
-						case 12:
-							_context.next = 14;
-							return dispatch({
-								type: "PAGE1_TOTAL",
-								payload: json.total
-							});
-
-						case 14:
-							_context.next = 16;
-							return dispatch({
-								type: "PAGE1_LOADING",
-								payload: false
-							});
-
-						case 16:
-						case 'end':
-							return _context.stop();
-					}
-				}
-			}, _callee, this);
-		}));
-
-		return function (_x) {
-			return _ref.apply(this, arguments);
-		};
-	}();
+		await dispatch({
+			type: "PAGE1_LOADING",
+			payload: false
+		});
+	};
 };
 
-var getTables = function getTables(data) {
-	return function () {
-		var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(dispatch) {
-			var _fetch2;
+const getTables = data => {
+	return async function (dispatch) {
 
-			var res, json;
-			return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-				while (1) {
-					switch (_context2.prev = _context2.next) {
-						case 0:
-							_context2.next = 2;
-							return dispatch({
-								type: "PAGE1_LOADING",
-								payload: true
-							});
+		await dispatch({
+			type: "PAGE1_LOADING",
+			payload: true
+		});
 
-						case 2:
+		dispatch({
+			type: "PAGE1_OFFSET",
+			payload: data.offset
+		});
 
-							dispatch({
-								type: "PAGE1_OFFSET",
-								payload: data.offset
-							});
+		dispatch({
+			type: "PAGE1_LIMIT",
+			payload: data.limit
+		});
 
-							dispatch({
-								type: "PAGE1_LIMIT",
-								payload: data.limit
-							});
+		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
+			method: 'POST',
+			mode: 'cors',
+			cache: 'force-cache',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': 'Bearer xxx'
+			},
 
-							_context2.next = 6;
-							return fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", (_fetch2 = {
-								method: 'POST',
-								mode: 'cors',
-								cache: 'force-cache',
-								headers: {
-									'Content-Type': 'application/x-www-form-urlencoded',
-									'Authorization': 'Bearer xxx'
-								}
+			cache: 'default',
+			body: toQueryString(data)
+		});
 
-							}, _defineProperty(_fetch2, 'cache', 'default'), _defineProperty(_fetch2, 'body', toQueryString(data)), _fetch2));
+		let json = await res.json();
 
-						case 6:
-							res = _context2.sent;
-							_context2.next = 9;
-							return res.json();
+		await dispatch({
+			type: "PAGE1_TABLEDATA",
+			payload: json.data
+		});
 
-						case 9:
-							json = _context2.sent;
-							_context2.next = 12;
-							return dispatch({
-								type: "PAGE1_TABLEDATA",
-								payload: json.data
-							});
+		await dispatch({
+			type: "PAGE1_TOTAL",
+			payload: json.total
+		});
 
-						case 12:
-							_context2.next = 14;
-							return dispatch({
-								type: "PAGE1_TOTAL",
-								payload: json.total
-							});
-
-						case 14:
-							_context2.next = 16;
-							return dispatch({
-								type: "PAGE1_LOADING",
-								payload: false
-							});
-
-						case 16:
-						case 'end':
-							return _context2.stop();
-					}
-				}
-			}, _callee2, this);
-		}));
-
-		return function (_x2) {
-			return _ref2.apply(this, arguments);
-		};
-	}();
+		await dispatch({
+			type: "PAGE1_LOADING",
+			payload: false
+		});
+	};
 };
 
-var getCharts = function getCharts(data) {
-	return function () {
-		var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(dispatch) {
-			var res, json;
-			return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
-				while (1) {
-					switch (_context3.prev = _context3.next) {
-						case 0:
-							_context3.next = 2;
-							return fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/demo", {
-								method: 'GET',
-								mode: 'cors',
-								cache: 'default'
+const getCharts = data => {
+	return async function (dispatch) {
 
-							});
+		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/demo", {
+			method: 'GET',
+			mode: 'cors',
+			cache: 'default'
 
-						case 2:
-							res = _context3.sent;
-							_context3.next = 5;
-							return res.json();
+		});
 
-						case 5:
-							json = _context3.sent;
+		let json = await res.json();
 
-
-							dispatch({
-								type: "ADIMPRESSION_APPCODE",
-								payload: json.number2
-							});
-
-						case 7:
-						case 'end':
-							return _context3.stop();
-					}
-				}
-			}, _callee3, this);
-		}));
-
-		return function (_x3) {
-			return _ref3.apply(this, arguments);
-		};
-	}();
+		dispatch({
+			type: "ADIMPRESSION_APPCODE",
+			payload: json.number2
+		});
+	};
 };
 
 
