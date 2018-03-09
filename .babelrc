@@ -1,4 +1,4 @@
 {
 	"presets": ["react"],
-	"plugins":[["import", {"libraryName": "antd"}]]
+	"plugins":[["import", {"libraryName": "antd","style": true}]]
 }
