@@ -123,7 +123,7 @@ class About extends Component {
 				        selectedKeys={['2']}
 				        style={{ lineHeight: '64px' }}
 				      >
-				        <Menu.Item key="1"><Link href='/' replace><a>变化的数据</a></Link></Menu.Item>
+				        <Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
 				        <Menu.Item key="2">不变化的数据</Menu.Item>
 				      </Menu>
 					</Header>
@@ -141,7 +141,6 @@ class About extends Component {
 	  						</Card>
 	  					</div>
 			        </Content>
-
 	      		</Layout>
 	        </div>
 		)

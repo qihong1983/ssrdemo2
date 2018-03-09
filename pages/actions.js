@@ -109,6 +109,7 @@ const getTables = (data) => {
 		let json = await res.json();
 
 
+		console.log(22);
 		await dispatch({
 			type: "PAGE1_TABLEDATA",
 			payload: json.data
@@ -128,7 +129,6 @@ const getTables = (data) => {
 
 const getCharts = (data) => {
 	return async function(dispatch) {
-
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/demo", {
 			method: 'GET',
 			mode: 'cors',

@@ -118,7 +118,7 @@ class Index extends React.Component {
 				        style={{ lineHeight: '64px' }}
 				      >
 				        <Menu.Item key="1">变化的数据</Menu.Item>
-				        <Menu.Item key="2"><Link href='/about' replace><a>不变化的数据</a></Link></Menu.Item>
+				        <Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
 				      </Menu>
 					</Header>
 
