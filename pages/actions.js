@@ -111,6 +111,8 @@ const getTables = (data) => {
 
 		});
 
+		console.log(res);
+
 		let json = await res.json();
 
 
