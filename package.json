@@ -6,6 +6,7 @@
   "scripts": {
     "start": "next -p 8087",
     "build": "next build",
+    "export": "next export",
     "server": "next start -p 8087"
   },
   "keywords": [],
