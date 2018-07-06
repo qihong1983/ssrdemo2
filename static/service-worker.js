@@ -15,7 +15,7 @@ importScripts(
 workbox.precaching.precache(['./','./about/']);
 
  workbox.routing.registerRoute(
-    new RegExp("/5a2dca93e9ee5f7c09d8c6d7/(.*)"),
+    new RegExp("/mock/5a2dca93e9ee5f7c09d8c6d7/(.*)"),
    workbox.strategies.networkFirst()
 );
 
