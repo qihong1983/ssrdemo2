@@ -31,7 +31,7 @@ importScripts(
   );
 
 
-  workbox.routing.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
+  workbox.routing.registerRoute('https://www.easy-mock.com/(.*)',  workbox.strategies.networkFirst());
   
   // cache images
   workbox.routing.registerRoute(
