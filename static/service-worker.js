@@ -15,7 +15,7 @@ importScripts(
 workbox.precaching.precache(['./','./about/']);
 
  workbox.routing.registerRoute(
-    new RegExp("https://www.easy-mock.com/(.*)"),
+    new RegExp("https://www.easy-mock.com/*(.*)"),
    workbox.strategies.networkFirst()
 );
 
