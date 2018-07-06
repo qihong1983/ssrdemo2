@@ -1,0 +1,1 @@
+const withOffline = require('next-offline');
