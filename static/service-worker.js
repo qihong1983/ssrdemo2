@@ -16,7 +16,7 @@ importScripts(
 
 // cache HTML
  workbox.routing.registerRoute(
-   new RegExp('(.*)'),
+   new RegExp('(.html)'),
    workbox.strategies.staleWhileRevalidate({
     cacheName: "html-content"
    })
