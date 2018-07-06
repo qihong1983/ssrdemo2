@@ -111,7 +111,7 @@ const getTables = (data) => {
 
 		});
 
-		console.log(res);
+		console.log(res,'xxxx');
 
 		let json = await res.json();
 
