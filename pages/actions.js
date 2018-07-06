@@ -106,8 +106,8 @@ const getTables = (data) => {
 			body: toQueryString(data)
 		}).catch(function (error) {
 			console.log(error);
-			document.location.reload();
-			// alert('服务器出错');
+			// document.location.reload();
+			alert('服务器出错');
 
 		});
 
