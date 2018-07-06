@@ -93,7 +93,7 @@ const getTables = (data) => {
 			payload: data.limit
 		})
 		console.log(22233355566);
-		try {
+	
 			let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
 				method: 'POST',
 				mode: 'cors',
@@ -106,6 +106,11 @@ const getTables = (data) => {
 				cache: 'default',
 				body: toQueryString(data)
 			})
+			try {
+			
+			} catch(e) {
+				console.log('error');
+			}
 
 			console.log(res);
 
@@ -127,9 +132,7 @@ const getTables = (data) => {
 				type: "PAGE1_LOADING",
 				payload: false
 			})
-		} catch(e) {
-			console.log('error');
-		}
+
 	}
 }
 
