@@ -30,8 +30,15 @@ importScripts(
     })
   );
 
+  // cache bundles
+  workbox.routing.registerRoute(
+    new RegExp("https://www.easy-mock.com/(.*)"),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "fetch-content"
+    })
+  );
 
-  workbox.routing.registerRoute('https://www.easy-mock.com/(.*)',  workbox.strategies.networkFirst());
+  // workbox.routing.registerRoute('https://www.easy-mock.com/(.*)',  workbox.strategies.networkFirst());
   
   // cache images
   workbox.routing.registerRoute(
