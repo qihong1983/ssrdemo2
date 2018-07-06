@@ -16,7 +16,7 @@ importScripts(
 
 // cache HTML
  workbox.routing.registerRoute(
-   new RegExp('(.html)'),
+   new RegExp('./$'),
    workbox.strategies.staleWhileRevalidate({
     cacheName: "html-content"
    })
@@ -29,6 +29,9 @@ importScripts(
       cacheName: "bundled-content"
     })
   );
+
+
+  workbox.routing.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
   
   // cache images
   workbox.routing.registerRoute(
