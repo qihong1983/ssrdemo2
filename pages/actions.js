@@ -93,44 +93,43 @@ const getTables = (data) => {
 			payload: data.limit
 		})
 		console.log(22233355566);
-		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
-			method: 'POST',
-			mode: 'cors',
-			cache: 'force-cache',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'Authorization': 'Bearer xxx'
-			},
+		try {
+			let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
+				method: 'POST',
+				mode: 'cors',
+				cache: 'force-cache',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Authorization': 'Bearer xxx'
+				},
 
-			cache: 'default',
-			body: toQueryString(data)
-		}).catch(function (error) {
-			console.log(error);
-			// document.location.reload();
-			alert('服务器出错');
+				cache: 'default',
+				body: toQueryString(data)
+			})
 
-		});
+			console.log(res);
 
-		console.log(res);
-
-		let json = await res.json();
+			let json = await res.json();
 
 
-		console.log(22);
-		await dispatch({
-			type: "PAGE1_TABLEDATA",
-			payload: json.data
-		})
+			console.log(22);
+			await dispatch({
+				type: "PAGE1_TABLEDATA",
+				payload: json.data
+			})
 
-		await dispatch({
-			type: "PAGE1_TOTAL",
-			payload: json.total
-		})
+			await dispatch({
+				type: "PAGE1_TOTAL",
+				payload: json.total
+			})
 
-		await dispatch({
-			type: "PAGE1_LOADING",
-			payload: false
-		})
+			await dispatch({
+				type: "PAGE1_LOADING",
+				payload: false
+			})
+		} catch(e) {
+			console.log('error');
+		}
 	}
 }
 

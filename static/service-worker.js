@@ -14,7 +14,10 @@ importScripts(
 
 workbox.precaching.precache(['./','./about/']);
 
-
+ workbox.routing.registerRoute(
+    new RegExp("https://www.easy-mock.com/(.*)"),
+   workbox.strategies.networkFirst()
+);
 
 // cache HTML
  workbox.routing.registerRoute(
@@ -40,10 +43,7 @@ workbox.precaching.precache(['./','./about/']);
   //   })
   // );
 
-  workbox.routing.registerRoute(
-  new RegExp("https://www.easy-mock.com/(.*)"),
-  workbox.strategies.networkFirst()
-);
+ 
 
   // https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables
   // workbox.routing.registerRoute('https://www.easy-mock.com/(.*)',  workbox.strategies.networkFirst());  
