@@ -106,7 +106,9 @@ const getTables = (data) => {
 			body: toQueryString(data)
 		}).catch(function (error) {
 			console.log(error);
-			alert('服务器出错');
+			document.location.reload();
+			// alert('服务器出错');
+
 		});
 
 		let json = await res.json();
