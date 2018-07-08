@@ -42,7 +42,7 @@ const getTablesNoData = (data) => {
 
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/tableNoChange", {
 			method: 'POST',
-			mode: 'cors',
+			// mode: 'cors',
 			cache: 'force-cache',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
@@ -95,7 +95,7 @@ const getTables = (data) => {
 
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
 			method: 'POST',
-			mode: 'cors',
+			// mode: 'cors',
 			cache: 'force-cache',
 			type: 'fetch',
 			headers: {
@@ -132,7 +132,7 @@ const getCharts = (data) => {
 	return async function(dispatch) {
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/demo", {
 			method: 'GET',
-			mode: 'cors',
+			// mode: 'cors',
 			type: 'fetch',
 			cache: 'default'
 
