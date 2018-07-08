@@ -49,32 +49,32 @@ importScripts(
 
 
 
-const staticAssets = [
-  './'
-];
+// const staticAssets = [
+//   './'
+// ];
 
 
-const wb = new WorkboxSW();
+// const wb = new WorkboxSW();
 
-wb.precache(staticAssets);
+// wb.precache(staticAssets);
 
-wb.router.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
+// wb.router.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
 
 
-  wb.router.registerRoute(
-    new RegExp("/_next/(.*)"),
-    wb.strategies.staleWhileRevalidate({
-      cacheName: "bundled-content"
-    })
-  );
+//   wb.router.registerRoute(
+//     new RegExp("/_next/(.*)"),
+//     wb.strategies.staleWhileRevalidate({
+//       cacheName: "bundled-content"
+//     })
+//   );
 
-wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
-  cacheName: 'news-images',
-  cacheExpiration: {
-    maxEntries: 2,
-    maxAgeSeconds: 7 * 24 * 60 * 60,
-  },
-  cacheableResponse: {
-    statuses: [0, 200]
-  },
-}));
+// wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
+//   cacheName: 'news-images',
+//   cacheExpiration: {
+//     maxEntries: 2,
+//     maxAgeSeconds: 7 * 24 * 60 * 60,
+//   },
+//   cacheableResponse: {
+//     statuses: [0, 200]
+//   },
+// }));
