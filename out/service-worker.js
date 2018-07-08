@@ -51,8 +51,7 @@ importScripts(
 //importScripts('./node_modules/workbox-sw/build/importScripts/workbox-sw.prod.v2.1.3.js');
 
 const staticAssets = [
-  './',
-  '/about'
+  './'
 ];
 
 const wb = new WorkboxSW();
