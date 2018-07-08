@@ -48,8 +48,6 @@ importScripts(
   // workbox.googleAnalytics.initialize();
 
 
-importScripts('./node_modules/workbox-sw/build/importScripts/workbox-sw.prod.v2.1.3.js');
-
 const staticAssets = [
   './'
 ];
