@@ -52,16 +52,13 @@ importScripts(
 
 const staticAssets = [
   './',
-  './about'
+  '/about'
 ];
 
-//
-
 const wb = new WorkboxSW();
-
 wb.precache(staticAssets);
 
-wb.router.registerRoute('/mock/(.*)', wb.strategies.networkFirst());
+wb.router.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
 
 wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
   cacheName: 'news-images',
