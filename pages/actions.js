@@ -101,7 +101,6 @@ const getTables = (data) => {
 					'Content-Type': 'application/x-www-form-urlencoded',
 					'Authorization': 'Bearer xxx'
 				},
-
 				cache: 'default',
 				body: toQueryString(data)
 			})
