@@ -21,7 +21,7 @@ workbox.precaching.precache(['./','./about/']);
 
 // cache HTML
  workbox.routing.registerRoute(
-   new RegExp('./$'),
+   new RegExp('./(.*)'),
    workbox.strategies.staleWhileRevalidate({
     cacheName: "html-content"
    })

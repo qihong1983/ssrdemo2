@@ -64,7 +64,6 @@ const getTablesNoData = (data) => {
 			payload: json.total
 		})
 
-
 		await dispatch({
 			type: "PAGE1_LOADING",
 			payload: false
