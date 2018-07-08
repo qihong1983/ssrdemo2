@@ -61,7 +61,7 @@ const wb = new WorkboxSW();
 
 wb.precache(staticAssets);
 
-wb.router.registerRoute('www.easy-mock.com/(*)', wb.strategies.networkFirst());
+wb.router.registerRoute('www.easy-mock.com/(.*)', wb.strategies.networkFirst());
 
 wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
   cacheName: 'news-images',
