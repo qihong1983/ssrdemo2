@@ -48,7 +48,7 @@ const getTablesNoData = (data) => {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Authorization': 'Bearer xxx'
 			},
-
+			type: 'fetch',
 			cache: 'default',
 			body: toQueryString(data)
 		});
@@ -97,6 +97,7 @@ const getTables = (data) => {
 			method: 'POST',
 			mode: 'cors',
 			cache: 'force-cache',
+			type: 'fetch',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Authorization': 'Bearer xxx'
@@ -132,6 +133,7 @@ const getCharts = (data) => {
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/demo", {
 			method: 'GET',
 			mode: 'cors',
+			type: 'fetch',
 			cache: 'default'
 
 		});
