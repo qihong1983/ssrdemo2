@@ -105,7 +105,6 @@ const getTables = (data) => {
 				body: toQueryString(data)
 			})
 
-
 			let json = await res.json();
 
 
