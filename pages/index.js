@@ -62,6 +62,14 @@ class Index extends React.Component {
 
 	componentDidMount() {
 
+		let data = store.getState();
+
+		let params = {
+			limit: data.limit,
+			offset: 1
+		}
+		store.dispatch(actionCreators.getTables(params));
+
 		notification['success']({
 			message: 'SSR 秒开(有数据变化的)',
 			description: '用户刷新无感知性能体验',

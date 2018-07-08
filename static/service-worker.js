@@ -48,8 +48,11 @@ importScripts(
   // workbox.googleAnalytics.initialize();
 
 
+//importScripts('./node_modules/workbox-sw/build/importScripts/workbox-sw.prod.v2.1.3.js');
+
 const staticAssets = [
-  './'
+  './',
+  './about'
 ];
 
 //
@@ -59,31 +62,6 @@ const wb = new WorkboxSW();
 wb.precache(staticAssets);
 
 wb.router.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
-
-  // cache bundles
-  wb.router.registerRoute(
-    new RegExp("/_next/(.*)"),
-    wb.strategies.staleWhileRevalidate({
-      cacheName: "bundled-content"
-    })
-  );
-
-
-
-  // cache images
-  wb.router.registerRoute(
-    new RegExp("/static/(.*)"),
-    wb.strategies.cacheFirst({
-      cacheName: "images",
-      plugins: [
-        new workbox.expiration.Plugin({
-          maxEntries: 60,
-          maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
-        })
-      ]
-    })
-  );
-
 
 wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
   cacheName: 'news-images',
