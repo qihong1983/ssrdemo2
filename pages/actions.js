@@ -43,13 +43,14 @@ const getTablesNoData = (data) => {
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/tableNoChange", {
 			method: 'POST',
 			// mode: 'cors',
-			cache: 'force-cache',
+			// cache: 'force-cache',
 			headers: {
+				'Cache-Control': 'no-cache',
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Authorization': 'Bearer xxx'
 			},
 			type: 'fetch',
-			cache: 'default',
+			// cache: 'default',
 			body: toQueryString(data)
 		});
 
@@ -96,14 +97,16 @@ const getTables = (data) => {
 		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
 			method: 'POST',
 			// mode: 'cors',
-			cache: 'force-cache',
+			// cache: 'force-cache',
 			type: 'fetch',
 			headers: {
+				'Cache-Control': 'no-cache',
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Authorization': 'Bearer xxx'
 			},
 
-			cache: 'default',
+			// cache: 'default',
+			// body: toQueryString(data)
 			body: toQueryString(data)
 		});
 
