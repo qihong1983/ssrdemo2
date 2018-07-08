@@ -40,7 +40,7 @@ const getTablesNoData = (data) => {
 			payload: data.limit
 		})
 
-		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/tableNoChange", {
+		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/tableNoChange?p="+data.offset, {
 			method: 'GET',
 			// mode: 'cors',
 			// cache: 'force-cache',
@@ -94,7 +94,7 @@ const getTables = (data) => {
 			payload: data.limit
 		})
 
-		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables", {
+		let res = await fetch("https://www.easy-mock.com/mock/5a2dca93e9ee5f7c09d8c6d7/Aaa/nextDemoTables?p="+data.offset, {
 			method: 'GET',
 			// mode: 'cors',
 			// cache: 'force-cache',
