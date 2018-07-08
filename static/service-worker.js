@@ -60,7 +60,7 @@ wb.precache(staticAssets);
 
 wb.router.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
 
-wb.router.registerRoute('/(.*)', wb.strategies.networkFirst());
+wb.router.registerRoute('/(.*)', wb.strategies.cacheFirst());
 
 wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
   cacheName: 'news-images',
