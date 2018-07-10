@@ -147,7 +147,7 @@ class About extends Component {
 					</Header>
 					<Content>
 						<div style={{ background: '#f2f2f2', padding: '30px' }}>
-					    	<Card title="SSR刷新后用户无感知的性能体验、PWA其中被访问过后的页面断网后依然能访问" bordered={false}>
+					    	<Card title="SSR刷新后用户无感知的性能体验、PWA其中被访问过后的页面断网后依然能访问(用chrome或firefox打开)" bordered={false}>
 								<Table 
 									columns={this.props.about.columns} 
 									dataSource={this.props.about.tableData} 
