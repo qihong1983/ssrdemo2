@@ -31,3 +31,4 @@
  	- 私有数据用jwt
 - pwa 
 	- 必需是https的 
+	- https://github.com/qihong1983/doc/wiki/PWA-(Progressive-Web-Apps)-%E4%BB%B7%E5%80%BC%E7%82%B9
