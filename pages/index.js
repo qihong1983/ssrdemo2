@@ -24,6 +24,8 @@ import {
 	bindActionCreators
 } from 'redux';
 
+import NProgress from 'nprogress';
+
 import Head from 'next/head'; // 引入内置组件
 import Link from 'next/link';
 import {
@@ -43,6 +45,9 @@ class Index extends React.Component {
 		isServer
 	}) {
 
+		if (isServer == false) {
+			NProgress.start();
+		}
 		console.log(11);
 		// global.token = 'aaa';
 
@@ -60,8 +65,18 @@ class Index extends React.Component {
 		super(props);
 	}
 
-	componentDidMount() {
 
+	componentWillMount() {
+
+
+		
+
+	}
+
+	componentDidMount() {
+		if (document != undefined) {
+		 NProgress.done();
+		}
 		
 		notification['success']({
 			message: 'SSR 秒开(有数据变化的)',
@@ -107,11 +122,10 @@ class Index extends React.Component {
 					<title>变化的数据</title>
 					<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
 					<link rel="stylesheet" href="/static/antd.css" />
-					<link rel="stylesheet" href="/static/demo.css" />
 				</Head>
 				<Layout>
 					<Header style={{color:"white"}}>
-					<div className="logo" >SSR demo</div>
+					<div className="logo" >SSR+PWA DEMO</div>
 				      <Menu
 				        theme="dark"
 				        mode="horizontal"
@@ -125,8 +139,8 @@ class Index extends React.Component {
 
 					<Content>
 
-						<div style={{ background: '#ECECEC', padding: '30px' }}>
-						    <Card title="小洪（高级前端架构师）" bordered={false}>
+						<div style={{ background: '#f2f2f2',padding: '30px' }}>
+						    <Card title="SSR刷新后用户无感知的性能体验、PWA其中被访问过后的页面断网后依然能访问" bordered={false}>
 								<Table 
 									columns={this.props.index.columns} 
 									dataSource={this.props.index.tableData} 

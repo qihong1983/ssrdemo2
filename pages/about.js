@@ -24,6 +24,10 @@ const {
 import Head from 'next/head'; // 引入内置组件
 import Link from 'next/link';
 
+
+
+import NProgress from 'nprogress';
+
 import {
 	withRouter
 } from 'next/router';
@@ -52,6 +56,10 @@ class About extends Component {
 		store,
 		isServer
 	}) {
+
+		if (isServer == false) {
+			NProgress.start();
+		}
 		let data = store.getState();
 
 		let params = {
@@ -66,7 +74,18 @@ class About extends Component {
 		super(props);
 	}
 
+	componentWillMount() {
+
+		
+	}
+
 	componentDidMount() {
+
+		// NProgress.done();
+
+		if (document !== undefined) {
+			NProgress.done();
+		}
 
 		notification['success']({
 			message: 'SSR 秒开（无数据变化的）',
@@ -112,11 +131,10 @@ class About extends Component {
 	         		<title>不变化的数据</title>
 	         		<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
 	      			<link rel="stylesheet" href="/static/antd.css" />
-	      			<link rel="stylesheet" href="/static/demo.css" />
 	      		</Head>
 	      		<Layout>
 	      			<Header style={{color:"white"}}>
-						<div className="logo" >SSR demo</div>
+						<div className="logo" >SSR+PWA DEMO</div>
 				      <Menu
 				        theme="dark"
 				        mode="horizontal"
@@ -128,8 +146,8 @@ class About extends Component {
 				      </Menu>
 					</Header>
 					<Content>
-						<div style={{ background: '#ECECEC', padding: '30px' }}>
-					    	<Card title="小洪（高级前端架构师）" bordered={false}>
+						<div style={{ background: '#f2f2f2', padding: '30px' }}>
+					    	<Card title="SSR刷新后用户无感知的性能体验、PWA其中被访问过后的页面断网后依然能访问" bordered={false}>
 								<Table 
 									columns={this.props.about.columns} 
 									dataSource={this.props.about.tableData} 
