@@ -1,76 +1,27 @@
-//importScripts(
- // "https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js"
-//);
-importScripts(
-  "/workbox-sw.js"
-);
+self.__precacheManifest = [{"url":"/_next/fa1b56b4-1d4d-404e-a125-19d470308316/page/_error.js","revision":"fa1b56b4-1d4d-404e-a125-19d470308316"},{"url":"/_next/fa1b56b4-1d4d-404e-a125-19d470308316/page/about.js","revision":"fa1b56b4-1d4d-404e-a125-19d470308316"},{"url":"/_next/fa1b56b4-1d4d-404e-a125-19d470308316/page/actions.js","revision":"fa1b56b4-1d4d-404e-a125-19d470308316"},{"url":"/_next/fa1b56b4-1d4d-404e-a125-19d470308316/page/index.js","revision":"fa1b56b4-1d4d-404e-a125-19d470308316"}];
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
 
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js");
 
+/**
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-//importScripts('/workbox-sw.prod.v2.1.3.js');
-
-
-//workbox.precache(['./']);
-
-//workbox.precaching.precache(['./']);
-
-// cache HTML
- // workbox.routing.registerRoute(
- //   new RegExp('(.*)'),
- //   workbox.strategies.staleWhileRevalidate({
- //    cacheName: "html-content"
- //   })
- //  );
-
-  // cache bundles
-  // workbox.routing.registerRoute(
-  //   new RegExp("/_next/(.*)"),
-  //   workbox.strategies.staleWhileRevalidate({
-  //     cacheName: "bundled-content"
-  //   })
-  // );
-  
-  // cache images
-  // workbox.routing.registerRoute(
-  //   new RegExp("/static/(.*)"),
-  //   workbox.strategies.cacheFirst({
-  //     cacheName: "images",
-  //     plugins: [
-  //       new workbox.expiration.Plugin({
-  //         maxEntries: 60,
-  //         maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
-  //       })
-  //     ]
-  //   })
-  // );
-  
-  // offline analytics
-  // workbox.googleAnalytics.initialize();
-
-
-//importScripts('./node_modules/workbox-sw/build/importScripts/workbox-sw.prod.v2.1.3.js');
-
-const staticAssets = [
-  './',
-  '/about/'
-];
-
-const wb = new WorkboxSW();
-wb.precache(staticAssets);
-
-wb.router.registerRoute('https://www.easy-mock.com/(.*)', wb.strategies.networkFirst());
-
-wb.router.registerRoute('/(.*)', wb.strategies.networkFirst());
-
-wb.router.registerRoute(/.*\.(png|jpg|jpeg|gif)/, wb.strategies.cacheFirst({
-  cacheName: 'news-images',
-  cacheExpiration: {
-    maxEntries: 2,
-    maxAgeSeconds: 7 * 24 * 60 * 60,
-  },
-  cacheableResponse: {
-    statuses: [0, 200]
-  },
-}));
-
-
+workbox.routing.registerRoute(/(.*)/, workbox.strategies.cacheFirst(), 'GET');
+workbox.routing.registerRoute(/api/, workbox.strategies.networkFirst({ plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200],"headers":{"x-test":"true"}})] }), 'GET');

@@ -7,7 +7,7 @@
     "start": "next -p 8087",
     "build": "next build",
     "export": "next export && cp -rvf static/service-worker.js out && cp -rvf static/manifest.json out && cp -rvf static/workbox-sw.js out",
-    "server": "next build && next start -p 8087"
+    "server": "next build && next export && next start -p 8087"
   },
   "keywords": [],
   "author": "",
