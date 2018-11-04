@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
                 <Head>
                     { nextStyle.tag }
                     <link rel="manifest" href="/static/manifest.json" />
-    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet" />
+    <link href="/static/nprogress.min.css" rel="stylesheet" />
     
                     <link rel="stylesheet" href="/static/demo.css" />
 
