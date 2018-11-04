@@ -131,7 +131,6 @@ class About extends Component {
 	         		<title>不变化的数据</title>
 	         		<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
 	      			<link rel="stylesheet" href="/static/antd.css" />
-	      			<link rel="stylesheet" href="/static/textToVideo.css" />
 	      			
 	      		</Head>
 	      		<Layout>
