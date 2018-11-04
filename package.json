@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "next -p 8087",
+    "dev": "next -p 8087",
     "build": "next build",
     "export": "next export && cp -rvf static/service-worker.js out && cp -rvf static/manifest.json out && cp -rvf static/workbox-sw.js out",
     "start": "next build && next start -p 8087",
-    "dev": "NODE_ENV=production node server.js"
+    "dev-node": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
