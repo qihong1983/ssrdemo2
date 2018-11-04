@@ -6,7 +6,7 @@
 
 const _self = this;
 const HOST_NAME = location.host;
-const VERSION_NAME = 'CACHE-v4';
+const VERSION_NAME = 'CACHE-v3';
 const CACHE_NAME = HOST_NAME + '-' + VERSION_NAME;
 const CACHE_HOST = [HOST_NAME, 'cdn.bootcss.com'];
 const SUBSCRIBE_API = '/publish/subscribe';
@@ -129,7 +129,6 @@ const handleFetchRequest = function(req) {
 };
 
 const onFetch = function(event) {
-	debugger;
 	event.respondWith(handleFetchRequest(event.request));
 };
 
@@ -192,14 +191,10 @@ _self.addEventListener('activate', onActive);
 
 _self.addEventListener('message', onMessage);
 
-// _self.addEventListener('fetch', onFetch);
+_self.addEventListener('fetch', onFetch);
 
-_self.addEventListener('fetch', function(event) {
-	console.log('1111');
-});
+_self.addEventListener('push', onPush);
 
-// _self.addEventListener('push', onPush);
+_self.addEventListener('notificationclick', onNotificationClick);
 
-// _self.addEventListener('notificationclick', onNotificationClick);
-
-// _self.addEventListener('pushsubscriptionchange', onPushSubscriptionChange);
+_self.addEventListener('pushsubscriptionchange', onPushSubscriptionChange);

@@ -29,3 +29,7 @@ module.exports = withOffline({
     }]
   }
 });
+
+// module.exports = {
+//   generateEtags: false
+// }

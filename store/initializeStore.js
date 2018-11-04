@@ -10,6 +10,7 @@ import {
 import thunk from 'redux-thunk';
 import reducer from '../modules/reducers';
 
+
 const middleware = [thunk];
 
 const initializeStore = initialState => {

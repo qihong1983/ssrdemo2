@@ -15,6 +15,8 @@ export default class MyDocument extends Document {
             nextStyle
         } = this.props;
 
+
+
         return (
             <html>
                 <Head>
@@ -23,6 +25,7 @@ export default class MyDocument extends Document {
     <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet" />
     
                     <link rel="stylesheet" href="/static/demo.css" />
+
                 </Head>
                 <body>
                     <Main />
@@ -35,7 +38,7 @@ export default class MyDocument extends Document {
 
 MyDocument.getInitialProps = function(ctx) {
 
-    console.log(ctx);
+    // console.log(ctx);
     const props = Document.getInitialProps(ctx);
 
     props.nextStyle = flush();

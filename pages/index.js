@@ -69,21 +69,34 @@ class Index extends React.Component {
 	componentWillMount() {
 
 
-		
 
 	}
 
 	componentDidMount() {
 		if (document != undefined) {
-		 NProgress.done();
+			NProgress.done();
 		}
-		
+
 		notification['success']({
 			message: 'SSR 秒开(有数据变化的)',
 			description: '用户刷新无感知性能体验',
 		});
 
+
+		if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
+			if (window.location.href.indexOf("?mobile") < 0) {
+				try {
+					if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+						// window.location.href = "http://shipei.qq.com/index.htm";
+						window.location.href = "https://m.youyong.ba";
+					} else if (/iPad/i.test(navigator.userAgent)) {
+						window.location.href = "https://m.youyong.ba";
+					}
+				} catch (e) {}
+			}
+		}
 	}
+
 
 	addKey(data, str) {
 		var arr = [];
@@ -125,7 +138,7 @@ class Index extends React.Component {
 				</Head>
 				<Layout>
 					<Header style={{color:"white"}}>
-					<div className="logo" >SSR+PWA DEMO</div>
+					<div className="logo" >SSR DEMO</div>
 				      <Menu
 				        theme="dark"
 				        mode="horizontal"
@@ -140,7 +153,7 @@ class Index extends React.Component {
 					<Content>
 
 						<div style={{ background: '#f2f2f2',padding: '30px' }}>
-						    <Card title="SSR刷新后用户无感知的性能体验、PWA其中被访问过后的页面断网后依然能访问(用chrome或firefox打开)" bordered={false}>
+						    <Card title="SSR刷新后用户无感知的性能体验(用chrome或firefox打开)" bordered={false}>
 								<Table 
 									columns={this.props.index.columns} 
 									dataSource={this.props.index.tableData} 
