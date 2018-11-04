@@ -147,6 +147,7 @@ class Index extends React.Component {
 				      >
 				        <Menu.Item key="1">变化的数据</Menu.Item>
 				        <Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
+				        <Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音</a></Link></Menu.Item>
 				      </Menu>
 					</Header>
 

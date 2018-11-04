@@ -11,7 +11,12 @@ import {
 	Table,
 	Card,
 	Menu,
-	notification
+	notification,
+	Form,
+	Icon,
+	Input,
+	Button,
+	Checkbox
 } from 'antd';
 const {
 	Header,
@@ -46,11 +51,18 @@ import {
 import initializeStore from '../store/initializeStore';
 import * as actionCreators from './actions';
 
+const FormItem = Form.Item;
+
+
+const {
+	TextArea
+} = Input;
+
 /**
  * 引入公共文件结束
  */
 
-class About extends Component {
+class TextToVideo extends Component {
 	static async getInitialProps({
 		query,
 		store,
@@ -72,6 +84,10 @@ class About extends Component {
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			utterThis: null
+		}
 	}
 
 	componentWillMount() {
@@ -115,7 +131,28 @@ class About extends Component {
 		this.props.getTablesNoData(params);
 	}
 
+
+	handleSubmit(e) {
+		e.preventDefault();
+		this.props.form.validateFields((err, values) => {
+			if (!err) {
+				this.setState({
+					utterThis: new window.SpeechSynthesisUtterance(values.text)
+				}, () => {
+					window.speechSynthesis.speak(this.state.utterThis);
+				});
+			}
+		});
+	}
+
+	pauseBtn(e) {
+		// window.speechSynthesis.pause(this.state.utterThis);
+	}
+
 	render() {
+		const {
+			getFieldDecorator
+		} = this.props.form;
 
 		var pagination = {
 			current: this.props.about.offset,
@@ -131,8 +168,7 @@ class About extends Component {
 	         		<title>不变化的数据</title>
 	         		<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
 	      			<link rel="stylesheet" href="/static/antd.css" />
-	      			<link rel="stylesheet" href="/static/textToVideo.css" />
-	      			
+	      			<link rel="stylesheet" href="/static/TextToVideo.css" />
 	      		</Head>
 	      		<Layout>
 	      			<Header style={{color:"white"}}>
@@ -140,26 +176,34 @@ class About extends Component {
 				      <Menu
 				        theme="dark"
 				        mode="horizontal"
-				        selectedKeys={['2']}
+				        selectedKeys={['3']}
 				        style={{ lineHeight: '64px' }}
 				      >
 				        <Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
-				        <Menu.Item key="2">不变化的数据</Menu.Item>
-				        <Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音</a></Link></Menu.Item>
+				        <Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
+				        <Menu.Item key="3">文字转语音</Menu.Item>
 				      </Menu>
 					</Header>
 					<Content>
 						<div style={{ background: '#f2f2f2', padding: '30px' }}>
-					    	<Card title="SSR刷新后用户无感知的性能体验(用chrome或firefox打开)" bordered={false}>
-								<Table 
-									columns={this.props.about.columns} 
-									dataSource={this.props.about.tableData} 
-									hoverable={true} 
-									loading={this.props.about.loading} 
-									pagination={pagination}
-									onChange={this.handleTableChange.bind(this)}
-								/>
-	  						</Card>
+					    	<Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+						        <FormItem>
+						          {getFieldDecorator('text', {
+						            rules: [{ required: true, message: '必填项' }],
+						          })(
+						             <TextArea placeholder="在这里粘贴要语音播报的文字" autosize={{ minRows: 2, maxRows: 6 }}  />
+						          )}
+						        </FormItem>
+						        
+						        <FormItem>
+						          
+						          <Button type="primary" htmlType="submit" className="login-form-button" style={{marginRight: "10px"}}>
+						            播放
+						          </Button>
+
+						         
+						        </FormItem>
+						      </Form>
 	  					</div>
 			        </Content>
 	      		</Layout>
@@ -167,6 +211,8 @@ class About extends Component {
 		)
 	}
 }
+
+TextToVideo = Form.create()(TextToVideo);
 
 //将state.counter绑定到props的counter
 const mapStateToProps = (state) => {
@@ -181,8 +227,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return bindActionCreators(actionCreators, dispatch);
 };
 
-About = connect(mapStateToProps, mapDispatchToProps)(About);
+TextToVideo = connect(mapStateToProps, mapDispatchToProps)(TextToVideo);
 
-About = withRedux(initializeStore)(About);
+TextToVideo = withRedux(initializeStore)(TextToVideo);
 
-export default withRouter(About);
+export default withRouter(TextToVideo);
