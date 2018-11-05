@@ -146,9 +146,18 @@ class TextToVideo extends Component {
 	}
 
 	pauseBtn(e) {
-		// window.speechSynthesis.pause(this.state.utterThis);
+		window.speechSynthesis.pause();
 	}
 
+
+	resumeBtn(e) {
+		window.speechSynthesis.resume();
+	}
+
+	stopBtn(e) {
+		window.speechSynthesis.cancel();
+
+	}
 	render() {
 		const {
 			getFieldDecorator
@@ -168,7 +177,7 @@ class TextToVideo extends Component {
 	         		<title>不变化的数据</title>
 	         		<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
 	      			<link rel="stylesheet" href="/static/antd.css" />
-	      			<link rel="stylesheet" href="/static/textToVideo.css" />
+	      			<link rel="stylesheet" href="/static/TextToVideo.css" />
 	      		</Head>
 	      		<Layout>
 	      			<Header style={{color:"white"}}>
@@ -201,7 +210,18 @@ class TextToVideo extends Component {
 						            播放
 						          </Button>
 
-						         
+						          <Button onClick={this.pauseBtn.bind(this)} className="login-form-button">
+						            暂停
+						          </Button>
+
+
+						          <Button onClick={this.resumeBtn.bind(this)} className="login-form-button">
+						            继续
+						          </Button>
+
+						          <Button onClick={this.stopBtn.bind(this)}  className="login-form-button">
+						            停止
+						          </Button>
 						        </FormItem>
 						      </Form>
 	  					</div>

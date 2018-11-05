@@ -27,8 +27,13 @@
     border-color: #cc553d;
 }
 
+.ant-btn{
+	margin-right:10px;
+}
+
 .ant-btn:focus, .ant-btn:hover {
 	    color: #e56045;
     background-color: #fff;
     border-color: #e56045;
+    margin-right:10px;
 }
