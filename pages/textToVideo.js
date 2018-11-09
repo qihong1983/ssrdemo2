@@ -16,6 +16,7 @@ import {
 	Icon,
 	Input,
 	Button,
+	Divider,
 	Checkbox
 } from 'antd';
 const {
@@ -25,6 +26,7 @@ const {
 	Content
 } = Layout;
 
+import ReactAudioPlayer from 'react-audio-player';
 
 import Head from 'next/head'; // 引入内置组件
 import Link from 'next/link';
@@ -86,7 +88,8 @@ class TextToVideo extends Component {
 		super(props);
 
 		this.state = {
-			utterThis: null
+			utterThis: null,
+			audio: "https://api.youyong.ba/default.wav"
 		}
 	}
 
@@ -134,7 +137,7 @@ class TextToVideo extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		this.props.form.validateFields((err, values) => {
+		this.props.form.validateFields(['text'], (err, values) => {
 			if (!err) {
 				this.setState({
 					utterThis: new window.SpeechSynthesisUtterance(values.text)
@@ -158,10 +161,48 @@ class TextToVideo extends Component {
 		window.speechSynthesis.cancel();
 
 	}
+
+	handleSubmit1(e) {
+		e.preventDefault();
+		this.props.form.validateFields(['title2', 'text2'], async (err, values) => {
+			if (!err) {
+
+				console.log(values.text2, 'values.text2');
+				console.log(values)
+
+
+				let res = await fetch("https://api.youyong.ba/textToAudio?title=" + values.title2 + "&text=" + values.text2, {
+					method: 'GET',
+					// mode: 'cors',
+					// cache: 'force-cache',
+					headers: {
+						'Cache-Control': 'no-cache',
+						'Content-Type': 'application/x-www-form-urlencoded',
+						'Authorization': 'Bearer xxx'
+					},
+					type: 'fetch'
+					// cache: 'default',
+					// body: toQueryString(data)
+				});
+
+				let json = await res.json();
+				console.log(json);
+
+				this.setState({
+					"audio": json.data
+				})
+
+			}
+		});
+	}
+
+
 	render() {
 		const {
 			getFieldDecorator
 		} = this.props.form;
+
+		console.log(this.props, 'this.props');
 
 		var pagination = {
 			current: this.props.about.offset,
@@ -222,8 +263,43 @@ class TextToVideo extends Component {
 						          <Button onClick={this.stopBtn.bind(this)}  className="login-form-button">
 						            停止
 						          </Button>
+						        </FormItem>{/*
+						        <input type="text" x-webkit-speech lang="ch-CN"  x-webkit-grammar="bUIltin:search"                      
+      onwebkitspeechchange="foo()"/>*/}
+						      </Form>
+		<Divider dashed style={{background:"#cccccc"}}/>
+						      <Form onSubmit={this.handleSubmit1.bind(this)} className="login-form">
+						        <FormItem style={{margin:0}}>
+						          <strong>只支持500个汉字，1000个字节</strong>
+						        </FormItem>
+						         <FormItem>
+						          {getFieldDecorator('title2', {
+						            rules: [{ required: true, message: '必填项' }],
+						          })(
+						             <Input placeholder="这里填写语音文件名称"   />
+						          )}
+						        </FormItem>
+						        <FormItem>
+						          {getFieldDecorator('text2', {
+						            rules: [{ required: true, message: '必填项' }],
+						          })(
+						             <TextArea placeholder="接口方式--在这里粘贴要语音播报的文字" autosize={{ minRows: 2, maxRows: 6 }}  />
+						          )}
+						        </FormItem>
+						        <FormItem>
+						        <ReactAudioPlayer
+								  src={this.state.audio}
+								  autoPlay
+								  controls
+								/>
+						        </FormItem>
+						        <FormItem>
+						        	<Button type="primary" htmlType="submit" className="login-form-button" style={{marginRight: "10px"}}>
+						            生成音频文件
+						          </Button>
 						        </FormItem>
 						      </Form>
+
 	  					</div>
 			        </Content>
 	      		</Layout>
