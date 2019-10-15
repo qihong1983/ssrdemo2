@@ -192,7 +192,8 @@ const getList = (data) => {
         })
 
         // let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/list?page=${data.offset}&keyword=${encodeURI(data.keyword)}`, {
-        let res = await fetch(`http://localhost:8081/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
+            let res = await fetch(`https://api.youyong.ba/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
+                // let res = await fetch(`http://localhost:8081/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -256,7 +257,8 @@ const getToken = (data) => {
     return async function (dispatch) {
         console.log(data, 'data');
         // {phoneNumber: "18600190151", volidCode: "111111"}
-        let res = await fetch(`http://localhost:8081/accessToken?phone=${data.phoneNumber}`, {
+        // let res = await fetch(`http://localhost:8081/accessToken?phone=${data.phoneNumber}`, {
+        let res = await fetch(`https://api.youyong.ba/accessToken?phone=${data.phoneNumber}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -296,7 +298,8 @@ const getSearch = (data) => {
         // INDEX_KEYWORD
 
         // let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/searchData?searchName=${data.searchName}&lang=${data.lang}`, {
-        let res = await fetch(`http://localhost:8081/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
+            // let res = await fetch(`http://localhost:8081/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
+                let res = await fetch(`https://api.youyong.ba/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -342,7 +345,8 @@ const sendSwim = (data) => {
         // http://localhost:8081/insert?userId=1&title=游泳&endNum=11&img=http://dummyimage.com/229x139/79f2d5/f2b279.png?text=asdf&isOver=false&num=11&price=23&sendUser=小洪&startTime=2019-07-06 22:30:00&thumb=http://dummyimage.com/252x251/79f29d/f27a79.png?text=列亲级目则&pinyin=xiaohong
 
         // let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/sendActive?classroot=${data.classroot}&endTime=${data.endTime}&price=${data.price}&img=${data.img}&py=${data.py}`, {
-        let res = await fetch(`http://localhost:8081/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+            // let res = await fetch(`http://localhost:8081/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+                let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',

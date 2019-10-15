@@ -301,7 +301,8 @@ class SendForm extends React.Component {
                                 listType="picture-card"
                                 className="avatar-uploader"
                                 showUploadList={false}
-                                action="http://localhost:8081/uploadimg"
+                                // action="http://localhost:8081/uploadimg"
+                                action="https://api.youyong.ba/uploadimg"
                                 beforeUpload={beforeUpload}
                                 onChange={this.handleChange.bind(this)}
                             >
