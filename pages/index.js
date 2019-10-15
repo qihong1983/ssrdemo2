@@ -11,14 +11,52 @@ import {
 	Table,
 	Card,
 	Menu,
+	Button,
+	Avatar,
+	Drawer,
+	Divider,
+	Modal,
+	Row,
+	Radio,
+	Col,
+	Input,
+	InputNumber,
+	Form,
+	DatePicker,
+	Upload,
+	AutoComplete,
+	Badge,
+	Icon,
+	Tooltip,
+	LocaleProvider,
+	Pagination,
+	Select,
+	List,
+	Tag,
 	notification
 } from 'antd';
+
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+
+
+const ButtonGroup = Button.Group;
+
 const {
 	Header,
 	Footer,
 	Sider,
 	Content
 } = Layout;
+
+const Option = AutoComplete.Option;
+
+// const MyIcon = Icon.createFromIconfontCN({
+// 	scriptUrl: 'static/fonts/iconfont.js', // 在 iconfont.cn 上生成
+// });
+
+const IconFont = Icon.createFromIconfontCN({
+	scriptUrl: '//at.alicdn.com/t/font_475028_caaiz33gkk.js',
+});
 
 import {
 	bindActionCreators
@@ -35,41 +73,335 @@ import {
 const cookieParser = require("cookie-parser");
 
 import initializeStore from '../store/initializeStore';
-import * as actionCreators from './actions';
+import * as actionCreators from '../actions/index';
+
+import SendForm from '../components/SendForm';
+
+import OkBaoming from '../components/OkBaoming';
+
+import LoginGroup from '../components/LoginGroup';
+
+
+
+import moment from 'moment';
+
+
+//读取cookies 
+function getCookie(name) {
+	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+	if (arr = document.cookie.match(reg))
+
+		return unescape(arr[2]);
+	else
+		return null;
+}
+
+
+const { Meta } = Card;
+
+// function onSelect(value) {
+// 	console.log('onSelect', value);
+// }
+
+function getRandomInt(max, min = 0) {
+	return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
+}
+
+function searchResult(query) {
+	return (new Array(getRandomInt(5))).join('.').split('.')
+		.map((item, idx) => ({
+			query,
+			category: `${query}${idx}`,
+			count: getRandomInt(200, 100),
+		}));
+}
+
+
+function getBase64(img, callback) {
+	const reader = new FileReader();
+	reader.addEventListener('load', () => callback(reader.result));
+	reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+	const isJPG = file.type === 'image/jpeg';
+	if (!isJPG) {
+		message.error('You can only upload JPG file!');
+	}
+	const isLt2M = file.size / 1024 / 1024 < 2;
+	if (!isLt2M) {
+		message.error('Image must smaller than 2MB!');
+	}
+	return isJPG && isLt2M;
+}
+
+
+function renderOption(item) {
+
+	return (
+		<Option key={item.title} text={item.title} data-text={item.title} >
+			{item.title} {/*<b>({item.pinyin})</b>*/}
+		</Option>
+	);
+}
+
+const data = [
+	'小洪',
+	'小洪1',
+	'小洪2',
+	'小洪3',
+	'小洪4',
+	'小洪5',
+	'小洪6',
+];
+
+function trim(str) {
+	return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+const pStyle = {
+	fontSize: 16,
+	color: 'rgba(0,0,0,0.85)',
+	lineHeight: '24px',
+	display: 'block',
+	marginBottom: 16,
+};
+
+const DescriptionItem = ({ title, content }) => (
+	<div
+		style={{
+			fontSize: 14,
+			lineHeight: '22px',
+			marginBottom: 7,
+			color: 'rgba(0,0,0,0.65)',
+		}}
+	>
+		<p
+			style={{
+				marginRight: 8,
+				display: 'inline-block',
+				color: 'rgba(0,0,0,0.85)',
+			}}
+		>
+			{title}:
+	  </p>
+		{content}
+	</div>
+);
+
+
+const Dragger = Upload.Dragger;
 
 
 class Index extends React.Component {
 	static async getInitialProps({
 		query,
 		store,
-		isServer
+		isServer,
+		req,
+		res
 	}) {
 
-		if (isServer == false) {
-			NProgress.start();
-		}
-		console.log(11);
-		// global.token = 'aaa';
 
-		let data = store.getState();
+
+
+		var token = null;
+		if (isServer == false) {
+
+			token = getCookie("token");
+
+
+			NProgress.start();
+		} else {
+
+
+			var cookies = req.headers.cookie;
+
+
+			var userInfo = {};
+
+			console.log(cookies, 'cookies');
+
+			if (cookies) {
+				cookies.split(';').forEach(item => {
+
+					if (!item) {
+
+						return
+
+					}
+
+					var arr = item.split('=')
+
+					var key = trim(arr[0]);
+
+					var val = arr[1]
+
+
+					console.log(arr[0], '--->', arr[1]);
+					// req.coolie[key] = val;
+
+					userInfo[key] = val;
+
+					console.log(userInfo, '@@@@@@@@@@@@@@@@');
+
+					// console.log(JSON.parse(userInfo));
+
+
+					token = userInfo.token;
+
+				});
+
+			}
+
+			// console.log(userInfo, 'userInfo');
+			// console.log(userInfo.userId, 'userInfo.userId');
+
+			// console.log(cookies, '####cookies####');
+			// // let data = store.getState();
+
+
+
+			// console.log(token, 'token ---------------');
+
+			// console.log(cookies.token, 'cookies.tokencookies.tokencookies.tokencookies.token');
+
+		}
+
+
+
+		console.log(token, '***token****');
+
+		if (token != null) {
+
+			console.log('这里走了吗');
+
+			if (isServer == false) {
+				var getUserInfoParam = {
+					userName: getCookie("username"),
+					userAvatar: getCookie("avatar")
+				}
+			} else {
+
+				console.log(userInfo.userName, 'userInfo.userName');
+
+				console.log(userInfo.avatar, 'userInfo.avatar');
+
+				var getUserInfoParam = {
+					userName: userInfo.userName,
+					userAvatar: userInfo.avatar
+				}
+			}
+
+			await store.dispatch(actionCreators.setUserInfo(getUserInfoParam));
+		}
+
+
+
+
+
+
+
+		let page = 1;
+		if (query.page == undefined) {
+			page = 1;
+		} else {
+			page = query.page;
+		}
+
+		let keyword = "";
+		if (query.keyword == undefined) {
+			keyword = "";
+		} else {
+			keyword = query.keyword;
+		}
 
 		let params = {
-			limit: data.limit,
-			offset: 1
+			offset: page,
+			keyword: keyword
 		}
-		await store.dispatch(actionCreators.getTables(params));
+		await store.dispatch(actionCreators.getList(params));
+
 
 	}
 
+
+
+
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			current: 3,
+			dataSource: [],
+			visible: false,
+			userCenterVisible: false,
+			size: 'large',
+			sendVisible: false,
+			loginModalState: false,
+			wangqiData: [
+				'英东游泳-健身趴',
+				'英东游泳-健身趴1',
+				'英东游泳-健身趴2',
+				'英东游泳-健身趴3',
+				'英东游泳-健身趴4',
+			],
+			loading: false,
+			imageUrl: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+			changeLogin: 'phoneLogin',
+			checkVolid: true,
+			count: 60
+		}
+	}
+
+
+	// clickSearchText(e) {
+	// 	console.log(e.currentTarget);
+	// }
+
+
+	handleChange(info) {
+		if (info.file.status === 'uploading') {
+			this.setState({ loading: true });
+			return;
+		}
+		if (info.file.status === 'done') {
+			// Get this url from response in real world.
+			getBase64(info.file.originFileObj, imageUrl => this.setState({
+				imageUrl,
+				loading: false,
+			}));
+		}
+	}
+
+	setPrice(e) {
+		console.log(e);
+	}
+
+	onChange(page) {
+		console.log(page);
+		// this.setState({
+		// 	current: page,
+		// });
+
+		// this.props.router.push(youyong.ba?page);
+
+		NProgress.start();
+		this.props.router.push(`/?page=${page}&keyword=${this.props.Index.keyword}`);
+		NProgress.done();
+		console.log(this.props, '#########');
+
+		// var params = {
+		// 	offset: page
+		// }
+
+		// this.props.getList(params);
 	}
 
 
 	componentWillMount() {
-
-
-
+		// NProgress.start();
 	}
 
 	componentDidMount() {
@@ -77,11 +409,8 @@ class Index extends React.Component {
 			NProgress.done();
 		}
 
-		notification['success']({
-			message: 'SSR 秒开(有数据变化的)',
-			description: '用户刷新无感知性能体验',
-		});
-
+		console.log('%c游泳吧 swiming club', 'color:#e56045;font-family:"yahei";text-shadow:5px 5px 2px #fff, 5px 5px 2px #373E40, 5px 5px 5px #A2B4BA, 5px 5px 10px #82ABBA;font-weight:bolder;font-size:55px;border:5px solid #e56045;padding:20px; text-align:center;box-shadow: 20px 20px 15px yellow;background-color:#f2f2f2; width:300px; height:100px;');
+		console.log("%c ", "background: url(https://sponsor-static.segmentfault.com/d7c03f1c9111484e0f9fdb1a576f334f.png) no-repeat center; display:block; padding-left:504px; padding-bottom:421px; width:504px; height:421px;")
 
 		if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
 			if (window.location.href.indexOf("?mobile") < 0) {
@@ -92,7 +421,7 @@ class Index extends React.Component {
 					} else if (/iPad/i.test(navigator.userAgent)) {
 						window.location.href = "https://m.youyong.ba";
 					}
-				} catch (e) {}
+				} catch (e) { }
 			}
 		}
 	}
@@ -119,66 +448,708 @@ class Index extends React.Component {
 		this.props.getTables(params);
 	}
 
-	render() {
 
-		var pagination = {
-			current: this.props.index.offset,
-			pageSize: this.props.index.limit,
-			total: this.props.index.total
+	handleSearch(value) {
+
+		console.log(value, 'valuevalue');
+
+		value = value.replace(/\s/g, "");
+
+		let lang = "cn";
+		if (/[^\x00-\xff]/g.test(value))
+			lang = 'cn';
+		else
+			lang = 'en';
+
+		var data = {
+			"searchName": value,
+			"lang": lang
 		}
 
-		this.addKey(this.props.index.tableData, 'index' + new Date().getTime());
+		// console.log(this.props.getSearch, '是不是搜索');
+		this.props.getSearch(data);
+
+
+		this.setState({
+			dataSource: value ? searchResult(value) : [],
+		});
+	}
+
+	clickAddActive(e) {
+
+
+		this.props.changePrice(e.currentTarget.dataset.price);
+		this.props.changeId(e.currentTarget.dataset.id);
+
+		this.props.getEntered(e.currentTarget.dataset.id);
+
+
+
+		this.setState({
+			visible: true
+		});
+
+
+	}
+
+	onClose() {
+		this.setState({
+			visible: false,
+		});
+	};
+
+	clickAvatar() {
+
+		// 先注释掉
+		// this.setState({
+		// 	userCenterVisible: true
+		// });
+
+		var token = getCookie('token');
+
+		if (token != null) {
+			this.setState({
+				userCenterVisible: true
+			});
+		} else {
+			this.setState({
+				loginModalState: true
+			});
+		}
+
+
+
+
+
+
+	}
+
+
+	handleOk(e) {
+		console.log(e);
+		this.setState({
+			userCenterVisible: false,
+		});
+	}
+
+	handleCancel(e) {
+		console.log(e);
+		this.setState({
+			userCenterVisible: false,
+		});
+	}
+
+	/**
+	 * 发志报名
+	 */
+	sendVisibleClose() {
+		this.setState({
+			sendVisible: false
+		})
+	}
+
+	sendActive() {
+
+		//先先注释掉
+		this.setState({
+			sendVisible: true
+		});
+
+
+	}
+
+
+	handleSubmit(e) {
+		e.preventDefault();
+		this.props.form.validateFields(async (err, values) => {
+
+			console.log(err, 'err');
+
+			console.log(values, 'values');
+			if (!err) {
+
+				var temp = JSON.parse(values.dragger[0].response.split(values.dragger[0].name)[1] + values.dragger[0].response.split(values.dragger[0].name)[2]);
+
+				var img = temp.data + values.dragger[0].name;
+
+				var data = {
+					"classroot": values.address,
+					"endTime": moment(values.endTime).format("YYYY-MM-DD HH:mm"),
+					"price": values.price,
+					"img": img,
+					"py": pinyinUtil.getPinyin(values.address).replace(/\s/g, "")
+				}
+
+				await this.props.sendSwim(data);
+
+				let params = {
+					offset: 1,
+					keyword: ""
+				}
+
+				await this.props.getList(params);
+				// this.props.
+
+				this.props.form.resetFields();
+
+				this.sendVisibleClose();
+			}
+		});
+	}
+
+	handleSelectChange(value) {
+		console.log(value);
+		this.props.form.setFieldsValue({
+			note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
+		});
+	}
+
+
+	handleOpenChange(open) {
+		if (open) {
+			this.setState({ mode: 'time' });
+		}
+	}
+
+	handlePanelChange(value, mode) {
+		this.setState({ mode });
+	}
+
+
+	/**
+	 * 点击搜索
+	 * @method clickSearch
+	 */
+	clickSearch(e) {
+
+		NProgress.start();
+		this.props.router.push(`/?page=1&keyword=${e.currentTarget.parentElement.previousSibling.value}`);
+		NProgress.done();
+	}
+
+
+	searchSelect(e) {
+		console.log(e);
+		NProgress.start();
+
+		// data.searchName = this.searchName.replace(/\s/g, "");
+
+
+		// if (/[^\x00-\xff]/g.test(data.searchName))
+		//     data.lang = 'cn';
+		// else
+		//     data.lang = 'en';
+		if (e == '空') {
+			e = '';
+		}
+
+		this.props.router.push(`/?page=1&keyword=${e}`);
+		NProgress.done();
+
+	}
+
+	normFile(e) {
+		console.log('Upload event:', e);
+		if (Array.isArray(e)) {
+			return e;
+		}
+		return e && e.fileList;
+	}
+
+
+	userListRender() {
+
+		var arr = [];
+		this.props.Index.userList.map((v, k) => {
+
+			console.log(v.avatar);
+			arr.push(<Col span={2} key={v.user}>
+				<Tooltip title={v.user}>
+					<Avatar size="large" src={v.avatar} alt={v.user} style={{ marginTop: "10px" }} />
+				</Tooltip>
+			</Col>);
+		});
+		return arr;
+	}
+
+
+	/**
+	 * 确认登录
+	 * @method loginHandleOk
+	 * @param {Object} e 
+	 */
+	loginHandleOk(e) {
+		console.log('确认登录');
+		console.log(e);
+		// this.refs.loginSubmitPhone.props.onSubmit();
+		//this.loginSubmitPhone();
+
+		this.loginSubmitPhone();
+
+
+
+	}
+
+	/**
+	 * 取消登录
+	 * @method loginHandleCancel
+	 * @param {Object} e 
+	 */
+	loginHandleCancel(e) {
+		console.log('取消登录');
+
+		this.setState({
+			loginModalState: false
+		});
+	}
+
+
+	/**
+	 * 登录
+	 * @param {} e 
+	 */
+
+	closeLoginModal() {
+		this.setState({
+			loginModalState: false
+		});
+	}
+
+	/**
+	 * 登录切换
+	 * @method loginChangeHandle
+	 */
+	loginChangeHandle(e) {
+		console.log(e.target.value);
+
+		this.setState({
+			changeLogin: e.target.value
+		});
+	}
+
+	/**
+	 * 提交登录表单
+	 * @method loginSubmitPhone
+	 */
+	loginSubmitPhone(e) {
+		console.log(e);
+
+		this.props.form.validateFields((err, values) => {
+
+			console.log(values);
+
+			if (values.phoneNumber == '' || values.volidCode == '') {
+				console.log('有错误');
+			}
+			// if (!err) {
+			// 	console.log('Received values of form: ', values);
+			// }
+		});
+	}
+	/**
+	 * 点击二维码
+	 * @method checkVolidFn
+	 */
+	checkVolidFn() {
+		var { count } = this.state;
+		const timer = setInterval(() => {
+			this.setState({ "count": (count--), checkVolid: false }, () => {
+				if (count === 0) {
+					clearInterval(timer);
+					this.setState({
+						checkVolid: true,
+						count: 60
+					})
+				}
+			});
+		}, 1000);
+	}
+
+
+	/**
+	 * 渲染登录
+	 * @method getChangeCard
+	 */
+	getChangeCard() {
+		const { getFieldDecorator } = this.props.form;
+
+
+		if (this.state.changeLogin == 'phoneLogin') {
+
+			return (<div style={{ marginTop: 16 }}>
+
+				<Form ref="loginSubmitPhone" onSubmit={this.loginSubmitPhone.bind(this)}>
+
+					<div style={{ marginBottom: 16 }}>
+						<Form.Item
+							label="手机号"
+						>
+							{getFieldDecorator('phoneNumber', {
+								rules: [
+									{ required: true, message: '请输入手机号' },
+									{
+										pattern: new RegExp('[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$', 'g'),
+										message: '手机号码有误'
+									}
+								],
+							})(
+								<Input addonAfter={this.state.checkVolid ? (<span style={{ cursor: "pointer" }} onClick={this.checkVolidFn.bind(this)}>点击发送验证码</span>) : (<span>{this.state.count}s</span>)} placeholder="请输入手机号" />
+							)}
+						</Form.Item>
+					</div>
+
+					<div style={{ marginBottom: 16 }}>
+						<Form.Item
+							label="验证码"
+						>
+							{getFieldDecorator('volidCode', {
+								rules: [{ required: true, message: '请输入验证码' }],
+							})(
+								<Input placeholder="输入验证码" />
+							)}
+						</Form.Item>
+					</div>
+				</Form>
+
+			</div>)
+		} else if (this.state.changeLogin == 'wxLogin') {
+			return (<div style={{ marginTop: 16 }}>
+				<div style={{ marginBottom: 16 }}>
+					<Input addonAfter={<span style={{ cursor: "pointer" }}>微信扫码登录</span>} placeholder="请输入手机号" />
+				</div>
+			</div>);
+		} else {
+			return (<div style={{ marginTop: 16 }}>
+				<div style={{ marginBottom: 16 }}>
+					<Input addonAfter={<span style={{ cursor: "pointer" }}>移动端扫码登录</span>} placeholder="请输入手机号" />
+				</div>
+			</div>);
+		}
+
+
+
+	}
+
+
+
+	handleSubmit1(e) {
+		// debugger;
+		e.preventDefault();
+
+		this.props.form.validateFields(async (err, values) => {
+			console.log(err, 'err');
+			console.log(values, 'values');
+			console.log('aaaa');
+		})
+
+
+	}
+
+	render() {
+		const size = this.state.size;
+		// var pagination = {
+		// 	current: this.props.index.offset,
+		// 	pageSize: this.props.index.limit,
+		// 	total: this.props.index.total
+		// }
+
+		// this.addKey(this.props.index.tableData, 'index' + new Date().getTime());
+
+
+		const { getFieldDecorator } = this.props.form;
+
+
+		const listData = [];
+		for (let i = 0; i < 23; i++) {
+			listData.push({
+				href: 'http://ant.design',
+				title: `ant design part ${i}`,
+				avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+				description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+				content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+			});
+		}
+
+		const IconText = ({ type, text }) => (
+			<span>
+				<Icon type={type} style={{ marginRight: 8 }} />
+				{text}
+			</span>
+		);
+		const { dataSource } = this.state;
+
+
+
+		const formItemLayout = {
+			labelCol: { span: 6 },
+			wrapperCol: { span: 14 },
+		};
+
+
+
+
+		const props = {
+			name: 'file',
+			multiple: true,
+			action: '//jsonplaceholder.typicode.com/posts/',
+			onChange(info) {
+				// const status = info.file.status;
+				// if (status !== 'uploading') {
+				// 	console.log(info.file, info.fileList);
+				// }
+				// if (status === 'done') {
+				// 	message.success(`${info.file.name} file uploaded successfully.`);
+				// } else if (status === 'error') {
+				// 	message.error(`${info.file.name} file upload failed.`);
+				// }
+			},
+		};
+
+
+		const uploadButton = (
+			<div>
+				<Icon type={this.state.loading ? 'loading' : 'plus'} />
+				<div className="ant-upload-text">Upload</div>
+			</div>
+		);
+
+		const imageUrl = this.state.imageUrl;
+
+		console.log(this.props.Index, 'this.props.Index.userAvatar');
+
 
 		return (
-			<div>
-			    <Head>
-					<title>变化的数据</title>
-					<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-					<link rel="stylesheet" href="/static/antd.css" />
-				</Head>
-				<Layout>
-					<Header style={{color:"white"}}>
-					<div className="logo" >SSR DEMO</div>
-				      <Menu
-				        theme="dark"
-				        mode="horizontal"
-				        selectedKeys={['1']}
-				        style={{ lineHeight: '64px' }}
-				      >
-				        <Menu.Item key="1">变化的数据</Menu.Item>
-				        <Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
-				        <Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音</a></Link></Menu.Item>
-				      </Menu>
-					</Header>
+			<LocaleProvider locale={zhCN}>
+				<div>
+					<Head>
+						<title>游泳吧</title>
+						<meta name="keywords" content="游泳吧社区 swimming club" />
+						<meta name="description" content="游泳吧社区 swimming club" />
+						<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+						<link rel="stylesheet" href="/static/antd.css" />
+						<link rel="stylesheet" href="/static/demo.css" />
+					</Head>
+					<Layout>
+						<Header style={{ color: "white" }}>
+							<div className="logo" ><IconFont type="icon-LOGOyouyongba" className="logoIconStyle" /> <span className="logoTitle">游泳吧 swimming club</span></div>
+							<Menu
+								theme="dark"
+								mode="horizontal"
+								selectedKeys={['1']}
+								style={{ lineHeight: '60px', width: "350px", float: "left" }}
+							>
+								<Menu.Item key="1">结伴</Menu.Item>
+								<Menu.Item key="2"><Link href='/about'><a>demo演示</a></Link></Menu.Item>
+								<Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音工具</a></Link></Menu.Item>
+							</Menu>
+							<div className="userInfo">
+								<Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button>
+								<Badge count={1}>
+									{this.props.Index.userAvatar ? (<Avatar className="avatarStyle" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" onClick={this.clickAvatar.bind(this)} />) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
 
-					<Content>
+								</Badge>
+							</div>
+						</Header>
 
-						<div style={{ background: '#f2f2f2',padding: '30px' }}>
-						    <Card title="SSR刷新后用户无感知的性能体验(用chrome或firefox打开)" bordered={false}>
-								<Table 
-									columns={this.props.index.columns} 
-									dataSource={this.props.index.tableData} 
-									hoverable={true} 
-									loading={this.props.index.loading} 
-									pagination={pagination}
-									onChange={this.handleTableChange.bind(this)}
+						{/* <Content style={{ minWidth: "1200px" }}> */}
+						<Content>
+							<div style={{ background: '#f2f2f2', padding: '30px' }}>
+								<div className="global-search-wrapper" style={{ width: 300 }}>
+									<AutoComplete
+										className="global-search"
+										size="large"
+										style={{ width: '100%' }}
+										dataSource={this.props.Index.search.map(renderOption.bind(this))}
+
+										onSearch={this.handleSearch.bind(this)}
+										placeholder="input here"
+										optionLabelProp="text"
+									>
+										<Input
+											ref="searchDom"
+											placeholder="找伴游"
+											suffix={(
+												<Button className="search-btn" size="large" type="primary" onClick={this.clickSearch.bind(this)}>
+													<Icon type="search" />
+												</Button>
+											)}
+										/>
+
+										{/* <Input
+											ref="searchDom"
+											placeholder="找伴游"
+											suffix={(
+												<Icon type="search" style={{marginRight:"15px"}} />
+											)}
+										/> */}
+									</AutoComplete>
+								</div>
+
+								<List
+									header={<div>结伴游泳 </div>}
+									footer={<div><Pagination style={{ textAlign: "right" }} current={parseInt(this.props.Index.page, 10)} onChange={this.onChange.bind(this)} total={parseInt(this.props.Index.total, 10)} /></div>}
+									bordered
+									dataSource={this.props.Index.list}
+									className="indexList"
+									grid={{ gutter: 24, column: 4 }}
+									renderItem={item => (<List.Item key={item.id}>
+										<Card
+											cover={<img alt="example" src={`${item.img}`} />}
+											actions={[<Button type="primary" disabled={item.isOver ? 'disabled' : ''} className="wrapAdd" data-id={item.id} data-price={item.price} onClick={this.clickAddActive.bind(this)} ><Icon type="plus" />报名</Button>]}
+										>
+											<Meta
+												avatar={<Avatar src={`${item.thumb}`} />}
+												title={`${item.title}`}
+												description={`发起人：${item.sendUser}`}
+											/>
+
+											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{item.startTime}</Tag>
+											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{item.num}人</Tag>
+											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{item.isOver ? '结束' : '未结束'}</Tag>
+										</Card>
+									</List.Item>)}
 								/>
-		  					</Card>
-	  					</div>
-						
-					</Content>
-					<Footer>Footer</Footer>
 
-				</Layout>
-			</div>
+								{/** 发起报名 */}
+
+								<SendForm
+									sendVisible={this.state.sendVisible}
+									sendVisibleClose={this.sendVisibleClose.bind(this)}
+									sendSwim={this.props.sendSwim.bind(this)}
+									list={this.props.getList.bind(this)}
+								/>
+								{/* http://pinyin.netease.com/uploadfile.php */}
+
+								{/* 确认报名 */}
+								<OkBaoming
+									onClose={this.onClose.bind(this)}
+									visible={this.state.visible}
+									showPrice={this.props.Index.showPrice}
+									userList={this.props.Index.userList}
+								/>
+							</div>
+
+
+							{/* 登录框 */}
+
+							<LoginGroup
+								loginModalState={this.state.loginModalState}
+								onOk={this.loginHandleOk.bind(this)}
+								loginHandleCancel={this.loginHandleCancel.bind(this)}
+								changeLogin={this.state.changeLogin}
+								loginChangeHandle={this.loginChangeHandle.bind(this)}
+								loginHandleOk={this.loginHandleOk.bind(this)}
+								closeLoginModal={this.closeLoginModal.bind(this)}
+							/>
+
+							{/* 个人中心  */}
+							<Modal
+								title="个人中心"
+								visible={this.state.userCenterVisible}
+								onOk={this.handleOk.bind(this)}
+								onCancel={this.handleCancel.bind(this)}
+								okText="确认"
+								cancelText="取消"
+								wrapClassName="userCenter"
+							>
+								<Radio.Group value={size} style={{ marginBottom: "20px" }} onChange={this.handleSizeChange}>
+									{/* <Radio.Button value="large">往期参加</Radio.Button>
+									<Radio.Button>我发布的</Radio.Button> */}
+									<Radio.Button>基本信息</Radio.Button>
+								</Radio.Group>
+
+								<Button type="primary" style={{ marginLeft: "10px" }}>登出</Button>
+
+								{/* <List
+									bordered
+									dataSource={this.state.wangqiData}
+									renderItem={item => (<List.Item >
+										<div >{item}</div>
+										<Radio.Group value={"small"} size={"small"} onChange={this.handleSizeChange}>
+											<Radio.Button value="small" size={"small"}>不参加了</Radio.Button>
+											<Radio.Button value="default" size={"small"}>编辑</Radio.Button>
+											<Radio.Button value="default" size={"small"}>删除</Radio.Button>
+										</Radio.Group>
+
+									</List.Item>)}
+								/> */}
+
+
+
+
+								<Form onSubmit={this.handleSubmit.bind(this)}>
+									<Form.Item
+										label="昵称"
+										labelCol={{ span: 5 }}
+										wrapperCol={{ span: 12 }}
+									>
+										{getFieldDecorator('username', {
+											initialValue: "",
+											rules: [{ required: false, message: '结伴主题' }],
+										})(
+											<Input />
+										)}
+									</Form.Item>
+
+									<Form.Item
+										label="用户头像"
+										labelCol={{ span: 5 }}
+										wrapperCol={{ span: 12 }}
+									>
+										{getFieldDecorator('dragger', {
+											valuePropName: 'avatar1',
+											getValueFromEvent: this.normFile,
+										})(
+											<Upload
+												name="avatar"
+												listType="picture-card"
+												className="avatar-uploader"
+												showUploadList={false}
+												action="http://pinyin.netease.com/uploadfile.php"
+												beforeUpload={beforeUpload}
+												onChange={this.handleChange.bind(this)}
+											>
+												{imageUrl ? <img style={{ width: "86px", height: "86px" }} src={imageUrl} alt="avatar" /> : uploadButton}
+											</Upload>
+
+										)}
+									</Form.Item>
+
+									<Form.Item
+										wrapperCol={{ span: 12, offset: 5 }}
+									>
+										<Button type="primary" htmlType="submit">
+											修改
+          									</Button>
+									</Form.Item>
+								</Form>
+
+
+							</Modal>
+
+						</Content>
+						<Footer>
+
+							页尾
+
+
+					</Footer>
+
+					</Layout>
+				</div>
+			</LocaleProvider >
 		)
 	}
 }
 
 //将state.counter绑定到props的counter
 const mapStateToProps = (state) => {
+
+
+
 	return {
-		index: state.About
+		About: state.About,
+		Index: state.Index
 	}
 };
 
@@ -187,6 +1158,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	//全量
 	return bindActionCreators(actionCreators, dispatch);
 };
+
+Index = Form.create({ name: 'coordinated' })(Index);
 
 Index = connect(mapStateToProps, mapDispatchToProps)(Index);
 

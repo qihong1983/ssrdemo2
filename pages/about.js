@@ -44,7 +44,7 @@ import {
 
 
 import initializeStore from '../store/initializeStore';
-import * as actionCreators from './actions';
+import * as actionCreators from '../actions/index';
 
 /**
  * 引入公共文件结束
@@ -59,7 +59,11 @@ class About extends Component {
 
 		if (isServer == false) {
 			NProgress.start();
+		} else {
+
+
 		}
+
 		let data = store.getState();
 
 		let params = {
@@ -67,7 +71,6 @@ class About extends Component {
 			offset: 1
 		}
 		await store.dispatch(actionCreators.getTablesNoData(params));
-
 	}
 
 	constructor(props) {
@@ -128,41 +131,41 @@ class About extends Component {
 		return (
 			<div>
 				<Head>
-	         		<title>不变化的数据</title>
-	         		<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-	      			<link rel="stylesheet" href="/static/antd.css" />
-	      			
-	      		</Head>
-	      		<Layout>
-	      			<Header style={{color:"white"}}>
+					<title>不变化的数据</title>
+					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+					<link rel="stylesheet" href="/static/antd.css" />
+
+				</Head>
+				<Layout>
+					<Header style={{ color: "white" }}>
 						<div className="logo" >SSR DEMO</div>
-				      <Menu
-				        theme="dark"
-				        mode="horizontal"
-				        selectedKeys={['2']}
-				        style={{ lineHeight: '64px' }}
-				      >
-				        <Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
-				        <Menu.Item key="2">不变化的数据</Menu.Item>
-				        <Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音</a></Link></Menu.Item>
-				      </Menu>
+						<Menu
+							theme="dark"
+							mode="horizontal"
+							selectedKeys={['2']}
+							style={{ lineHeight: '64px' }}
+						>
+							<Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
+							<Menu.Item key="2">不变化的数据</Menu.Item>
+							<Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音</a></Link></Menu.Item>
+						</Menu>
 					</Header>
 					<Content>
 						<div style={{ background: '#f2f2f2', padding: '30px' }}>
-					    	<Card title="SSR刷新后用户无感知的性能体验(用chrome或firefox打开)" bordered={false}>
-								<Table 
-									columns={this.props.about.columns} 
-									dataSource={this.props.about.tableData} 
-									hoverable={true} 
-									loading={this.props.about.loading} 
+							<Card title="SSR刷新后用户无感知的性能体验(用chrome或firefox打开)" bordered={false}>
+								<Table
+									columns={this.props.about.columns}
+									dataSource={this.props.about.tableData}
+									hoverable={true}
+									loading={this.props.about.loading}
 									pagination={pagination}
 									onChange={this.handleTableChange.bind(this)}
 								/>
-	  						</Card>
-	  					</div>
-			        </Content>
-	      		</Layout>
-	        </div>
+							</Card>
+						</div>
+					</Content>
+				</Layout>
+			</div>
 		)
 	}
 }

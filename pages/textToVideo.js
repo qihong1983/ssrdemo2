@@ -51,7 +51,7 @@ import {
 
 
 import initializeStore from '../store/initializeStore';
-import * as actionCreators from './actions';
+import * as actionCreators from '../actions/index';
 
 const FormItem = Form.Item;
 
@@ -215,95 +215,95 @@ class TextToVideo extends Component {
 		return (
 			<div>
 				<Head>
-	         		<title>不变化的数据</title>
-	         		<meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-	      			<link rel="stylesheet" href="/static/antd.css" />
-	      			<link rel="stylesheet" href="/static/textToVideo.css" />
-	      		</Head>
-	      		<Layout>
-	      			<Header style={{color:"white"}}>
+					<title>不变化的数据</title>
+					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+					<link rel="stylesheet" href="/static/antd.css" />
+					<link rel="stylesheet" href="/static/textToVideo.css" />
+				</Head>
+				<Layout>
+					<Header style={{ color: "white" }}>
 						<div className="logo" >SSR DEMO</div>
-				      <Menu
-				        theme="dark"
-				        mode="horizontal"
-				        selectedKeys={['3']}
-				        style={{ lineHeight: '64px' }}
-				      >
-				        <Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
-				        <Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
-				        <Menu.Item key="3">文字转语音</Menu.Item>
-				      </Menu>
+						<Menu
+							theme="dark"
+							mode="horizontal"
+							selectedKeys={['3']}
+							style={{ lineHeight: '64px' }}
+						>
+							<Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
+							<Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
+							<Menu.Item key="3">文字转语音</Menu.Item>
+						</Menu>
 					</Header>
 					<Content>
 						<div style={{ background: '#f2f2f2', padding: '30px' }}>
-					    	<Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
-						        <FormItem>
-						          {getFieldDecorator('text', {
-						            rules: [{ required: true, message: '必填项' }],
-						          })(
-						             <TextArea placeholder="在这里粘贴要语音播报的文字" autosize={{ minRows: 2, maxRows: 6 }}  />
-						          )}
-						        </FormItem>
-						        
-						        <FormItem>
-						          
-						          <Button type="primary" htmlType="submit" className="login-form-button" style={{marginRight: "10px"}}>
-						            播放
+							<Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+								<FormItem>
+									{getFieldDecorator('text', {
+										rules: [{ required: true, message: '必填项' }],
+									})(
+										<TextArea placeholder="在这里粘贴要语音播报的文字" autosize={{ minRows: 2, maxRows: 6 }} />
+									)}
+								</FormItem>
+
+								<FormItem>
+
+									<Button type="primary" htmlType="submit" className="login-form-button" style={{ marginRight: "10px" }}>
+										播放
 						          </Button>
 
-						          <Button onClick={this.pauseBtn.bind(this)} className="login-form-button">
-						            暂停
+									<Button onClick={this.pauseBtn.bind(this)} className="login-form-button">
+										暂停
 						          </Button>
 
 
-						          <Button onClick={this.resumeBtn.bind(this)} className="login-form-button">
-						            继续
+									<Button onClick={this.resumeBtn.bind(this)} className="login-form-button">
+										继续
 						          </Button>
 
-						          <Button onClick={this.stopBtn.bind(this)}  className="login-form-button">
-						            停止
+									<Button onClick={this.stopBtn.bind(this)} className="login-form-button">
+										停止
 						          </Button>
-						        </FormItem>{/*
+								</FormItem>{/*
 						        <input type="text" x-webkit-speech lang="ch-CN"  x-webkit-grammar="bUIltin:search"                      
       onwebkitspeechchange="foo()"/>*/}
-						      </Form>
-		<Divider dashed style={{background:"#cccccc"}}/>
-						      <Form onSubmit={this.handleSubmit1.bind(this)} className="login-form">
-						        <FormItem style={{margin:0}}>
-						          <strong>只支持500个汉字，1000个字节</strong>
-						        </FormItem>
-						         <FormItem>
-						          {getFieldDecorator('title2', {
-						            rules: [{ required: true, message: '必填项' }],
-						          })(
-						             <Input placeholder="这里填写语音文件名称"   />
-						          )}
-						        </FormItem>
-						        <FormItem>
-						          {getFieldDecorator('text2', {
-						            rules: [{ required: true, message: '必填项' }],
-						          })(
-						             <TextArea placeholder="接口方式--在这里粘贴要语音播报的文字" autosize={{ minRows: 2, maxRows: 6 }}  />
-						          )}
-						        </FormItem>
-						        <FormItem>
-						        <ReactAudioPlayer
-								  src={this.state.audio}
-								  autoPlay
-								  controls
-								/>
-						        </FormItem>
-						        <FormItem>
-						        	<Button type="primary" htmlType="submit" className="login-form-button" style={{marginRight: "10px"}}>
-						            生成音频文件
+							</Form>
+							<Divider dashed style={{ background: "#cccccc" }} />
+							<Form onSubmit={this.handleSubmit1.bind(this)} className="login-form">
+								<FormItem style={{ margin: 0 }}>
+									<strong>只支持500个汉字，1000个字节</strong>
+								</FormItem>
+								<FormItem>
+									{getFieldDecorator('title2', {
+										rules: [{ required: true, message: '必填项' }],
+									})(
+										<Input placeholder="这里填写语音文件名称" />
+									)}
+								</FormItem>
+								<FormItem>
+									{getFieldDecorator('text2', {
+										rules: [{ required: true, message: '必填项' }],
+									})(
+										<TextArea placeholder="接口方式--在这里粘贴要语音播报的文字" autosize={{ minRows: 2, maxRows: 6 }} />
+									)}
+								</FormItem>
+								<FormItem>
+									<ReactAudioPlayer
+										src={this.state.audio}
+										autoPlay
+										controls
+									/>
+								</FormItem>
+								<FormItem>
+									<Button type="primary" htmlType="submit" className="login-form-button" style={{ marginRight: "10px" }}>
+										生成音频文件
 						          </Button>
-						        </FormItem>
-						      </Form>
+								</FormItem>
+							</Form>
 
-	  					</div>
-			        </Content>
-	      		</Layout>
-	        </div>
+						</div>
+					</Content>
+				</Layout>
+			</div>
 		)
 	}
 }

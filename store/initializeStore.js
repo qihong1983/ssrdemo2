@@ -8,8 +8,9 @@ import {
 } from 'redux-devtools-extension';
 
 import thunk from 'redux-thunk';
-import reducer from '../modules/reducers';
 
+import reducer from '../reducers/reducers';
+// import * as serviceWorker from './serviceWorker';
 
 const middleware = [thunk];
 
@@ -20,5 +21,6 @@ const initializeStore = initialState => {
 		composeWithDevTools(applyMiddleware(...middleware))
 	);
 };
-
 export default initializeStore;
+
+// serviceWorker.register();

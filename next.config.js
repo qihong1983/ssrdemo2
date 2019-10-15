@@ -1,35 +1,21 @@
-const withOffline = require('next-offline');
+// const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
+const nextOffline = require('next-offline')
+const path = require('path')
+const withPlugins = require('next-compose-plugins')
 
-module.exports = withOffline({
-  exportPathMap: async function(defaultPathMap) {
-    return {
-      '/': {
-        page: '/'
-      },
-      '/about': {
-        page: '/about'
-      }
-    }
-  },
-  workboxOpts: {
-    runtimeCaching: [{
-      urlPattern: /(.*)/,
-      handler: 'cacheFirst'
-    }, {
-      urlPattern: /api/,
-      handler: 'networkFirst',
-      options: {
-        cacheableResponse: {
-          statuses: [0, 200],
-          headers: {
-            'x-test': 'true'
-          }
-        }
-      }
-    }]
+module.exports = withPlugins(
+  [
+    [nextOffline]
+  ],
+  {
+    webpack: config => {
+      config.resolve.modules = [
+        path.resolve('./src'),
+        path.resolve('./public'),
+        'node_modules'
+      ]
+      return config
+    },
+    // Other Next.js config here...
   }
-});
-
-// module.exports = {
-//   generateEtags: false
-// }
+)

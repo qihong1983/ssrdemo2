@@ -16,27 +16,29 @@ export default class MyDocument extends Document {
         } = this.props;
 
 
-
         return (
             <html>
                 <Head>
-                    { nextStyle.tag }
+                    {nextStyle.tag}
                     <link rel="manifest" href="/static/manifest.json" />
-    <link href="/static/nprogress.min.css" rel="stylesheet" />
-    
+                    <link href="/static/nprogress.min.css" rel="stylesheet" />
+
                     <link rel="stylesheet" href="/static/demo.css" />
 
                 </Head>
                 <body>
                     <Main />
                     <NextScript />
+                    <script type="text/javascript" src="/static/js/pinyin_dict_notone.js"></script>
+
+                    <script type="text/javascript" src="/static/js/pinyinUtil.js"></script>
                 </body>
             </html>
         );
     }
 }
 
-MyDocument.getInitialProps = function(ctx) {
+MyDocument.getInitialProps = function (ctx) {
 
     // console.log(ctx);
     const props = Document.getInitialProps(ctx);
