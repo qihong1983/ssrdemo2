@@ -80,7 +80,7 @@ class TextToVideo extends Component {
 			limit: data.limit,
 			offset: 1
 		}
-		await store.dispatch(actionCreators.getTablesNoData(params));
+		// await store.dispatch(actionCreators.getTablesNoData(params));
 
 	}
 
