@@ -288,7 +288,7 @@ class TextToVideo extends Component {
 								</FormItem>
 								<FormItem>
 									<ReactAudioPlayer
-										src={this.state.audio}
+										src={encodeURI(this.state.audio)}
 										autoPlay
 										controls
 									/>
