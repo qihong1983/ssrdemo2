@@ -8,6 +8,7 @@ body {
     margin:0 auto;
     margin-bottom:30px;
     background:#f2f2f2;
+    display:flex;
   }
 
 
@@ -36,7 +37,7 @@ body {
   }
   
   .global-search.ant-select-auto-complete .ant-select-selection--single {
-    margin-right: -46px;
+    /* margin-right: -46px; */
   }
   
   .global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input:not(:last-child) {
@@ -407,3 +408,12 @@ a:hover{
     width: 227px;
     height: 138px;
 }
+
+
+.search-btn {
+    margin-right: 10px;
+    /* color: #e56045; */
+
+
+}
+

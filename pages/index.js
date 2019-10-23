@@ -623,7 +623,7 @@ class Index extends React.Component {
 	clickSearch(e) {
 
 		NProgress.start();
-		this.props.router.push(`/?page=1&keyword=${e.currentTarget.parentElement.previousSibling.value}`);
+		this.props.router.push(`/?page=1&keyword=`);
 		NProgress.done();
 	}
 
@@ -845,6 +845,15 @@ class Index extends React.Component {
 
 	}
 
+	autoSelect(value, option) {
+		console.log(value, option);
+
+
+		NProgress.start();
+		this.props.router.push(`/?page=1&keyword=${value}`);
+		NProgress.done();
+	}
+
 	render() {
 		const size = this.state.size;
 		// var pagination = {
@@ -944,7 +953,8 @@ class Index extends React.Component {
 							</Menu>
 							<div className="userInfo">
 								<Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button>
-								<Badge count={1}>
+								{/* <Badge count={1}> */}
+								<Badge>
 									{this.props.Index.userAvatar ? (<Avatar className="avatarStyle" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" onClick={this.clickAvatar.bind(this)} />) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
 
 								</Badge>
@@ -954,24 +964,36 @@ class Index extends React.Component {
 						{/* <Content style={{ minWidth: "1200px" }}> */}
 						<Content>
 							<div style={{ background: '#f2f2f2', padding: '30px' }}>
-								<div className="global-search-wrapper" style={{ width: 300 }}>
+								<div className="global-search-wrapper" style={{ width: 400 }}>
 									<AutoComplete
 										className="global-search"
 										size="large"
-										style={{ width: '100%' }}
+										style={{ width: '260px',marginRight:"10px" }}
 										dataSource={this.props.Index.search.map(renderOption.bind(this))}
 
 										onSearch={this.handleSearch.bind(this)}
 										placeholder="input here"
 										optionLabelProp="text"
+										onSelect={this.autoSelect.bind(this)}
+										//xxxx
 									>
-										<Input
+										{/* <Input
 											ref="searchDom"
 											placeholder="找伴游"
 											suffix={(
 												<Button className="search-btn" size="large" type="primary" onClick={this.clickSearch.bind(this)}>
 													<Icon type="search" />
 												</Button>
+											)}
+										/> */}
+
+<Input
+											ref="searchDom"
+											placeholder="找伴游"
+											suffix={(
+										
+													<Icon className="search-btn" type="search" />
+										
 											)}
 										/>
 
@@ -983,6 +1005,9 @@ class Index extends React.Component {
 											)}
 										/> */}
 									</AutoComplete>
+									<Button className="search-btn" size="large" type="primary" onClick={this.clickSearch.bind(this)}>
+													全部
+												</Button>
 								</div>
 
 								<List

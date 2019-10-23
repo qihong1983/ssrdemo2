@@ -290,6 +290,7 @@ class LoginGroup extends React.Component {
 
         return (
             <Modal
+                width={350}
                 title="登录"
                 visible={this.props.loginModalState}
                 onOk={this.loginHandleOk.bind(this)}

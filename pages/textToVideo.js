@@ -192,6 +192,8 @@ class TextToVideo extends Component {
 					"audio": json.data
 				})
 
+				
+
 			}
 		});
 	}
@@ -288,8 +290,9 @@ class TextToVideo extends Component {
 								</FormItem>
 								<FormItem>
 									<ReactAudioPlayer
-										src={encodeURI(this.state.audio)}
-										autoPlay
+										// src={encodeURI(this.state.audio)}
+										src={this.state.audio}
+										//autoPlay
 										controls
 									/>
 								</FormItem>
