@@ -247,12 +247,8 @@ class LoginGroup extends React.Component {
 
         this.props.form.validateFields((err, values) => {
 
-            console.log(values, '33333');
-
-
 
             if (!err) {
-
                 var params = {
                     phone: values.phoneNumber,
                     password: values.volidCode

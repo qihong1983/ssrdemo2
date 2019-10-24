@@ -102,6 +102,16 @@ function getCookie(name) {
 }
 
 
+function setCookie(c_name, value, expiredays){
+	　　　　var exdate=new Date();
+   　　　　exdate.setDate(exdate.getDate() + expiredays);
+   　　　　document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+	　　}
+function clearCookie(name) {  
+    setCookie(name, "", -1);  
+}  
+
+
 const { Meta } = Card;
 
 // function onSelect(value) {
@@ -858,6 +868,38 @@ class Index extends React.Component {
 		NProgress.done();
 	}
 
+	logout() {
+
+		
+		this.setState({
+			userCenterVisible: false
+		}, () => {
+			console.log(this.state.loginModalState);
+			console.log('看看关没关闭');
+		});
+
+		clearCookie("token");
+
+
+		clearCookie('userId');
+        clearCookie('userName');
+        clearCookie('avatar');
+        clearCookie('phone');
+		
+		var params = {
+			id: "",
+			username: "",
+			avatar: "",
+			phone: "",
+			token:""
+		}
+
+		this.props.setUserCookie(params);
+		console.log('88888888');
+		
+		
+	}
+
 	render() {
 		const size = this.state.size;
 		// var pagination = {
@@ -1065,6 +1107,7 @@ class Index extends React.Component {
 
 							<LoginGroup
 								loginModalState={this.state.loginModalState}
+								// loginModalState={false}
 								onOk={this.loginHandleOk.bind(this)}
 								loginHandleCancel={this.loginHandleCancel.bind(this)}
 								changeLogin={this.state.changeLogin}
@@ -1089,7 +1132,7 @@ class Index extends React.Component {
 									<Radio.Button>基本信息</Radio.Button>
 								</Radio.Group>
 
-								<Button type="primary" style={{ marginLeft: "10px" }}>登出</Button>
+								<Button type="primary" style={{ marginLeft: "10px" }} onClick={this.logout.bind(this)}>登出</Button>
 
 								{/* <List
 									bordered
