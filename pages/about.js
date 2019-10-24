@@ -138,7 +138,7 @@ class About extends Component {
 				<Head>
 					<title>游泳吧</title>
 					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-					<link rel="stylesheet" href="/static/antd.css" />
+					
 
 				</Head>
 				<Layout>

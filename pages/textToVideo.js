@@ -221,7 +221,7 @@ class TextToVideo extends Component {
 				<Head>
 					<title>游泳吧</title>
 					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-					<link rel="stylesheet" href="/static/antd.css" />
+					
 					<link rel="stylesheet" href="/static/textToVideo.css" />
 				</Head>
 				<Layout>
