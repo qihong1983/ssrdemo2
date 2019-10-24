@@ -54,7 +54,9 @@ import initializeStore from '../store/initializeStore';
 import * as actionCreators from '../actions/index';
 
 const FormItem = Form.Item;
-
+const IconFont = Icon.createFromIconfontCN({
+	scriptUrl: '/static/js/font_475028_caaiz33gkk.js',
+});
 
 const {
 	TextArea
@@ -224,7 +226,7 @@ class TextToVideo extends Component {
 				</Head>
 				<Layout>
 					<Header style={{ color: "white" }}>
-						<div className="logo" >SSR DEMO</div>
+					<div className="logo" ><IconFont type="icon-LOGOyouyongba" className="logoIconStyle" /> <span className="logoTitle">游泳吧 swimming club</span></div>
 						<Menu
 								theme="dark"
 								mode="horizontal"

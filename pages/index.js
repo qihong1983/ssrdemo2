@@ -54,8 +54,12 @@ const Option = AutoComplete.Option;
 // 	scriptUrl: 'static/fonts/iconfont.js', // 在 iconfont.cn 上生成
 // });
 
+// const IconFont = Icon.createFromIconfontCN({
+// 	scriptUrl: '//at.alicdn.com/t/font_475028_caaiz33gkk.js',
+// });
+
 const IconFont = Icon.createFromIconfontCN({
-	scriptUrl: '//at.alicdn.com/t/font_475028_caaiz33gkk.js',
+	scriptUrl: '/static/js/font_475028_caaiz33gkk.js',
 });
 
 import {
@@ -208,7 +212,6 @@ class Index extends React.Component {
 		if (isServer == false) {
 
 			token = getCookie("token");
-
 
 			NProgress.start();
 		} else {
@@ -1022,8 +1025,9 @@ class Index extends React.Component {
 									renderItem={item => (<List.Item key={item.id}>
 										<Card
 											cover={<img alt="example" src={`${item.img}`} />}
-											actions={[<Button type="primary" disabled={item.isOver ? 'disabled' : ''} className="wrapAdd" data-id={item.id} data-price={item.price} onClick={this.clickAddActive.bind(this)} ><Icon type="plus" />报名</Button>]}
+											actions={[<Button type="primary" disabled={  moment(item.startTime).unix() < moment(new Date()).unix() ? 'disabled' : ''} className="wrapAdd" data-id={item.id} data-price={item.price} onClick={this.clickAddActive.bind(this)} ><Icon type="plus" />报名</Button>]}
 										>
+											
 											<Meta
 												avatar={<Avatar src={`${item.thumb}`} />}
 												title={`${item.title}`}
