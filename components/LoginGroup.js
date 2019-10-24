@@ -134,6 +134,7 @@ class LoginGroup extends React.Component {
     loginHandleOk(e) {
 
 
+
         // console.log(this.refs.loginSubmitPhone.props.onSubmit());
         this.refs.loginSubmitPhone.props.onSubmit()
         // loginHandleOk()
@@ -156,6 +157,7 @@ class LoginGroup extends React.Component {
         // });
 
 
+        console.log(e, 'eeeeee');
 
         console.log(this.refs.loginSubmitPhone);
 
@@ -242,24 +244,22 @@ class LoginGroup extends React.Component {
      * @method loginSubmitPhone
      */
     loginSubmitPhone(e) {
-        console.log(e);
 
         this.props.form.validateFields((err, values) => {
 
-            console.log(values);
+            console.log(values, '33333');
 
-            // if (values.phoneNumber == '' || values.volidCode == '') {
-            //     console.log('有错误');
-            // }
 
 
             if (!err) {
 
-                console.log(this.props, 'this.props');
-                this.props.getToken(values);
-                console.log('Received values of form: ', values);
-                this.props.closeLoginModal();
+                var params = {
+                    phone: values.phoneNumber,
+                    password: values.volidCode
+                }
 
+                this.props.getToken(params);
+                this.props.closeLoginModal();
             }
         });
 
@@ -270,8 +270,24 @@ class LoginGroup extends React.Component {
      * 点击二维码
      * @method checkVolidFn
      */
-    checkVolidFn() {
+    async checkVolidFn(e) {
         var { count } = this.state;
+
+
+        if (this.props.form.getFieldError('phoneNumber') == undefined) {
+            this.props.sendPassword(this.props.form.getFieldValue('phoneNumber'));
+        }
+
+
+        // this.props.form.validateFields((err, values) => {
+
+        //     console.log(err, values, 'values');
+        //     if (!err) {
+
+        //     }
+        // });
+
+
         const timer = setInterval(() => {
             this.setState({ "count": (count--), checkVolid: false }, () => {
                 if (count === 0) {
@@ -317,8 +333,6 @@ class LoginGroup extends React.Component {
 
 //将state.counter绑定到props的counter
 const mapStateToProps = (state) => {
-
-
 
     return {
         About: state.About,

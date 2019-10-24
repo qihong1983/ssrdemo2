@@ -104,7 +104,7 @@ class SendForm extends React.Component {
 
         this.state = {
             mode: null,
-            imageUrl: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            imageUrl: "/static/default.png"
         }
     }
 

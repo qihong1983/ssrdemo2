@@ -204,8 +204,6 @@ class Index extends React.Component {
 	}) {
 
 
-
-
 		var token = null;
 		if (isServer == false) {
 
@@ -255,7 +253,10 @@ class Index extends React.Component {
 
 			}
 
-			// console.log(userInfo, 'userInfo');
+
+
+
+			await store.dispatch(actionCreators.setUserCookie(userInfo));
 			// console.log(userInfo.userId, 'userInfo.userId');
 
 			// console.log(cookies, '####cookies####');
@@ -348,7 +349,7 @@ class Index extends React.Component {
 				'英东游泳-健身趴4',
 			],
 			loading: false,
-			imageUrl: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+			imageUrl: "/static/default.png",
 			changeLogin: 'phoneLogin',
 			checkVolid: true,
 			count: 60
@@ -927,6 +928,8 @@ class Index extends React.Component {
 		console.log(this.props.Index, 'this.props.Index.userAvatar');
 
 
+
+
 		return (
 			<LocaleProvider locale={zhCN}>
 				<div>
@@ -955,8 +958,7 @@ class Index extends React.Component {
 								<Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button>
 								{/* <Badge count={1}> */}
 								<Badge>
-									{this.props.Index.userAvatar ? (<Avatar className="avatarStyle" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" onClick={this.clickAvatar.bind(this)} />) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
-
+									{this.props.Index.token ? (<Avatar className="avatarStyle" shape="square" src={this.props.Index.avatar} onClick={this.clickAvatar.bind(this)} />) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
 								</Badge>
 							</div>
 						</Header>
@@ -968,14 +970,14 @@ class Index extends React.Component {
 									<AutoComplete
 										className="global-search"
 										size="large"
-										style={{ width: '260px',marginRight:"10px" }}
+										style={{ width: '260px', marginRight: "10px" }}
 										dataSource={this.props.Index.search.map(renderOption.bind(this))}
 
 										onSearch={this.handleSearch.bind(this)}
 										placeholder="input here"
 										optionLabelProp="text"
 										onSelect={this.autoSelect.bind(this)}
-										//xxxx
+									//xxxx
 									>
 										{/* <Input
 											ref="searchDom"
@@ -987,13 +989,13 @@ class Index extends React.Component {
 											)}
 										/> */}
 
-<Input
+										<Input
 											ref="searchDom"
 											placeholder="找伴游"
 											suffix={(
-										
-													<Icon className="search-btn" type="search" />
-										
+
+												<Icon className="search-btn" type="search" />
+
 											)}
 										/>
 
@@ -1006,7 +1008,7 @@ class Index extends React.Component {
 										/> */}
 									</AutoComplete>
 									<Button className="search-btn" size="large" type="primary" onClick={this.clickSearch.bind(this)}>
-													全部
+										全部
 												</Button>
 								</div>
 

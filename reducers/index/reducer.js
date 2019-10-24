@@ -14,12 +14,49 @@ const Index = (state, action) => {
             selectId: 0,
             showPrice: 0,
             userName: "",
-            userAvatar: ""
+            userAvatar: "",
+            //用户信息
+            userId: "",
+            userName: "",
+            avatar: "",
+            phone: "",
+            token: ""
+
         }
     }
 
     switch (action.type) {
 
+        case "INDEX_TOKEN":
+
+            return Object.assign({}, state, {
+                token: action.payload
+            });
+
+        case "INDEX_PHONE":
+
+            return Object.assign({}, state, {
+                phone: action.payload
+            });
+
+
+        case "INDEX_AVATAR":
+
+            return Object.assign({}, state, {
+                avatar: action.payload
+            });
+
+        case "INDEX_USERNAME":
+
+            return Object.assign({}, state, {
+                userName: action.payload
+            });
+
+        case "INDEX_USERID":
+
+            return Object.assign({}, state, {
+                userId: action.payload
+            });
         case "INDEX_LIST":
             return Object.assign({}, state, {
                 list: action.payload

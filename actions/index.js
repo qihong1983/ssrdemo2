@@ -29,8 +29,31 @@ const inita = (data) => {
         })
     }
 }
+function asc2str(str) {
+    return String.fromCharCode(str);
+}
 
-
+function UrlDecode(str) {
+    var ret = "";
+    for (var i = 0; i < str.length; i++) {
+        var chr = str.charAt(i);
+        if (chr == "+") {
+            ret += " ";
+        } else if (chr == "%") {
+            var asc = str.substring(i + 1, i + 3);
+            if (parseInt("0x" + asc) > 0x7f) {
+                ret += asc2str(parseInt("0x" + asc + str.substring(i + 4, i + 6)));
+                i += 5;
+            } else {
+                ret += asc2str(parseInt("0x" + asc));
+                i += 2;
+            }
+        } else {
+            ret += chr;
+        }
+    }
+    return ret;
+}
 
 
 const getTablesNoData = (data) => {
@@ -192,8 +215,8 @@ const getList = (data) => {
         })
 
         // let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/list?page=${data.offset}&keyword=${encodeURI(data.keyword)}`, {
-            let res = await fetch(`https://api.youyong.ba/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
-                // let res = await fetch(`http://localhost:8081/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
+        let res = await fetch(`https://api.youyong.ba/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
+            // let res = await fetch(`http://localhost:8081/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -258,26 +281,52 @@ const getToken = (data) => {
         console.log(data, 'data');
         // {phoneNumber: "18600190151", volidCode: "111111"}
         // let res = await fetch(`http://localhost:8081/accessToken?phone=${data.phoneNumber}`, {
-        let res = await fetch(`https://api.youyong.ba/accessToken?phone=${data.phoneNumber}`, {
-            method: 'GET',
+        // let res = await fetch(`https://api.youyong.ba/accessToken?phone=${data.phoneNumber}`, {
+        let res = await fetch(`https://api.youyong.ba/token`, {
+            method: 'POST',
+            mode: 'cors',
             headers: {
-                'Cache-Control': 'no-cache',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Bearer xxx'
-            }
+                'Content-Type': 'application/json'
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
         });
+
 
         let json = await res.json();
 
-        setCookie('userId', json.data[0].id);
-        setCookie('userName', decodeURIComponent(json.data[0].username));
-        setCookie('avatar', decodeURIComponent(json.data[0].avatar));
-        setCookie('phone', decodeURIComponent(json.data[0].phone));
-        setCookie('token', 'xxx');
+        console.log(json, 'json');
+        setCookie('userId', json.data.id);
+        setCookie('userName', decodeURIComponent(json.data.username));
+        setCookie('avatar', json.data.avatar);
+        setCookie('phone', decodeURIComponent(json.data.phone));
+        setCookie('token', json.data.token);
 
-        // alert(decodeURIComponent(json.data[0].username));
-        // alert(decodeURIComponent(json.data[0].avatar));
-        // setCookie('token', json.data[0].token);
+
+        dispatch({
+            type: "INDEX_TOKEN",
+            payload: json.data.token
+        });
+
+        dispatch({
+            type: "INDEX_PHONE",
+            payload: json.data.phone
+        });
+
+        dispatch({
+            type: "INDEX_AVATAR",
+            payload: json.data.avatar
+        });
+
+        dispatch({
+            type: "INDEX_USERNAME",
+            payload: json.data.username
+        });
+
+        dispatch({
+            type: "INDEX_USERID",
+            payload: json.data.id
+        });
 
 
     }
@@ -298,8 +347,8 @@ const getSearch = (data) => {
         // INDEX_KEYWORD
 
         // let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/searchData?searchName=${data.searchName}&lang=${data.lang}`, {
-            // let res = await fetch(`http://localhost:8081/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
-                let res = await fetch(`https://api.youyong.ba/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
+        // let res = await fetch(`http://localhost:8081/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
+        let res = await fetch(`https://api.youyong.ba/searchbar?searchName=${data.searchName}&lang=${data.lang}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -325,28 +374,8 @@ const getSearch = (data) => {
 const sendSwim = (data) => {
     return async function (dispatch) {
 
-        console.log(data, 'action datadata');
-        // debugger;
 
-        // var data = {
-        //     "classroot": values.address,
-        //     "endTime": moment(values.endTime).format("YYYY-MM-DD HH:mm"),
-        //     "price": values.price,
-        //     "img": img
-        // }
-
-
-        // endTime: "2019-07-09 05:05:05"
-        // imageUrl: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        // price: 1000
-        // title: "fff"
-        // userId: 1
-        // userNum: 10
-        // http://localhost:8081/insert?userId=1&title=游泳&endNum=11&img=http://dummyimage.com/229x139/79f2d5/f2b279.png?text=asdf&isOver=false&num=11&price=23&sendUser=小洪&startTime=2019-07-06 22:30:00&thumb=http://dummyimage.com/252x251/79f29d/f27a79.png?text=列亲级目则&pinyin=xiaohong
-
-        // let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/sendActive?classroot=${data.classroot}&endTime=${data.endTime}&price=${data.price}&img=${data.img}&py=${data.py}`, {
-            // let res = await fetch(`http://localhost:8081/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
-                let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -420,6 +449,65 @@ const setUserInfo = (data) => {
 
 }
 
+const sendPassword = (data) => {
+    return async function (dispatch) {
+        let res = await fetch(`https://api.youyong.ba/getPassword?phone=${data}`, {
+            method: 'GET',
+            // mode: 'cors',
+            // cache: 'force-cache',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer xxx'
+            },
+            type: 'fetch'
+            // cache: 'default',
+            // body: toQueryString(data)
+        });
+
+        let json = await res.json();
+
+        console.log(json, 'json');
+    }
+}
+
+const setUserCookie = (data) => {
+    return async function (dispatch) {
+
+        console.log(data, 'setcookie');
+
+        dispatch({
+            type: "INDEX_TOKEN",
+            payload: data.token
+        });
+
+        dispatch({
+            type: "INDEX_PHONE",
+            payload: data.phone
+        });
+
+        // dispatch({
+        //     type: "INDEX_AVATAR",
+        //     payload: UrlDecode(data.avatar)
+        // });
+
+        dispatch({
+            type: "INDEX_AVATAR",
+            payload: unescape(data.avatar)
+        });
+
+        dispatch({
+            type: "INDEX_USERNAME",
+            payload: data.username
+        });
+
+        dispatch({
+            type: "INDEX_USERID",
+            payload: data.id
+        });
+    }
+}
+
 export {
     getCharts,
     inita,
@@ -432,5 +520,7 @@ export {
     changeId,
     getEntered,
     setUserInfo,
-    getToken
+    getToken,
+    sendPassword,
+    setUserCookie
 }

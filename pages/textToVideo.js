@@ -217,7 +217,7 @@ class TextToVideo extends Component {
 		return (
 			<div>
 				<Head>
-					<title>不变化的数据</title>
+					<title>游泳吧</title>
 					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 					<link rel="stylesheet" href="/static/antd.css" />
 					<link rel="stylesheet" href="/static/textToVideo.css" />
@@ -226,15 +226,15 @@ class TextToVideo extends Component {
 					<Header style={{ color: "white" }}>
 						<div className="logo" >SSR DEMO</div>
 						<Menu
-							theme="dark"
-							mode="horizontal"
-							selectedKeys={['3']}
-							style={{ lineHeight: '64px' }}
-						>
-							<Menu.Item key="1"><Link href='/'><a>变化的数据</a></Link></Menu.Item>
-							<Menu.Item key="2"><Link href='/about'><a>不变化的数据</a></Link></Menu.Item>
-							<Menu.Item key="3">文字转语音</Menu.Item>
-						</Menu>
+								theme="dark"
+								mode="horizontal"
+								selectedKeys={['3']}
+								style={{ lineHeight: '60px', width: "350px", float: "left" }}
+							>
+								<Menu.Item key="1"><Link href='/'><a>结伴</a></Link></Menu.Item>
+								<Menu.Item key="2"><Link href='/about'><a>demo演示</a></Link></Menu.Item>
+								<Menu.Item key="3">文字转语音工具</Menu.Item>
+							</Menu>
 					</Header>
 					<Content>
 						<div style={{ background: '#f2f2f2', padding: '30px' }}>
