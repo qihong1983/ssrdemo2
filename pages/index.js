@@ -293,7 +293,7 @@ class Index extends React.Component {
 
 			if (isServer == false) {
 				var getUserInfoParam = {
-					userName: getCookie("username"),
+					userName: getCookie("userName"),
 					userAvatar: getCookie("avatar")
 				}
 			} else {
@@ -1003,7 +1003,7 @@ class Index extends React.Component {
 								<Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button>
 								{/* <Badge count={1}> */}
 								<Badge>
-									{this.props.Index.token ? (<Avatar className="avatarStyle" shape="square" src={this.props.Index.avatar} onClick={this.clickAvatar.bind(this)} />) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
+									{this.props.Index.token ? (<Tooltip placement="leftBottom" title={this.props.Index.userName}><Avatar className="avatarStyle" shape="square" src={this.props.Index.avatar} onClick={this.clickAvatar.bind(this)} /></Tooltip>) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
 								</Badge>
 							</div>
 						</Header>
