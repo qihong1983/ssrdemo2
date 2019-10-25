@@ -1,5 +1,9 @@
 import 'isomorphic-unfetch';
 
+import React from 'react';
+
+import { message } from 'antd';
+
 const cookieParser = require("cookie-parser");
 
 function setCookie(name, value) {
@@ -296,37 +300,45 @@ const getToken = (data) => {
         let json = await res.json();
 
         console.log(json, 'json');
-        setCookie('userId', json.data.id);
-        setCookie('userName', decodeURIComponent(json.data.username));
-        setCookie('avatar', json.data.avatar);
-        setCookie('phone', decodeURIComponent(json.data.phone));
-        setCookie('token', json.data.token);
 
+        if (json.status) {
+            setCookie('userId', json.data.id);
+            setCookie('userName', decodeURIComponent(json.data.username));
+            setCookie('avatar', json.data.avatar);
+            setCookie('phone', decodeURIComponent(json.data.phone));
+            setCookie('token', json.data.token);
+    
+    
+            dispatch({
+                type: "INDEX_TOKEN",
+                payload: json.data.token
+            });
+    
+            dispatch({
+                type: "INDEX_PHONE",
+                payload: json.data.phone
+            });
+    
+            dispatch({
+                type: "INDEX_AVATAR",
+                payload: json.data.avatar
+            });
+    
+            dispatch({
+                type: "INDEX_USERNAME",
+                payload: json.data.username
+            });
+    
+            dispatch({
+                type: "INDEX_USERID",
+                payload: json.data.id
+            });
+        } else {
+            // import { message, Button } from 'antd';
 
-        dispatch({
-            type: "INDEX_TOKEN",
-            payload: json.data.token
-        });
-
-        dispatch({
-            type: "INDEX_PHONE",
-            payload: json.data.phone
-        });
-
-        dispatch({
-            type: "INDEX_AVATAR",
-            payload: json.data.avatar
-        });
-
-        dispatch({
-            type: "INDEX_USERNAME",
-            payload: json.data.username
-        });
-
-        dispatch({
-            type: "INDEX_USERID",
-            payload: json.data.id
-        });
+            message.error("令牌获取失败");
+        }
+    
 
 
     }
