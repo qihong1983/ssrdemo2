@@ -165,7 +165,7 @@ class SendForm extends React.Component {
     }
 
 
-    handleChange(info) {
+    async handleChange(info) {
         if (info.file.status === 'uploading') {
             this.setState({ loading: true });
             return;
@@ -175,6 +175,7 @@ class SendForm extends React.Component {
 
             console.log(info, 'info');
 
+            console.log(info.file.response.data, '*****');
 
 
             this.setState({
@@ -301,12 +302,13 @@ class SendForm extends React.Component {
                                 listType="picture-card"
                                 className="avatar-uploader"
                                 showUploadList={false}
-                                // action="http://localhost:8081/uploadimg"
+                                //  action="http://localhost:8081/uploadimg"
                                 action="https://api.youyong.ba/uploadimg"
                                 beforeUpload={beforeUpload}
                                 onChange={this.handleChange.bind(this)}
+                                accept={"image/jpeg"}
                             >
-                                {imageUrl ? <img style={{ width: "227px", height: "138px" }} src={imageUrl} alt="avatar" /> : uploadButton}
+                                {imageUrl ? <img style={{ width: "227px", height: "138px" }} key={this.state.imageUrl} src={`${this.state.imageUrl}`} alt="avatar" /> : uploadButton}
                             </Upload>
 
                         )}

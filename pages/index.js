@@ -376,6 +376,9 @@ class Index extends React.Component {
 
 
 	handleChange(info) {
+
+		console.log(info, 'info');
+		
 		if (info.file.status === 'uploading') {
 			this.setState({ loading: true });
 			return;
@@ -1149,8 +1152,6 @@ class Index extends React.Component {
 								/> */}
 
 
-
-
 								<Form onSubmit={this.handleSubmit.bind(this)}>
 									<Form.Item
 										label="昵称"
@@ -1180,7 +1181,7 @@ class Index extends React.Component {
 												className="avatar-uploader"
 												showUploadList={false}
 												action="http://pinyin.netease.com/uploadfile.php"
-												beforeUpload={beforeUpload}
+												// beforeUpload={beforeUpload}
 												onChange={this.handleChange.bind(this)}
 											>
 												{imageUrl ? <img style={{ width: "86px", height: "86px" }} src={imageUrl} alt="avatar" /> : uploadButton}
