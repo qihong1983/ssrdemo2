@@ -383,16 +383,27 @@ const getSearch = (data) => {
 }
 
 
-const sendSwim = (data) => {
+const sendSwim = (data,token) => {
     return async function (dispatch) {
 
 
-        let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        // let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Cache-Control': 'no-cache',
+        //         // 'Content-Type': 'application/x-www-form-urlencoded',
+        //         'Content-Type': 'application/json',
+        //         'Authorization': token
+        //     }
+        // });
+
+
+          let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
             method: 'GET',
             headers: {
                 'Cache-Control': 'no-cache',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Bearer xxx'
+                'Content-Type': 'application/json',
+                'Authorization': token
             }
         });
 
@@ -522,6 +533,90 @@ const setUserCookie = (data) => {
 
 
 
+/**
+ * 保存用户信息
+ */
+
+const saveUserInfo = (data, token) => {
+    return async function (dispatch) {
+        // let res = await fetch(`https://api.youyong.ba/saveUserInfo`, {
+        let res = await fetch(`http://localhost:8081/saveUserInfo`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
+        });
+        let json = await res.json();
+
+        if (json.status) {
+            message.success('保存成功');
+
+
+        dispatch({
+            type: "INDEX_AVATAR",
+            payload: unescape(data.avatar)
+        });
+
+        dispatch({
+            type: "INDEX_USERNAME",
+            payload: data.username
+        });
+
+        // decodeURI
+        console.log(data.username, '看看乱不乱码');
+
+        setCookie('avatar', data.avatar);
+        setCookie('userName', unescape(data.username));
+
+        
+
+        } else {
+            if (json.msg && json.msg == -1) {
+                
+
+                dispatch({
+                    type: "INDEX_TOKEN",
+                    payload: ""
+                });
+        
+                dispatch({
+                    type: "INDEX_PHONE",
+                    payload: ""
+                });
+        
+                // dispatch({
+                //     type: "INDEX_AVATAR",
+                //     payload: UrlDecode(data.avatar)
+                // });
+        
+                dispatch({
+                    type: "INDEX_AVATAR",
+                    payload: ""
+                });
+        
+                dispatch({
+                    type: "INDEX_USERNAME",
+                    payload: ""
+                });
+        
+                dispatch({
+                    type: "INDEX_USERID",
+                    payload: ""
+                });
+
+                return -1;
+            }
+            message.error("保存失败");
+        }
+
+        
+    }
+}
+
 export {
     getCharts,
     inita,
@@ -536,5 +631,6 @@ export {
     setUserInfo,
     getToken,
     sendPassword,
-    setUserCookie
+    setUserCookie,
+    saveUserInfo
 }

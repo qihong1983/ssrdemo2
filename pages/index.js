@@ -139,13 +139,13 @@ function getBase64(img, callback) {
 }
 
 function beforeUpload(file) {
-	const isJPG = file.type === 'image/jpeg';
+	const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
 	if (!isJPG) {
-		message.error('You can only upload JPG file!');
+		message.error('只能上传jpg和png图片');
 	}
 	const isLt2M = file.size / 1024 / 1024 < 2;
 	if (!isLt2M) {
-		message.error('Image must smaller than 2MB!');
+		message.error('图片必需小于2MB!');
 	}
 	return isJPG && isLt2M;
 }
@@ -365,7 +365,8 @@ class Index extends React.Component {
 			imageUrl: "/static/default.png",
 			changeLogin: 'phoneLogin',
 			checkVolid: true,
-			count: 60
+			count: 60,
+			userName: ""
 		}
 	}
 
@@ -375,7 +376,7 @@ class Index extends React.Component {
 	// }
 
 
-	handleChange(info) {
+	async handleChange(info) {
 
 		console.log(info, 'info');
 		
@@ -385,10 +386,18 @@ class Index extends React.Component {
 		}
 		if (info.file.status === 'done') {
 			// Get this url from response in real world.
-			getBase64(info.file.originFileObj, imageUrl => this.setState({
-				imageUrl,
-				loading: false,
-			}));
+			// getBase64(info.file.originFileObj, imageUrl => this.setState({
+			// 	imageUrl,
+			// 	loading: false,
+			// }));
+
+			console.log(info.file.response.data, 'info.file.response.data');
+			await setTimeout(()=> {
+                this.setState({
+                    imageUrl: info.file.response.data,
+                    loading: false
+                })
+            },1000);
 		}
 	}
 
@@ -441,6 +450,16 @@ class Index extends React.Component {
 				} catch (e) { }
 			}
 		}
+
+
+		var avatar = getCookie("avatar");
+		var userName = getCookie("userName");
+		
+		
+		this.setState({
+			imageUrl: avatar,
+			userName: userName
+		});
 	}
 
 
@@ -494,17 +513,27 @@ class Index extends React.Component {
 
 	clickAddActive(e) {
 
+		
+		var token = getCookie('token');
 
-		this.props.changePrice(e.currentTarget.dataset.price);
-		this.props.changeId(e.currentTarget.dataset.id);
+		if (token) {
+			this.props.changePrice(e.currentTarget.dataset.price);
+			this.props.changeId(e.currentTarget.dataset.id);
+	
+			this.props.getEntered(e.currentTarget.dataset.id);
+	
+	
+	
+			this.setState({
+				visible: true
+			});
+	
+		} else {
+			           this.setState({
+				                loginModalState: true
+				            });
+		}
 
-		this.props.getEntered(e.currentTarget.dataset.id);
-
-
-
-		this.setState({
-			visible: true
-		});
 
 
 	}
@@ -543,7 +572,6 @@ class Index extends React.Component {
 
 
 	handleOk(e) {
-		console.log(e);
 		this.setState({
 			userCenterVisible: false,
 		});
@@ -567,10 +595,19 @@ class Index extends React.Component {
 
 	sendActive() {
 
-		//先先注释掉
-		this.setState({
-			sendVisible: true
-		});
+		var token = getCookie('token');
+
+		if (token) {
+			//先先注释掉
+			this.setState({
+				sendVisible: true
+			});
+		} else {
+			this.setState({
+				loginModalState: true
+			});
+		}
+
 
 
 	}
@@ -578,39 +615,73 @@ class Index extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+		console.log('这是什么');
 		this.props.form.validateFields(async (err, values) => {
 
-			console.log(err, 'err');
-
-			console.log(values, 'values');
 			if (!err) {
 
-				var temp = JSON.parse(values.dragger[0].response.split(values.dragger[0].name)[1] + values.dragger[0].response.split(values.dragger[0].name)[2]);
-
-				var img = temp.data + values.dragger[0].name;
-
 				var data = {
-					"classroot": values.address,
-					"endTime": moment(values.endTime).format("YYYY-MM-DD HH:mm"),
-					"price": values.price,
-					"img": img,
-					"py": pinyinUtil.getPinyin(values.address).replace(/\s/g, "")
+					userid: getCookie('userId'),
+					avatar: this.state.imageUrl,
+					username: values.username,
+					phone: getCookie('phone')
 				}
 
-				await this.props.sendSwim(data);
+				var token = getCookie('token');
+				console.log(token, 'token');
 
-				let params = {
-					offset: 1,
-					keyword: ""
+				var auth = await this.props.saveUserInfo(data, token);
+
+				if (auth == -1) {
+					this.setState({
+						loginModalState: true
+					});
+
+					clearCookie("token");
+
+
+					clearCookie('userId');
+					clearCookie('userName');
+					clearCookie('avatar');
+					clearCookie('phone');
+
+
 				}
 
-				await this.props.getList(params);
-				// this.props.
+				this.setState({
+					userCenterVisible: false
+				});
 
-				this.props.form.resetFields();
+				//xxxxx
 
-				this.sendVisibleClose();
-			}
+
+				//xxxxx
+				// var temp = JSON.parse(values.dragger[0].response.split(values.dragger[0].name)[1] + values.dragger[0].response.split(values.dragger[0].name)[2]);
+
+				// var img = temp.data + values.dragger[0].name;
+
+				// var data = {
+				// 	"classroot": values.address,
+				// 	"endTime": moment(values.endTime).format("YYYY-MM-DD HH:mm"),
+				// 	"price": values.price,
+				// 	"img": img,
+				// 	"py": pinyinUtil.getPinyin(values.address).replace(/\s/g, "")
+				// }
+
+				// await this.props.sendSwim(data);
+
+				// let params = {
+				// 	offset: 1,
+				// 	keyword: ""
+				// }
+
+				// await this.props.getList(params);
+				// // this.props.
+
+				// this.props.form.resetFields();
+
+				// this.sendVisibleClose();
+			} 
 		});
 	}
 
@@ -1006,7 +1077,7 @@ class Index extends React.Component {
 								<Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button>
 								{/* <Badge count={1}> */}
 								<Badge>
-									{this.props.Index.token ? (<Tooltip placement="leftBottom" title={this.props.Index.userName}><Avatar className="avatarStyle" shape="square" src={this.props.Index.avatar} onClick={this.clickAvatar.bind(this)} /></Tooltip>) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
+									{this.props.Index.token ? (<Tooltip placement="leftBottom" title={unescape(this.props.Index.userName)}><Avatar className="avatarStyle" shape="square" src={this.props.Index.avatar} onClick={this.clickAvatar.bind(this)} /></Tooltip>) : (<Avatar className="avatarStyle" shape="square" icon="user" onClick={this.clickAvatar.bind(this)} />)}
 								</Badge>
 							</div>
 						</Header>
@@ -1159,8 +1230,8 @@ class Index extends React.Component {
 										wrapperCol={{ span: 12 }}
 									>
 										{getFieldDecorator('username', {
-											initialValue: "",
-											rules: [{ required: false, message: '结伴主题' }],
+											initialValue: this.state.userName,
+											rules: [{ required: true, message: '用户名称不能为空' }],
 										})(
 											<Input />
 										)}
@@ -1174,17 +1245,20 @@ class Index extends React.Component {
 										{getFieldDecorator('dragger', {
 											valuePropName: 'avatar1',
 											getValueFromEvent: this.normFile,
+											rules: [{ required: false, message: '用户头像必填' }],
 										})(
 											<Upload
 												name="avatar"
 												listType="picture-card"
 												className="avatar-uploader"
 												showUploadList={false}
-												action="http://pinyin.netease.com/uploadfile.php"
-												// beforeUpload={beforeUpload}
+												// action="http://pinyin.netease.com/uploadfile.php"
+												action="https://api.youyong.ba/uploadimg"
+												beforeUpload={beforeUpload}
 												onChange={this.handleChange.bind(this)}
+												accept="image/jpeg,image/png"
 											>
-												{imageUrl ? <img style={{ width: "86px", height: "86px" }} src={imageUrl} alt="avatar" /> : uploadButton}
+												{imageUrl ? <img style={{ width: "86px", height: "86px" }} key={this.state.imageUrl} src={`${this.state.imageUrl}`} alt="avatar" /> : uploadButton}
 											</Upload>
 
 										)}

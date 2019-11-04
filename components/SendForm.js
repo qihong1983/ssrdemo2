@@ -57,6 +57,8 @@ const IconFont = Icon.createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_475028_caaiz33gkk.js',
 });
 
+
+
 import {
     bindActionCreators
 } from 'redux';
@@ -97,6 +99,18 @@ function getBase64(img, callback) {
     reader.readAsDataURL(img);
 }
 
+
+//读取cookies 
+function getCookie(name) {
+	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+	if (arr = document.cookie.match(reg))
+
+		return unescape(arr[2]);
+	else
+		return null;
+}
+
 class SendForm extends React.Component {
 
     constructor(props) {
@@ -129,17 +143,19 @@ class SendForm extends React.Component {
 
             var sendDate = new Date(moment(values.endTime).format("YYYY-MM-DD hh:mm:ss")).getTime();
 
-
-
+            
+            var userId = getCookie("userId");
+            var sendUser = getCookie("userName");
+            var avatar = getCookie("avatar");
             var data = {
-                userId: 1,
+                userId: userId,
                 imageUrl: this.state.imageUrl,
                 endTime: moment(values.endTime).format("YYYY-MM-DD hh:mm:ss"),
                 price: values.price,
                 title: values.title,
                 userNum: values.userNum,
-                sendUser: "小洪",
-                thumb: "http://dummyimage.com/252x251/79f29d/f27a79.png?text=列亲级目则",
+                sendUser: sendUser,
+                thumb: avatar,
                 py: pinyinUtil.getPinyin(values.title).replace(/\s/g, ""),
                 isOver: 0
             }
@@ -150,7 +166,8 @@ class SendForm extends React.Component {
 
 
             if (!err) {
-                this.props.sendSwim(data);
+                var token = getCookie('token');
+                this.props.sendSwim(data,token);
                 this.props.sendVisibleClose();
 
                 let params = {
@@ -177,11 +194,14 @@ class SendForm extends React.Component {
 
             console.log(info.file.response.data, '*****');
 
+            setTimeout(()=> {
+                this.setState({
+                    imageUrl: info.file.response.data,
+                    loading: false
+                })
+            },500);
 
-            this.setState({
-                imageUrl: info.file.response.data,
-                loading: false
-            })
+
 
             // getBase64(info.file.originFileObj, imageUrl => this.setState({
             //     imageUrl,
