@@ -294,7 +294,7 @@ const getEntered = (id, token) => {
 
 const okBaoming = (data, token) => {
     return async function (dispatch) {
-        let res = await fetch(`http://localhost:8081/okbaoming`, {
+        let res = await fetch(`https://api.youyong.ba/okbaoming`, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -442,7 +442,7 @@ const sendSwim = (data, token) => {
 
 
         // let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
-        let res = await fetch(`http://localhost:8081/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -590,7 +590,7 @@ const setUserCookie = (data) => {
 const saveUserInfo = (data, token) => {
     return async function (dispatch) {
         // let res = await fetch(`https://api.youyong.ba/saveUserInfo`, {
-        let res = await fetch(`http://localhost:8081/saveUserInfo`, {
+        let res = await fetch(`https://api.youyong.ba/saveUserInfo`, {
             method: 'POST',
             mode: 'cors',
             headers: {
