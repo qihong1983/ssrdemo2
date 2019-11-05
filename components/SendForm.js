@@ -33,7 +33,8 @@ import {
     Select,
     List,
     Tag,
-    notification
+    notification,
+    message
 } from 'antd';
 
 import zhCN from 'antd/lib/locale-provider/zh_CN';
@@ -102,13 +103,13 @@ function getBase64(img, callback) {
 
 //读取cookies 
 function getCookie(name) {
-	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
 
-	if (arr = document.cookie.match(reg))
+    if (arr = document.cookie.match(reg))
 
-		return unescape(arr[2]);
-	else
-		return null;
+        return unescape(arr[2]);
+    else
+        return null;
 }
 
 class SendForm extends React.Component {
@@ -128,7 +129,7 @@ class SendForm extends React.Component {
         }
     }
 
-    handleSubmit1(e) {
+    async handleSubmit1(e) {
         // debugger;
         e.preventDefault();
 
@@ -143,7 +144,7 @@ class SendForm extends React.Component {
 
             var sendDate = new Date(moment(values.endTime).format("YYYY-MM-DD hh:mm:ss")).getTime();
 
-            
+
             var userId = getCookie("userId");
             var sendUser = getCookie("userName");
             var avatar = getCookie("avatar");
@@ -167,8 +168,17 @@ class SendForm extends React.Component {
 
             if (!err) {
                 var token = getCookie('token');
-                this.props.sendSwim(data,token);
-                this.props.sendVisibleClose();
+                var isSuccess = await this.props.sendSwim(data, token);
+
+                if (isSuccess) {
+                    message.success('发布成功');
+                    this.props.sendVisibleClose();
+                } else if (isSuccess == -1) {
+                    message.warning('请您重新登录');
+                } else {
+                    message.error('发布失败');
+                }
+
 
                 let params = {
                     offset: 1,
@@ -194,12 +204,12 @@ class SendForm extends React.Component {
 
             console.log(info.file.response.data, '*****');
 
-            setTimeout(()=> {
+            setTimeout(() => {
                 this.setState({
                     imageUrl: info.file.response.data,
                     loading: false
                 })
-            },500);
+            }, 500);
 
 
 
@@ -263,8 +273,8 @@ class SendForm extends React.Component {
                         rules: [{ required: true, message: '不能为空' }],
                     })(
                         <InputNumber
-                            formatter={value => `¥ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={value => value.replace(/\¥\s?|(,*)/g, '')}
+                            formatter={value => `${value} 个`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            parser={value => value.replace(/\个\s?|(,*)/g, '')}
                             onChange={this.setPrice}
                         />
                     )}

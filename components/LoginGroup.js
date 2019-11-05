@@ -6,6 +6,8 @@ import {
     connect
 } from 'react-redux';
 
+
+import WxLogin from 'wxlogin.react';
 import {
     Layout,
     Table,
@@ -112,6 +114,18 @@ class LoginGroup extends React.Component {
         }
     }
 
+    componentDidMount() {
+        var obj = new WxLogin({
+            self_redirect: true,
+            id: "login_container",
+            appid: "wxdbb117c79cfbdea7",
+            scope: "",
+            redirect_uri: "",
+            state: "",
+            style: "",
+            href: ""
+        });
+    }
 
     onClose() {
         this.props.onClose();
@@ -221,9 +235,18 @@ class LoginGroup extends React.Component {
 
             </div>)
         } else if (this.props.changeLogin == 'wxLogin') {
+
+
             return (<div style={{ marginTop: 16 }}>
-                <div style={{ marginBottom: 16 }}>
-                    <Input addonAfter={<span style={{ cursor: "pointer" }}>微信扫码登录</span>} placeholder="请输入手机号" />
+                <div style={{ marginBottom: 16 }} id="login_container">
+                    {/* <Input addonAfter={<span style={{ cursor: "pointer" }}>微信扫码登录</span>} placeholder="请输入手机号" /> */}
+
+                    <iframe
+                        style={{ height: "330px" }}
+                        frameBorder="0"
+                        sandbox="allow-scripts allow-same-origin allow-top-navigation"
+                        scrolling="no"
+                        src="https://open.weixin.qq.com/connect/qrconnect?appid=wxdbb117c79cfbdea7&redirect_uri=https://www.youyong.ba&response_type=code&scope=snsapi_login&state=3d6be0a4035d839573b04816624a415e&#wechat_redirect"></iframe>
                 </div>
             </div>);
         } else {
@@ -268,7 +291,6 @@ class LoginGroup extends React.Component {
      */
     async checkVolidFn(e) {
         var { count } = this.state;
-
 
         if (this.props.form.getFieldError('phoneNumber') == undefined) {
             this.props.sendPassword(this.props.form.getFieldValue('phoneNumber'));

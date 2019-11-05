@@ -102,14 +102,14 @@ function getCookie(name) {
 }
 
 
-function setCookie(c_name, value, expiredays){
-	　　　　var exdate=new Date();
-   　　　　exdate.setDate(exdate.getDate() + expiredays);
-   　　　　document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
-	　　}
-function clearCookie(name) {  
-    setCookie(name, "", -1);  
-}  
+function setCookie(c_name, value, expiredays) {
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate() + expiredays);
+	document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+}
+function clearCookie(name) {
+	setCookie(name, "", -1);
+}
 
 
 const { Meta } = Card;
@@ -379,7 +379,7 @@ class Index extends React.Component {
 	async handleChange(info) {
 
 		console.log(info, 'info');
-		
+
 		if (info.file.status === 'uploading') {
 			this.setState({ loading: true });
 			return;
@@ -392,12 +392,12 @@ class Index extends React.Component {
 			// }));
 
 			console.log(info.file.response.data, 'info.file.response.data');
-			await setTimeout(()=> {
-                this.setState({
-                    imageUrl: info.file.response.data,
-                    loading: false
-                })
-            },1000);
+			await setTimeout(() => {
+				this.setState({
+					imageUrl: info.file.response.data,
+					loading: false
+				})
+			}, 1000);
 		}
 	}
 
@@ -454,8 +454,8 @@ class Index extends React.Component {
 
 		var avatar = getCookie("avatar");
 		var userName = getCookie("userName");
-		
-		
+
+
 		this.setState({
 			imageUrl: avatar,
 			userName: userName
@@ -511,27 +511,43 @@ class Index extends React.Component {
 		});
 	}
 
-	clickAddActive(e) {
+	async clickAddActive(id, price) {
 
-		
+
 		var token = getCookie('token');
 
 		if (token) {
-			this.props.changePrice(e.currentTarget.dataset.price);
-			this.props.changeId(e.currentTarget.dataset.id);
-	
-			this.props.getEntered(e.currentTarget.dataset.id);
-	
-	
-	
-			this.setState({
-				visible: true
-			});
-	
+			// await this.props.changePrice(e.currentTarget.dataset.price);
+			await this.props.changePrice(price);
+			// console.log(e.Target, 'e.target');
+			// console.log(e.currentTarget.dataset.price, 'e.currentTarget.dataset.price');
+			// console.log(e.currentTarget.dataset, 'e.currentTarget.dataset.id');
+			await this.props.changeId(id);
+			// this.props.changeId(e.currentTarget.dataset.id);
+
+			// let status = this.props.getEntered(e.currentTarget.dataset.id, token);
+			let status = await this.props.getEntered(id, token);
+
+			if (status == -1) {
+
+				this.setState({
+					loginModalState: true,
+					visible: false
+				});
+			} else {
+
+				this.setState({
+					visible: true
+				});
+			}
+
+
+
+
 		} else {
-			           this.setState({
-				                loginModalState: true
-				            });
+			this.setState({
+				loginModalState: true
+			});
 		}
 
 
@@ -681,7 +697,7 @@ class Index extends React.Component {
 				// this.props.form.resetFields();
 
 				// this.sendVisibleClose();
-			} 
+			}
 		});
 	}
 
@@ -944,7 +960,7 @@ class Index extends React.Component {
 
 	logout() {
 
-		
+
 		this.setState({
 			userCenterVisible: false
 		}, () => {
@@ -956,22 +972,22 @@ class Index extends React.Component {
 
 
 		clearCookie('userId');
-        clearCookie('userName');
-        clearCookie('avatar');
-        clearCookie('phone');
-		
+		clearCookie('userName');
+		clearCookie('avatar');
+		clearCookie('phone');
+
 		var params = {
 			id: "",
 			username: "",
 			avatar: "",
 			phone: "",
-			token:""
+			token: ""
 		}
 
 		this.props.setUserCookie(params);
 		console.log('88888888');
-		
-		
+
+
 	}
 
 	render() {
@@ -1141,9 +1157,18 @@ class Index extends React.Component {
 									renderItem={item => (<List.Item key={item.id}>
 										<Card
 											cover={<img alt="example" src={`${item.img}`} />}
-											actions={[<Button type="primary" disabled={  moment(item.startTime).unix() < moment(new Date()).unix() ? 'disabled' : ''} className="wrapAdd" data-id={item.id} data-price={item.price} onClick={this.clickAddActive.bind(this)} ><Icon type="plus" />报名</Button>]}
+											actions={[<Button
+												type="primary"
+												disabled={moment(item.startTime).unix() < moment(new Date()).unix() ? 'disabled' : ''} className="wrapAdd"
+												data-id={item.id}
+												data-price={item.price}
+												// onClick={this.clickAddActive.bind(this)}
+												onClick={async () => {
+													await this.clickAddActive(item.id, item.price);
+												}}
+											><Icon type="plus" />报名</Button>]}
 										>
-											
+
 											<Meta
 												avatar={<Avatar src={`${item.thumb}`} />}
 												title={`${item.title}`}

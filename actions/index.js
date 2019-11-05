@@ -255,30 +255,73 @@ const getList = (data) => {
     }
 }
 
-const getEntered = (id) => {
+const getEntered = (id, token) => {
     return async function (dispatch) {
-        let res = await fetch(`https://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/signUpUserList?id=${id}`, {
+        // let res = await fetch(`http://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/signUpUserList?id=${id}`, {
+        // let res = await fetch(`http://localhost:8081/getBaomingList?id=${id}`, {
+        let res = await fetch(`https://api.youyong.ba/getBaomingList?id=${id}`, {
             method: 'GET',
             headers: {
-                'Cache-Control': 'no-cache',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Bearer xxx'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
-
         });
 
 
         let json = await res.json();
 
-        dispatch({
-            type: "PAGE1_USERLIST",
-            payload: json.data
-        });
+        if (json.status) {
+            dispatch({
+                type: "PAGE1_USERLIST",
+                payload: json.data
+            });
+        } else {
+            if (json.msg == -1) {
+                return json.msg
+            } else {
+                dispatch({
+                    type: "PAGE1_USERLIST",
+                    payload: json.data
+                });
+            }
+        }
+
 
 
     }
 }
 
+
+const okBaoming = (data, token) => {
+    return async function (dispatch) {
+        let res = await fetch(`http://localhost:8081/okbaoming`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
+        });
+
+        let json = await res.json();
+
+
+        if (json.status) {
+            return json.status;
+        } else {
+            if (json.msg == -1) {
+                return -1;
+            } else {
+                return json.status;
+            }
+        }
+        console.log(json, 'jsonjsonjson');
+        console.log(data, '参数');
+        console.log(token, 'token');
+    }
+}
 
 const getToken = (data) => {
     return async function (dispatch) {
@@ -307,28 +350,28 @@ const getToken = (data) => {
             setCookie('avatar', json.data.avatar);
             setCookie('phone', decodeURIComponent(json.data.phone));
             setCookie('token', json.data.token);
-    
-    
+
+
             dispatch({
                 type: "INDEX_TOKEN",
                 payload: json.data.token
             });
-    
+
             dispatch({
                 type: "INDEX_PHONE",
                 payload: json.data.phone
             });
-    
+
             dispatch({
                 type: "INDEX_AVATAR",
                 payload: json.data.avatar
             });
-    
+
             dispatch({
                 type: "INDEX_USERNAME",
                 payload: json.data.username
             });
-    
+
             dispatch({
                 type: "INDEX_USERID",
                 payload: json.data.id
@@ -338,7 +381,7 @@ const getToken = (data) => {
 
             message.error("令牌获取失败");
         }
-    
+
 
 
     }
@@ -383,7 +426,7 @@ const getSearch = (data) => {
 }
 
 
-const sendSwim = (data,token) => {
+const sendSwim = (data, token) => {
     return async function (dispatch) {
 
 
@@ -398,12 +441,12 @@ const sendSwim = (data,token) => {
         // });
 
 
-          let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        // let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        let res = await fetch(`http://localhost:8081/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
             method: 'GET',
             headers: {
-                'Cache-Control': 'no-cache',
-                'Content-Type': 'application/json',
-                'Authorization': token
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 
@@ -411,6 +454,13 @@ const sendSwim = (data,token) => {
         console.log(json, 'jsonjson');
 
         if (json.status) {
+            return json.status;
+        } else {
+            if (json.msg == -1) {
+                return -1;
+            } else {
+                return json.status;
+            }
 
         }
     }
@@ -545,7 +595,7 @@ const saveUserInfo = (data, token) => {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token
             },
             type: 'fetch',
             body: JSON.stringify(data)
@@ -556,53 +606,53 @@ const saveUserInfo = (data, token) => {
             message.success('保存成功');
 
 
-        dispatch({
-            type: "INDEX_AVATAR",
-            payload: unescape(data.avatar)
-        });
+            dispatch({
+                type: "INDEX_AVATAR",
+                payload: unescape(data.avatar)
+            });
 
-        dispatch({
-            type: "INDEX_USERNAME",
-            payload: data.username
-        });
+            dispatch({
+                type: "INDEX_USERNAME",
+                payload: data.username
+            });
 
-        // decodeURI
-        console.log(data.username, '看看乱不乱码');
+            // decodeURI
+            console.log(data.username, '看看乱不乱码');
 
-        setCookie('avatar', data.avatar);
-        setCookie('userName', unescape(data.username));
+            setCookie('avatar', data.avatar);
+            setCookie('userName', unescape(data.username));
 
-        
+
 
         } else {
             if (json.msg && json.msg == -1) {
-                
+
 
                 dispatch({
                     type: "INDEX_TOKEN",
                     payload: ""
                 });
-        
+
                 dispatch({
                     type: "INDEX_PHONE",
                     payload: ""
                 });
-        
+
                 // dispatch({
                 //     type: "INDEX_AVATAR",
                 //     payload: UrlDecode(data.avatar)
                 // });
-        
+
                 dispatch({
                     type: "INDEX_AVATAR",
                     payload: ""
                 });
-        
+
                 dispatch({
                     type: "INDEX_USERNAME",
                     payload: ""
                 });
-        
+
                 dispatch({
                     type: "INDEX_USERID",
                     payload: ""
@@ -613,7 +663,7 @@ const saveUserInfo = (data, token) => {
             message.error("保存失败");
         }
 
-        
+
     }
 }
 
@@ -632,5 +682,6 @@ export {
     getToken,
     sendPassword,
     setUserCookie,
-    saveUserInfo
+    saveUserInfo,
+    okBaoming
 }

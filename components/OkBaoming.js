@@ -24,6 +24,7 @@ import {
     Form,
     DatePicker,
     Upload,
+    message,
     AutoComplete,
     Badge,
     Icon,
@@ -74,6 +75,7 @@ const cookieParser = require("cookie-parser");
 import initializeStore from '../store/initializeStore';
 import * as actionCreators from '../actions/index';
 
+
 import moment from 'moment';
 
 
@@ -96,7 +98,16 @@ function beforeUpload(file) {
     }
     return isJPG && isLt2M;
 }
+//读取cookies 
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
 
+    if (arr = document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
 
 
 class OkBaoming extends React.Component {
@@ -111,22 +122,69 @@ class OkBaoming extends React.Component {
     }
 
 
+
+
     onClose() {
         this.props.onClose();
     }
 
 
+
+
     userListRender() {
         var arr = [];
-        this.props.userList.map((v, k) => {
-            console.log(v.avatar);
-            arr.push(<Col span={2} key={v.user}>
-                <Tooltip title={v.user}>
-                    <Avatar size="large" src={v.avatar} alt={v.user} style={{ marginTop: "10px" }} />
-                </Tooltip>
-            </Col>);
-        });
+
+        console.log(this.props.userList, '******');
+
+        if (this.props.userList) {
+            this.props.userList.map((v, k) => {
+
+                arr.push(<Col span={2} key={v.user}>
+                    <Tooltip title={v.user}>
+                        <Avatar size="large" src={v.avatar} alt={v.user} style={{ marginTop: "10px" }} />
+                    </Tooltip>
+                </Col>);
+            });
+        }
+
         return arr;
+    }
+
+
+    async okBaoming() {
+        console.log('*****');
+
+        var avatar = getCookie("avatar");
+        var userId = getCookie("userId");
+        var userName = getCookie("userName");
+
+        console.log(this.props.Index.selected, 'this.props');
+
+        var token = getCookie("token");
+
+        var data = {
+            avatar: avatar,
+            userId: userId,
+            userName: userName,
+            classId: this.props.Index.selected
+        }
+
+        var isSuccess = await this.props.okBaoming(data, token);
+
+        if (isSuccess) {
+
+            message.success('报名成功请准时参加');
+            await this.props.getEntered(this.props.Index.selected, token);
+        } else {
+            if (isSuccess == -1) {
+                message.success('请您重新登录');
+                this.props.onClose();
+            } else {
+                message.warning('您已报名');
+                this.props.onClose();
+            }
+        }
+
     }
 
     render() {
@@ -161,7 +219,13 @@ class OkBaoming extends React.Component {
 
 
 
-                <Button type="primary">确认报名</Button>
+                <Button
+                    type="primary"
+                    // onClick={this.okBaoming.bind(this)}
+                    onClick={() => {
+                        this.okBaoming();
+                    }}
+                >确认报名</Button>
 
             </Drawer>
         )
@@ -172,4 +236,28 @@ class OkBaoming extends React.Component {
 
 OkBaoming = Form.create({ name: 'coordinated' })(OkBaoming);
 
-export default OkBaoming;
+
+//将state.counter绑定到props的counter
+const mapStateToProps = (state) => {
+
+
+
+    return {
+        About: state.About,
+        Index: state.Index
+    }
+};
+
+//将action的所有方法绑定到props上
+const mapDispatchToProps = (dispatch, ownProps) => {
+    //全量
+    return bindActionCreators(actionCreators, dispatch);
+};
+
+
+OkBaoming = connect(mapStateToProps, mapDispatchToProps)(OkBaoming);
+
+OkBaoming = withRedux(initializeStore)(OkBaoming);
+
+export default withRouter(OkBaoming);
+
