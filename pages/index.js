@@ -478,6 +478,11 @@ class Index extends React.Component {
 
 			let isWxLogin = await this.props.wxLogin(code, state);
 
+
+			if (isWxLogin) {
+
+				this.props.router.reload();
+			}
 			// if (isWxLogin) {
 			// 	console.log('微信登录成功');
 			// 	//登录成功后
