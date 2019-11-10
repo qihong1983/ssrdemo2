@@ -724,6 +724,8 @@ const wxLogin = (code, state, router) => {
             setCookie('avatar', json.data.avatar);
             setCookie('token', json.data.token);
 
+
+            router.reload();
             return true;
         } else {
             return -1;
