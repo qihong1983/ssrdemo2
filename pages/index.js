@@ -1093,7 +1093,11 @@ class Index extends React.Component {
 			</div>
 		);
 
-		const imageUrl = this.state.imageUrl;
+		var imageUrl = this.state.imageUrl;
+
+		if (!imageUrl) {
+			imageUrl = this.props.Index.avatar;
+		}
 
 		console.log(this.props.Index, 'this.props.Index.userAvatar');
 

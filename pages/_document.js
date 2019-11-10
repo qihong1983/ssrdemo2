@@ -32,7 +32,6 @@ export default class MyDocument extends Document {
                     <script type="text/javascript" src="/static/js/pinyin_dict_notone.js"></script>
 
                     <script type="text/javascript" src="/static/js/pinyinUtil.js"></script>
-                    <script type="text/javascript" src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
                 </body>
             </html>
         );
