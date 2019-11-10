@@ -686,7 +686,43 @@ const wxLogin = (code, state) => {
 
         let json = await res.json();
 
+        console.log(json, 'json');
+
+
+
+        // avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTISxADAWm95lxDjCe4b9gucNP4LdZ6CbBGicsH48KaRpzzqSdiaHFryKcz5E1W1ibrKf2dFx6BhFD9OQ/132"
+        // id: 19
+        // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlvbmlkIjoib3ZJYUMwZDhVNkdNbENBMzJxQmtQU2ZMY3RBdyIsImlhdCI6MTU3MzQwMjUyMiwiZXhwIjoxNTczNDA0MzIyfQ.E09L4fze2SADcebgchS7Jz10Qrq-6iB8bCFIycwmWgY"
+        // username: "小洪"
+
         if (json.status) {
+            dispatch({
+                type: "INDEX_AVATAR",
+                payload: json.data.avatar
+            });
+
+            dispatch({
+                type: "INDEX_USERNAME",
+                payload: json.data.username
+            });
+
+            dispatch({
+                type: "INDEX_USERID",
+                payload: json.data.id
+            });
+
+
+            dispatch({
+                type: "INDEX_TOKEN",
+                payload: json.data.token
+            });
+
+
+            setCookie('userId', json.data.id);
+            setCookie('userName', decodeURIComponent(json.data.username));
+            setCookie('avatar', json.data.avatar);
+            setCookie('token', json.data.token);
+
             return json.data;
         } else {
             return -1;
