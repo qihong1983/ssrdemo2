@@ -1216,7 +1216,7 @@ class Index extends React.Component {
 
 											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{item.startTime}</Tag>
 											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{item.num}人</Tag>
-											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{item.isOver ? '结束' : '未结束'}</Tag>
+											<Tag color="#e5e5e5" style={{ marginTop: "20px" }}>{moment(item.startTime).unix() < moment(new Date()).unix() ? '结束' : '未结束'}</Tag>
 										</Card>
 									</List.Item>)}
 								/>
