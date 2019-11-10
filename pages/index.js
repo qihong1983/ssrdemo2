@@ -1290,7 +1290,7 @@ class Index extends React.Component {
 										wrapperCol={{ span: 12 }}
 									>
 										{getFieldDecorator('username', {
-											initialValue: this.state.userName,
+											initialValue: this.state.userName ? this.state.userName : this.props.Index.userName,
 											rules: [{ required: true, message: '用户名称不能为空' }],
 										})(
 											<Input />
@@ -1318,7 +1318,7 @@ class Index extends React.Component {
 												onChange={this.handleChange.bind(this)}
 												accept="image/jpeg,image/png"
 											>
-												{imageUrl ? <img style={{ width: "86px", height: "86px" }} key={this.state.imageUrl} src={`${this.state.imageUrl}`} alt="avatar" /> : uploadButton}
+												{imageUrl ? <img style={{ width: "86px", height: "86px" }} key={this.state.imageUrl ? this.state.imageUrl : this.props.Index.avatar} src={`${this.state.imageUrl ? this.state.imageUrl : this.props.Index.avatar}`} alt="avatar" /> : uploadButton}
 											</Upload>
 
 										)}
