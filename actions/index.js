@@ -723,7 +723,7 @@ const wxLogin = (code, state) => {
             setCookie('avatar', json.data.avatar);
             setCookie('token', json.data.token);
 
-            return json.data;
+            return true;
         } else {
             return -1;
         }
