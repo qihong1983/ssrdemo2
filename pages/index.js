@@ -476,7 +476,7 @@ class Index extends React.Component {
 
 			const { code, state } = this.props.router.query;
 
-			let isWxLogin = await this.props.wxLogin(code, state);
+			let isWxLogin = await this.props.wxLogin(code, state, this.props.router);
 
 
 			if (isWxLogin) {

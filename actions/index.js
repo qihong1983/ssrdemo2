@@ -667,7 +667,7 @@ const saveUserInfo = (data, token) => {
     }
 }
 
-const wxLogin = (code, state) => {
+const wxLogin = (code, state, router) => {
     return async function (dispatch) {
 
         var data = {
@@ -688,6 +688,7 @@ const wxLogin = (code, state) => {
 
         console.log(json, 'json');
 
+        console.log(router, 'routerrouterrouterrouter');
 
 
         // avatar: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTISxADAWm95lxDjCe4b9gucNP4LdZ6CbBGicsH48KaRpzzqSdiaHFryKcz5E1W1ibrKf2dFx6BhFD9OQ/132"
