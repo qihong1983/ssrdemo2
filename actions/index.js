@@ -667,6 +667,29 @@ const saveUserInfo = (data, token) => {
     }
 }
 
+const wxLogin = (code, state) => {
+    return async function (dispatch) {
+        let res = await fetch(`https://api.youyong.ba/wxLogin`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
+        });
+
+        let json = await res.json();
+
+        if (json.status) {
+            return json.data;
+        } else {
+            return -1;
+        }
+    }
+
+}
+
 export {
     getCharts,
     inita,
@@ -683,5 +706,6 @@ export {
     sendPassword,
     setUserCookie,
     saveUserInfo,
-    okBaoming
+    okBaoming,
+    wxLogin
 }

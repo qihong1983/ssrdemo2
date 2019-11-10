@@ -462,11 +462,34 @@ class Index extends React.Component {
 		});
 
 
+
+		getWxLogin();
+
+
+
+	}
+
+	async getWxLogin() {
 		if (this.props.router.query.code && this.props.router.query.state) {
 			console.log(this.props.router.query.code, 'code');
 			console.log(this.props.router.query.state, 'state');
+
+			const { code, state } = this.props.router.query;
+
+			let isWxLogin = await this.props.wxLogin(code, state);
+
+			if (isWxLogin) {
+				console.log('微信登录成功');
+				//登录成功后
+				console.log(isWxLogin);
+			} else {
+				console.log('微信登录不成功');
+			}
+
+
 		}
 	}
+
 
 
 	addKey(data, str) {
