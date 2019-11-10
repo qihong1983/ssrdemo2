@@ -460,6 +460,12 @@ class Index extends React.Component {
 			imageUrl: avatar,
 			userName: userName
 		});
+
+
+		if (this.props.router.query.code && this.props.router.query.state) {
+			console.log(this.props.router.query.code, 'code');
+			console.log(this.props.router.query.state, 'state');
+		}
 	}
 
 

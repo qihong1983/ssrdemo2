@@ -242,11 +242,15 @@ class LoginGroup extends React.Component {
                     {/* <Input addonAfter={<span style={{ cursor: "pointer" }}>微信扫码登录</span>} placeholder="请输入手机号" /> */}
 
                     <iframe
+
                         style={{ height: "330px" }}
                         frameBorder="0"
                         sandbox="allow-scripts allow-same-origin allow-top-navigation"
                         scrolling="no"
-                        src="https://open.weixin.qq.com/connect/qrconnect?appid=wxdbb117c79cfbdea7&redirect_uri=https://www.youyong.ba&response_type=code&scope=snsapi_login&state=3d6be0a4035d839573b04816624a415e&#wechat_redirect"></iframe>
+                        src="https://open.weixin.qq.com/connect/qrconnect?appid=wxdbb117c79cfbdea7&redirect_uri=https%3a%2f%2fyouyong.ba&response_type=code&scope=snsapi_login&state=3d6be0a4035d839573b04816624a415e&#wechat_redirect">
+
+                    </iframe>
+
                 </div>
             </div>);
         } else {
