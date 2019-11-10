@@ -463,7 +463,7 @@ class Index extends React.Component {
 
 
 
-		getWxLogin();
+		this.getWxLogin();
 
 
 

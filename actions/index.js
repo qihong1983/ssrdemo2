@@ -669,6 +669,11 @@ const saveUserInfo = (data, token) => {
 
 const wxLogin = (code, state) => {
     return async function (dispatch) {
+
+        var data = {
+            code: code,
+            state: state
+        }
         let res = await fetch(`https://api.youyong.ba/wxLogin`, {
             method: 'POST',
             mode: 'cors',
