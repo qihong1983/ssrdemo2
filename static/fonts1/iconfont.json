@@ -1,0 +1,30 @@
+{
+  "id": "1502358",
+  "name": "游泳吧",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1801156",
+      "name": "publishicon",
+      "font_class": "publishicon",
+      "unicode": "e697",
+      "unicode_decimal": 59031
+    },
+    {
+      "icon_id": "5263939",
+      "name": "LOGO游泳吧",
+      "font_class": "LOGOyouyongba-copy",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "7080980",
+      "name": "LOGO游泳吧",
+      "font_class": "LOGOyouyongba",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    }
+  ]
+}

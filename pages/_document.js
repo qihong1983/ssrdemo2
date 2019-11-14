@@ -8,6 +8,8 @@ import {
     flush
 } from 'next-style-loader/applyStyles';
 
+import { ServerStyleSheet } from 'styled-components'
+
 export default class MyDocument extends Document {
 
     render() {
@@ -23,8 +25,9 @@ export default class MyDocument extends Document {
                     <link rel="manifest" href="/static/manifest.json" />
                     <link href="/static/nprogress.min.css" rel="stylesheet" />
                     <link rel="stylesheet" href="/static/antd.css" />
-                    <link rel="stylesheet" href="/static/demo.css" />
 
+                    <link rel="stylesheet" href="/static/demo.css" />
+                   
                 </Head>
                 <body>
                     <Main />
@@ -46,4 +49,8 @@ MyDocument.getInitialProps = function (ctx) {
     props.nextStyle = flush();
 
     return props;
+
+
+
+
 };

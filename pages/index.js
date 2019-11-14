@@ -6,6 +6,8 @@ import {
 	connect
 } from 'react-redux';
 
+
+
 import {
 	Layout,
 	Table,
@@ -38,6 +40,8 @@ import {
 
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
+// import Wrapper from '../styled/index/index';
+
 
 const ButtonGroup = Button.Group;
 
@@ -61,6 +65,12 @@ const Option = AutoComplete.Option;
 const IconFont = Icon.createFromIconfontCN({
 	scriptUrl: '/static/js/font_475028_caaiz33gkk.js',
 });
+
+
+// const IconFont = Icon.createFromIconfontCN({
+// 	scriptUrl: '//at.alicdn.com/t/font_1502358_5wkl7tcdewu.js',
+// });
+
 
 import {
 	bindActionCreators
@@ -1106,18 +1116,20 @@ class Index extends React.Component {
 
 		return (
 			<LocaleProvider locale={zhCN}>
-				<div>
+				<div  className="main">
 					<Head>
 						<title>游泳吧</title>
 						<meta name="keywords" content="游泳吧社区 swimming club" />
 						<meta name="description" content="游泳吧社区 swimming club" />
 						<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-						<link rel="stylesheet" href="/static/antd.css" />
-						<link rel="stylesheet" href="/static/demo.css" />
+						{/* <link rel="stylesheet" href="/static/antd.css" />
+						<link rel="stylesheet" href="/static/demo.css" /> */}
 					</Head>
 					<Layout>
 						<Header style={{ color: "white" }}>
 							<div className="logo" ><IconFont type="icon-LOGOyouyongba" className="logoIconStyle" /> <span className="logoTitle">游泳吧 swimming club</span></div>
+
+
 							<Menu
 								theme="dark"
 								mode="horizontal"
@@ -1129,6 +1141,8 @@ class Index extends React.Component {
 								<Menu.Item key="3"><Link href='/textToVideo'><a>文字转语音工具</a></Link></Menu.Item>
 							</Menu>
 							<div className="userInfo">
+								{/* <Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button> */}
+
 								<Button type="primary" className="wrapSend" onClick={this.sendActive.bind(this)} ><IconFont type="icon-send1" className="send" />结伴游泳</Button>
 								{/* <Badge count={1}> */}
 								<Badge>
