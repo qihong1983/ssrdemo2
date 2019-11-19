@@ -1116,7 +1116,7 @@ class Index extends React.Component {
 
 		return (
 			<LocaleProvider locale={zhCN}>
-				<div  className="main">
+				<div className="main">
 					<Head>
 						<title>游泳吧</title>
 						<meta name="keywords" content="游泳吧社区 swimming club" />
