@@ -277,8 +277,6 @@ class Index extends React.Component {
 			}
 
 
-
-
 			await store.dispatch(actionCreators.setUserCookie(userInfo));
 			// console.log(userInfo.userId, 'userInfo.userId');
 

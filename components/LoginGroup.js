@@ -7,7 +7,7 @@ import {
 } from 'react-redux';
 
 
-import WxLogin from 'wxlogin.react';
+// import WxLogin from 'wxlogin.react';
 import {
     Layout,
     Table,
@@ -115,16 +115,7 @@ class LoginGroup extends React.Component {
     }
 
     componentDidMount() {
-        var obj = new WxLogin({
-            self_redirect: true,
-            id: "login_container",
-            appid: "wxdbb117c79cfbdea7",
-            scope: "",
-            redirect_uri: "",
-            state: "",
-            style: "",
-            href: ""
-        });
+
     }
 
     onClose() {
@@ -309,7 +300,7 @@ class LoginGroup extends React.Component {
         //     }
         // });
 
-
+        //xxxxx
         const timer = setInterval(() => {
             this.setState({ "count": (count--), checkVolid: false }, () => {
                 if (count === 0) {

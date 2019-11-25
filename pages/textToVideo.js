@@ -26,7 +26,8 @@ const {
 	Content
 } = Layout;
 
-import ReactAudioPlayer from 'react-audio-player';
+// import * as ReactAudioPlayer from "react-audio-player";
+// import Audio from 'react-audioplayer';
 
 import Head from 'next/head'; // 引入内置组件
 import Link from 'next/link';
@@ -76,18 +77,20 @@ class TextToVideo extends Component {
 		if (isServer == false) {
 			NProgress.start();
 		}
-		let data = store.getState();
+		// let data = store.getState();
 
-		let params = {
-			limit: data.limit,
-			offset: 1
-		}
+		// let params = {
+		// 	limit: data.limit,
+		// 	offset: 1
+		// }
 		// await store.dispatch(actionCreators.getTablesNoData(params));
 
 	}
 
 	constructor(props) {
 		super(props);
+
+		this.audioRef = React.createRef();
 
 		this.state = {
 			utterThis: null,
@@ -108,10 +111,10 @@ class TextToVideo extends Component {
 			NProgress.done();
 		}
 
-		notification['success']({
-			message: 'SSR 秒开（无数据变化的）',
-			description: '用户刷新无感知性能体验',
-		});
+		// notification['success']({
+		// 	message: 'SSR 秒开（无数据变化的）',
+		// 	description: '用户刷新无感知性能体验',
+		// });
 
 	}
 
@@ -194,7 +197,7 @@ class TextToVideo extends Component {
 					"audio": json.data
 				})
 
-				
+
 
 			}
 		});
@@ -221,22 +224,22 @@ class TextToVideo extends Component {
 				<Head>
 					<title>游泳吧</title>
 					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-					
+
 					<link rel="stylesheet" href="/static/textToVideo.css" />
 				</Head>
 				<Layout>
 					<Header style={{ color: "white" }}>
-					<div className="logo" ><IconFont type="icon-LOGOyouyongba" className="logoIconStyle" /> <span className="logoTitle">游泳吧 swimming club</span></div>
+						<div className="logo" ><IconFont type="icon-LOGOyouyongba" className="logoIconStyle" /> <span className="logoTitle">游泳吧 swimming club</span></div>
 						<Menu
-								theme="dark"
-								mode="horizontal"
-								selectedKeys={['3']}
-								style={{ lineHeight: '60px', width: "350px", float: "left" }}
-							>
-								<Menu.Item key="1"><Link href='/'><a>结伴</a></Link></Menu.Item>
-								<Menu.Item key="2"><Link href='/about'><a>demo演示</a></Link></Menu.Item>
-								<Menu.Item key="3">文字转语音工具</Menu.Item>
-							</Menu>
+							theme="dark"
+							mode="horizontal"
+							selectedKeys={['3']}
+							style={{ lineHeight: '60px', width: "350px", float: "left" }}
+						>
+							<Menu.Item key="1"><Link href='/'><a>结伴</a></Link></Menu.Item>
+							<Menu.Item key="2"><Link href='/about'><a>demo演示</a></Link></Menu.Item>
+							<Menu.Item key="3">文字转语音工具</Menu.Item>
+						</Menu>
 					</Header>
 					<Content>
 						<div style={{ background: '#f2f2f2', padding: '30px' }}>
@@ -267,9 +270,7 @@ class TextToVideo extends Component {
 									<Button onClick={this.stopBtn.bind(this)} className="login-form-button">
 										停止
 						          </Button>
-								</FormItem>{/*
-						        <input type="text" x-webkit-speech lang="ch-CN"  x-webkit-grammar="bUIltin:search"                      
-      onwebkitspeechchange="foo()"/>*/}
+								</FormItem>
 							</Form>
 							<Divider dashed style={{ background: "#cccccc" }} />
 							<Form onSubmit={this.handleSubmit1.bind(this)} className="login-form">
@@ -291,12 +292,17 @@ class TextToVideo extends Component {
 									)}
 								</FormItem>
 								<FormItem>
-									<ReactAudioPlayer
+									{/* <ReactAudioPlayer
 										// src={encodeURI(this.state.audio)}
 										src={this.state.audio}
 										//autoPlay
 										controls
-									/>
+									/> */}
+
+									<audio src={encodeURI(this.state.audio)} autoplay="autoplay" controls >
+										<track kind="captions" />
+										您的浏览器不支持 audio 元素。
+									</audio>
 								</FormItem>
 								<FormItem>
 									<Button type="primary" htmlType="submit" className="login-form-button" style={{ marginRight: "10px" }}>

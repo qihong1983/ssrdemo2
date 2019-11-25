@@ -540,7 +540,6 @@ const sendPassword = (data) => {
 
         let json = await res.json();
 
-        console.log(json, 'json');
     }
 }
 
