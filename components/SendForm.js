@@ -170,6 +170,10 @@ class SendForm extends React.Component {
                 var token = getCookie('token');
                 var isSuccess = await this.props.sendSwim(data, token);
 
+                console.log(this.props, 'this.props.this.props.');
+
+                 await this.props.sendGetui(data, token);
+
                 if (isSuccess) {
                     message.success('发布成功');
                     this.props.sendVisibleClose();

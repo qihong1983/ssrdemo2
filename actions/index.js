@@ -466,6 +466,40 @@ const sendSwim = (data, token) => {
     }
 }
 
+const sendGetui = (data, token) => {
+    return async function (dispatch) {
+
+
+        // let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        let res = await fetch(`https://api.youyong.ba/getui?title=${data.title}&body=刚刚${data.sendUser}发布了${data.title}[结伴游泳],在${data.endTime}集合,费用${data.price},人数${data.userNum}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        let json = await res.json();
+        console.log(json, 'jsonjson');
+
+        if (json.status) {
+            message.success('保存成功');
+            return json.status;
+        } else {
+            if (json.msg == -1) {
+                Toast.fail("未登录");
+                console.log(router);
+                router.push("/Login");
+                return -1;
+            } else {
+                message.error('保存成功');
+                return json.status;
+            }
+
+        }
+    }
+}
+
 const changePrice = (data) => {
     return function (dispatch) {
         dispatch({
@@ -741,6 +775,7 @@ export {
     getList,
     getSearch,
     sendSwim,
+    sendGetui,
     changePrice,
     changeId,
     getEntered,

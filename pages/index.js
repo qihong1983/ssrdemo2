@@ -1239,6 +1239,7 @@ class Index extends React.Component {
 									sendVisible={this.state.sendVisible}
 									sendVisibleClose={this.sendVisibleClose.bind(this)}
 									sendSwim={this.props.sendSwim.bind(this)}
+									sendGetui={this.props.sendGetui.bind(this)}
 									list={this.props.getList.bind(this)}
 								/>
 								{/* http://pinyin.netease.com/uploadfile.php */}
